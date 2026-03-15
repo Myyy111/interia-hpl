@@ -143,11 +143,11 @@ export default function ConfiguratorLayout() {
             {/* Header */}
             <header className="bg-white/90 backdrop-blur-md border-b border-slate-200 sticky top-0 z-40 shadow-sm transition-all">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                        <img src="/brand/logo-icon-dark.png" alt="Icon" className="w-12 h-12 object-contain drop-shadow-sm" />
-                        <div className="hidden sm:flex flex-col items-start ml-1 mt-1">
-                            <span className="font-['Playfair_Display'] text-[32px] font-bold leading-[0.8] text-[#b08d57]">Afandi</span>
-                            <span className="font-['Cinzel'] text-[10px] mt-1.5 tracking-[0.38em] font-bold pl-1 text-[#4a423e]">INTERIOR</span>
+                    <div className="flex items-center gap-3">
+                        <img src="/brand/logo-icon-dark.png" alt="Icon" className="w-[52px] h-[52px] object-contain drop-shadow-sm" />
+                        <div className="hidden sm:flex flex-col items-start ml-0 mt-1">
+                            <span className="font-['Playfair_Display'] text-[24px] font-bold leading-[0.85] text-[#b08d57]">Afandi</span>
+                            <span className="font-['Cinzel'] text-[9px] mt-1.5 tracking-[0.34em] font-bold pl-0.5 text-[#4a423e]">INTERIOR</span>
                         </div>
                     </div>
                     <div className="hidden md:flex items-center space-x-1 flex-1 justify-center max-w-2xl mx-8">

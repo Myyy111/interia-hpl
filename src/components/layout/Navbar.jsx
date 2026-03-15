@@ -37,19 +37,20 @@ export default function Navbar({ contactData }) {
         }
     };
 
-    const navTextColor = isScrolled ? 'text-slate-700 hover:text-indigo-600' : 'text-slate-200 hover:text-white';
-    const logoTextColor = isScrolled ? 'text-slate-900' : 'text-white';
+    const isHeaderSolid = isScrolled || mobileMenuOpen;
+    const navTextColor = isHeaderSolid ? 'text-slate-700 hover:text-indigo-600' : 'text-slate-200 hover:text-white';
+    const logoTextColor = isHeaderSolid ? 'text-slate-900' : 'text-white';
 
     return (
-        <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white/90 backdrop-blur-md shadow-sm py-4' : 'bg-transparent py-6'}`}>
+        <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isHeaderSolid ? 'bg-white shadow-md py-4' : 'bg-transparent py-6'}`}>
             <div className="max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between">
 
                 {/* Logo */}
-                <Link to="/" className="flex items-center gap-3 group">
-                    <img src={isScrolled ? "/brand/logo-icon-dark.png" : "/brand/logo-icon-light.png"} alt="Afandi Interior Logo" className="w-[72px] h-[72px] object-contain drop-shadow-md transition-all duration-300" />
+                <Link to="/" className="flex items-center gap-3 group" onClick={() => setMobileMenuOpen(false)}>
+                    <img src={isHeaderSolid ? "/brand/logo-icon-dark.png" : "/brand/logo-icon-light.png"} alt="Afandi Interior Logo" className="w-[72px] h-[72px] object-contain drop-shadow-md transition-all duration-300" />
                     <div className="flex flex-col items-start ml-0 mt-1">
-                        <span className={`font-['Playfair_Display'] text-[28px] font-bold leading-[0.85] transition-colors duration-300 ${isScrolled ? 'text-[#b08d57]' : 'text-white'}`}>Afandi</span>
-                        <span className={`font-['Cinzel'] text-[10px] mt-2 tracking-[0.34em] font-bold pl-0.5 transition-colors duration-300 ${isScrolled ? 'text-[#4a423e]' : 'text-slate-300'}`}>INTERIOR</span>
+                        <span className={`font-['Playfair_Display'] text-[28px] font-bold leading-[0.85] transition-colors duration-300 ${isHeaderSolid ? 'text-[#b08d57]' : 'text-white'}`}>Afandi</span>
+                        <span className={`font-['Cinzel'] text-[10px] mt-2 tracking-[0.34em] font-bold pl-0.5 transition-colors duration-300 ${isHeaderSolid ? 'text-[#4a423e]' : 'text-slate-300'}`}>INTERIOR</span>
                     </div>
                 </Link>
 
@@ -71,7 +72,7 @@ export default function Navbar({ contactData }) {
                 <div className="hidden md:flex items-center">
                     <Link
                         to="/configurator"
-                        className={`flex items-center gap-2 px-6 py-2.5 rounded-full font-semibold text-sm transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 ${isScrolled ? 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-indigo-500/30' : 'bg-white text-slate-900 hover:bg-slate-50'}`}
+                        className={`flex items-center gap-2 px-6 py-2.5 rounded-full font-semibold text-sm transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 ${isHeaderSolid ? 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-indigo-500/30' : 'bg-white text-slate-900 hover:bg-slate-50'}`}
                     >
                         Mulai Desain <ArrowRight size={16} />
                     </Link>
@@ -83,9 +84,9 @@ export default function Navbar({ contactData }) {
                     onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 >
                     {mobileMenuOpen ? (
-                        <X size={24} className={isScrolled ? 'text-slate-900' : 'text-white'} />
+                        <X size={28} className={isHeaderSolid ? 'text-slate-900' : 'text-white'} />
                     ) : (
-                        <Menu size={24} className={isScrolled ? 'text-slate-900' : 'text-white'} />
+                        <Menu size={28} className={isHeaderSolid ? 'text-slate-900' : 'text-white'} />
                     )}
                 </button>
             </div>

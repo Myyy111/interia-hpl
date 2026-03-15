@@ -2,17 +2,44 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Cinzel:wght@500;600;700&display=swap');
 
 @theme {
-  --color-primary-50: #f0fdfa;
-  --color-primary-100: #ccfbf1;
-  --color-primary-200: #99f6e4;
-  --color-primary-300: #5eead4;
-  --color-primary-400: #2dd4bf;
-  --color-primary-500: #14b8a6;
-  --color-primary-600: #0d9488;
-  --color-primary-700: #0f766e;
-  --color-primary-800: #115e59;
-  --color-primary-900: #134e4a;
-  --color-primary-950: #042f2e;
+  /* Override Teal with Gold (Coklat Muda) based on #b08d57 */
+  --color-teal-50: #fdfaf6;
+  --color-teal-100: #fbf3e9;
+  --color-teal-200: #f5e4cc;
+  --color-teal-300: #ebd1aa;
+  --color-teal-400: #dfb983;
+  --color-teal-500: #d4a362;
+  --color-teal-600: #b08d57;
+  --color-teal-700: #a4723c;
+  --color-teal-800: #875c35;
+  --color-teal-900: #6d4b2e;
+  --color-teal-950: #3c2716;
+
+  /* Override Indigo with Espresso/Dark (Hitam elegan) based on #4a423e */
+  --color-indigo-50: #f6f6f5;
+  --color-indigo-100: #e9e8e7;
+  --color-indigo-200: #cdcac7;
+  --color-indigo-300: #ab9f99;
+  --color-indigo-400: #8a7c74;
+  --color-indigo-500: #6b5d55;
+  --color-indigo-600: #574b44;
+  --color-indigo-700: #4a423e;
+  --color-indigo-800: #3e3835;
+  --color-indigo-900: #36312f;
+  --color-indigo-950: #1d1a18;
+
+  /* Override Slate with Warm Dark (Neutral Hitam Klasik) */
+  --color-slate-50: #fafaf9;
+  --color-slate-100: #f5f5f4;
+  --color-slate-200: #e7e5e4;
+  --color-slate-300: #d6d3d1;
+  --color-slate-400: #a8a29e;
+  --color-slate-500: #78716c;
+  --color-slate-600: #57534e;
+  --color-slate-700: #44403c;
+  --color-slate-800: #292524;
+  --color-slate-900: #1c1917;
+  --color-slate-950: #0c0a09;
 }
 
 html {

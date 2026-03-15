@@ -24,24 +24,24 @@ export default function Home() {
 
     return (
         <div className="min-h-screen font-sans bg-slate-50 text-slate-800 selection:bg-indigo-500/30">
-            <Navbar />
+            <Navbar contactData={settings.contact} />
 
             <main>
                 <Hero cmsData={settings.hero} />
                 <About cmsData={settings.about} />
                 <Services cmsData={settings.services} />
-                <Products />
+                <Products cmsData={settings.products} />
                 <HowItWorks cmsData={settings.howItWorks} />
                 <Portfolio cmsData={settings.portfolio} />
-                <Technology />
+                <Technology cmsData={settings.tech} />
                 <Team cmsData={settings.team} />
                 <Testimonials cmsData={settings.testimonials} />
                 <FAQ cmsData={settings.faqs} />
-                <Blog />
+                <Blog cmsData={settings.articles} contactData={settings.contact} />
                 <Contact cmsData={settings.contact} />
             </main>
 
-            <Footer />
+            <Footer contactData={settings.contact} />
         </div>
     );
 }

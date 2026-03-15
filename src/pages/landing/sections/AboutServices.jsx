@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sofa, LayoutDashboard, Hammer, ShieldCheck, Ruler, ThumbsUp } from 'lucide-react';
+import { Sofa, LayoutDashboard, Hammer, ShieldCheck, Ruler, ThumbsUp, Utensils } from 'lucide-react';
 
 export function About({ cmsData }) {
     if (!cmsData) return null;
@@ -38,18 +38,18 @@ export function About({ cmsData }) {
 
                 <div className="flex-1 relative">
                     <img
-                        src="https://images.unsplash.com/photo-1540932239986-30128078f3d5?q=80&w=1200&auto=format&fit=crop"
+                        src={cmsData.img || "https://images.unsplash.com/photo-1540932239986-30128078f3d5?q=80&w=1200&auto=format&fit=crop"}
                         className="w-full rounded-2xl shadow-xl border-4 border-white transform md:-rotate-3 hover:rotate-0 transition-transform duration-500"
                         alt="Tim Workshop Interia"
                     />
                     <div className="absolute -bottom-10 -left-10 bg-white p-6 rounded-2xl shadow-2xl animate-float border border-slate-100">
                         <div className="flex items-center gap-4">
                             <div className="w-16 h-16 rounded-full bg-teal-100 text-teal-600 flex items-center justify-center font-black text-2xl">
-                                5+
+                                {cmsData.badgeValue || '5+'}
                             </div>
                             <div>
-                                <h5 className="font-bold text-lg text-slate-900">Tahun Pengalaman</h5>
-                                <p className="text-slate-500 text-sm">Workshop Produksi Sendiri</p>
+                                <h5 className="font-bold text-lg text-slate-900">{cmsData.badgeTitle || 'Tahun Pengalaman'}</h5>
+                                <p className="text-slate-500 text-sm">{cmsData.badgeSub || 'Workshop Produksi Sendiri'}</p>
                             </div>
                         </div>
                     </div>
@@ -67,7 +67,7 @@ export function Services({ cmsData }) {
             desc: 'Solusi perancangan tata ruang, mulai dari apartemen kecil hingga rumah mewah dengan arsitek in-house.'
         },
         {
-            icon: <img src="https://cdn-icons-png.flaticon.com/512/1000/1000143.png" className="w-10 opacity-80" alt="Kitchen set icon" />,
+            icon: <Utensils size={40} className="text-indigo-600" />,
             title: 'Pembuatan Kitchen Set',
             desc: 'Dapur estetik dan fungsional (L-shape, U-shape, dll) dengan perhitungan ergonomi presisi dan aksesoris rak cerdas.'
         },
@@ -105,9 +105,14 @@ export function Services({ cmsData }) {
                             <h3 className="text-xl font-bold text-slate-900 mb-4">{s.title}</h3>
                             <p className="text-slate-500 leading-relaxed font-light flex-1">{s.desc}</p>
 
-                            <div className="mt-8 flex items-center text-sm font-bold text-indigo-600 group-hover:text-indigo-800 uppercase tracking-widest gap-2 cursor-pointer">
+                            <a 
+                                href={`https://wa.me/${cmsData?.phone?.replace(/[^0-9]/g, '') || ''}?text=Halo Interia, saya ingin bertanya tentang ${s.title}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="mt-8 flex items-center text-sm font-bold text-indigo-600 group-hover:text-indigo-800 uppercase tracking-widest gap-2"
+                            >
                                 Pelajari <span className="group-hover:translate-x-1 transition-transform">&rarr;</span>
-                            </div>
+                            </a>
                         </div>
                     ))}
                 </div>

@@ -2,29 +2,31 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Laptop, Maximize, CircleDollarSign, CheckCircle2 } from 'lucide-react';
 
-export function Products() {
-    const products = [
+export function Products({ cmsData }) {
+    const defaultProducts = [
         {
             title: 'Kitchen Set Minimalis',
             img: 'https://images.unsplash.com/photo-1556910103-1c02745a8289?q=80&w=800&auto=format&fit=crop',
-            features: ['L-Shape / U-Shape', 'Anti-Rayap (PVC/Blockboard)', 'Engsel Soft-close'],
+            features: 'L-Shape / U-Shape, Anti-Rayap (PVC/Blockboard), Engsel Soft-close',
         },
         {
             title: 'Lemari Pakaian Wardrobe',
             img: 'https://images.unsplash.com/photo-1595526114101-23da160c87ad?q=80&w=800&auto=format&fit=crop',
-            features: ['Full Plafon 3 Meter', 'Cermin Terintegrasi', 'LED Strip Sensor'],
+            features: 'Full Plafon 3 Meter, Cermin Terintegrasi, LED Strip Sensor',
         },
         {
             title: 'Meja Kerja & Belajar',
             img: 'https://images.unsplash.com/photo-1518455027359-f3f8164ba6bf?q=80&w=800&auto=format&fit=crop',
-            features: ['Ruang Penyimpanan', 'Cable Management', 'Desain Ergonomis'],
+            features: 'Ruang Penyimpanan, Cable Management, Desain Ergonomis',
         },
         {
             title: 'Kabinet Rak TV',
             img: 'https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=800&auto=format&fit=crop',
-            features: ['Floating Design', 'Hidden Storage', 'Back panel HPL'],
+            features: 'Floating Design, Hidden Storage, Back panel HPL',
         },
     ];
+
+    const products = (cmsData || []).length > 0 ? cmsData : defaultProducts;
 
     return (
         <section id="produk" className="py-24 bg-white">
@@ -48,15 +50,15 @@ export function Products() {
                             <div className="absolute inset-x-0 bottom-0 p-8 transform group-hover:-translate-y-4 transition-transform duration-500">
                                 <h3 className="text-2xl font-bold text-white mb-4">{p.title}</h3>
                                 <ul className="space-y-2 mb-6">
-                                    {p.features.map((feat, idx) => (
+                                    {(typeof p.features === 'string' ? p.features.split(',') : p.features || []).map((feat, idx) => (
                                         <li key={idx} className="flex items-center text-slate-300 font-medium text-sm gap-2 opacity-0 group-hover:opacity-100 transition-opacity" style={{ transitionDelay: `${idx * 100}ms` }}>
-                                            <CheckCircle2 size={16} className="text-teal-400" /> {feat}
+                                            <CheckCircle2 size={16} className="text-teal-400" /> {feat.trim()}
                                         </li>
                                     ))}
                                 </ul>
-                                <div className="flex items-center gap-2 cursor-pointer text-indigo-300 hover:text-indigo-200 uppercase text-sm font-bold tracking-wider">
+                                <Link to="/configurator" className="flex items-center gap-2 cursor-pointer text-indigo-300 hover:text-indigo-200 uppercase text-sm font-bold tracking-wider">
                                     Desain Sekarang &rarr;
-                                </div>
+                                </Link>
                             </div>
                         </div>
                     ))}
@@ -66,7 +68,8 @@ export function Products() {
     );
 }
 
-export function Technology() {
+export function Technology({ cmsData }) {
+    if (!cmsData) return null;
     return (
         <section id="teknologi" className="py-24 bg-slate-900 text-white relative overflow-hidden">
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-indigo-600/20 rounded-full blur-[120px] pointer-events-none"></div>
@@ -106,11 +109,11 @@ export function Technology() {
                     </div>
 
                     <h2 className="text-4xl md:text-5xl font-extrabold text-white leading-tight">
-                        Desain Sendiri dengan <span className="bg-clip-text text-transparent bg-gradient-to-r from-teal-400 to-indigo-400">Web Configurator</span> Modern
+                        {cmsData.title}
                     </h2>
 
                     <p className="text-lg text-slate-300 font-light leading-relaxed">
-                        Ucapkan selamat tinggal pada kesulitan menjelaskan ukuran atau model! Kami membangun alat Configurator visual yang memudahkan Anda:
+                        {cmsData.desc}
                     </p>
 
                     <div className="space-y-6 pt-4">

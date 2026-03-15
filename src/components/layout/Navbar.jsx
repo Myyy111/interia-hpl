@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ArrowRight } from 'lucide-react';
 
-export default function Navbar() {
+export default function Navbar({ contactData }) {
     const [isScrolled, setIsScrolled] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const location = useLocation();
@@ -108,6 +108,16 @@ export default function Navbar() {
                     >
                         Mulai Desain Sekarang <ArrowRight size={20} />
                     </Link>
+                    {contactData?.phone && (
+                        <a 
+                            href={`https://wa.me/${contactData.phone.replace(/[^0-9]/g, '')}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center justify-center gap-2 w-full py-4 border-2 border-slate-200 text-slate-700 rounded-xl font-bold"
+                        >
+                            Hubungi WhatsApp
+                        </a>
+                    )}
                 </div>
             )}
         </header>

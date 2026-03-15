@@ -1,8 +1,8 @@
 import React from 'react';
 import { Mail, Phone, MapPin, ArrowRight } from 'lucide-react';
 
-export function Blog({ cmsData }) {
-    const articles = cmsData || [
+export function Blog({ cmsData, contactData }) {
+    const defaultArticles = [
         {
             title: '5 Tips Memilih Material HPL untuk Dapur Minimalis',
             date: '12 Feb 2026',
@@ -23,6 +23,8 @@ export function Blog({ cmsData }) {
         },
     ];
 
+    const articles = (cmsData || []).length > 0 ? cmsData : defaultArticles;
+
     return (
         <section className="py-24 bg-white relative">
             <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -31,7 +33,10 @@ export function Blog({ cmsData }) {
                         <h2 className="text-4xl font-extrabold text-slate-900">Inspirasi & Edukasi</h2>
                         <p className="text-slate-500 font-light text-lg">Tips merawat dan ide desain dari arsitek kami.</p>
                     </div>
-                    <button className="flex items-center gap-2 font-bold text-teal-600 hover:text-indigo-600 transition-colors uppercase tracking-widest text-sm">
+                    <button 
+                        onClick={() => document.getElementById('kontak')?.scrollIntoView({ behavior: 'smooth' })}
+                        className="flex items-center gap-2 font-bold text-teal-600 hover:text-indigo-600 transition-colors uppercase tracking-widest text-sm"
+                    >
                         Lihat Blog Lainnya <ArrowRight size={16} />
                     </button>
                 </div>
@@ -48,10 +53,15 @@ export function Blog({ cmsData }) {
                             <div className="p-6">
                                 <h3 className="font-bold text-xl text-slate-900 mb-3 group-hover:text-teal-600 transition-colors">{a.title}</h3>
                                 <p className="text-slate-500 text-sm leading-relaxed mb-6 font-light">{a.desc}</p>
-                                <div className="text-sm font-bold text-indigo-600 uppercase tracking-widest cursor-pointer inline-flex items-center gap-2 group-hover:gap-3 transition-all">
+                                <a 
+                                    href={`https://wa.me/${contactData?.phone?.replace(/[^0-9]/g, '') || ''}?text=Halo Interia, saya ingin membaca lebih lanjut tentang artikel: ${a.title}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-sm font-bold text-indigo-600 uppercase tracking-widest cursor-pointer inline-flex items-center gap-2 group-hover:gap-3 transition-all"
+                                >
                                     Baca Selengkapnya
                                     <ArrowRight size={16} />
-                                </div>
+                                </a>
                             </div>
                         </article>
                     ))}

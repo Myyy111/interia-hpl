@@ -90,9 +90,14 @@ export function Portfolio({ cmsData }) {
                         <h2 className="text-4xl font-extrabold text-slate-900">Mahakarya Kami</h2>
                         <p className="text-slate-500 text-lg font-light">Eksplorasi estetika dan material dari klien sebelumnya.</p>
                     </div>
-                    <button className="px-6 py-3 border-2 border-slate-900 text-slate-900 hover:bg-slate-900 hover:text-white rounded-xl font-bold transition-colors">
+                    <a 
+                        href="https://instagram.com/interia_hpl" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="px-6 py-3 border-2 border-slate-900 text-slate-900 hover:bg-slate-900 hover:text-white rounded-xl font-bold transition-colors"
+                    >
                         Lihat Semua Foto (IG)
-                    </button>
+                    </a>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 auto-rows-[300px] gap-6">

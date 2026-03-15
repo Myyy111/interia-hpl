@@ -25,7 +25,11 @@ const defaultData = {
             subtitle: "Wujudkan ruangan impian Anda dengan Interia. Teknologi Configurator Cerdas kami membantu Anda merancang, mengestimasi harga, hingga memesan produksi ke workshop kami tanpa ribet."
         },
         about: {
-            description: "Workshop Interia tidak hanya mendesain; kami adalah eksekutor ahli dengan jam terbang ribuan jam di belakang mesin-mesin kayu. Spesialisasi kami adalah perpaduan antara gaya modern dengan kekuatan material yang tahan lama (Multiplek/Blockboard grade A)."
+            description: "Workshop Interia tidak hanya mendesain; kami adalah eksekutor ahli dengan jam terbang ribuan jam di belakang mesin-mesin kayu. Spesialisasi kami adalah perpaduan antara gaya modern dengan kekuatan material yang tahan lama (Multiplek/Blockboard grade A).",
+            badgeValue: '5+',
+            badgeTitle: 'Tahun Pengalaman',
+            badgeSub: 'Workshop Produksi Sendiri',
+            img: 'https://images.unsplash.com/photo-1540932239986-30128078f3d5?q=80&w=1200&auto=format&fit=crop'
         },
         contact: {
             phone: "+62 812 3456 7890",
@@ -65,6 +69,21 @@ const defaultData = {
             { img: 'https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?q=80&w=800&auto=format&fit=crop', title: 'Cozy Living Area' },
             { img: 'https://images.unsplash.com/photo-1595522904535-ba2c628e93ad?q=80&w=800&auto=format&fit=crop', title: 'Master Bedroom Wardrobe' },
             { img: 'https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?q=80&w=1200&auto=format&fit=crop', title: 'Open Space TV Setup' }
+        ],
+        products: [
+            { title: 'Kitchen Set Minimalis', img: 'https://images.unsplash.com/photo-1556910103-1c02745a8289?q=80&w=800&auto=format&fit=crop', features: 'L-Shape / U-Shape, Anti-Rayap, Engsel Soft-close' },
+            { title: 'Lemari Pakaian Wardrobe', img: 'https://images.unsplash.com/photo-1595526114101-23da160c87ad?q=80&w=800&auto=format&fit=crop', features: 'Full Plafon 3 Meter, Cermin Terintegrasi, LED Strip' },
+            { title: 'Meja Kerja & Belajar', img: 'https://images.unsplash.com/photo-1518455027359-f3f8164ba6bf?q=80&w=800&auto=format&fit=crop', features: 'Ruang Penyimpanan, Cable Management, Ergonomis' },
+            { title: 'Kabinet Rak TV', img: 'https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=800&auto=format&fit=crop', features: 'Floating Design, Hidden Storage, Back panel HPL' }
+        ],
+        tech: {
+            title: "Desain Sendiri dengan Web Configurator Modern",
+            desc: "Ucapkan selamat tinggal pada kesulitan menjelaskan ukuran atau model! Kami membangun alat Configurator visual yang memudahkan Anda."
+        },
+        articles: [
+            { title: '5 Tips Memilih Material HPL', date: '12 Feb 2026', img: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?q=80&w=600&auto=format&fit=crop', desc: 'Pelajari karakter masing-masing pelapis kayu agar awet puluhan tahun...' },
+            { title: 'Warna Interior Paling Dicari', date: '08 Feb 2026', img: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?q=80&w=600&auto=format&fit=crop', desc: 'Dari Sage Green hingga warna-warna earth tone yang menenangkan...' },
+            { title: 'Perbedaan Multiplek vs Blockboard', date: '24 Jan 2026', img: 'https://images.unsplash.com/photo-1540518614846-7eded433c457?q=80&w=600&auto=format&fit=crop', desc: 'Sebelum membuat lemari custom, kenali jenis kayu inti terbaik untuk budget Anda.' }
         ]
     },
     orders: []

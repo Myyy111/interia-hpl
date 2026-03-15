@@ -2,7 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { MapPin, Phone, Mail, Instagram, Facebook, Twitter } from 'lucide-react';
 
-export default function Footer() {
+export default function Footer({ contactData }) {
+    const phone = contactData?.phone || '+62 812-3456-7890';
+    const email = contactData?.email || 'hello@interia.com';
     return (
         <footer className="bg-slate-900 text-slate-300 pt-16 pb-8 border-t border-slate-800">
             <div className="max-w-7xl mx-auto px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
@@ -69,11 +71,11 @@ export default function Footer() {
                         </li>
                         <li className="flex gap-3 text-sm items-center">
                             <Phone size={18} className="text-indigo-400 shrink-0" />
-                            <span>+62 812-3456-7890</span>
+                            <span>{phone}</span>
                         </li>
                         <li className="flex gap-3 text-sm items-center">
                             <Mail size={18} className="text-indigo-400 shrink-0" />
-                            <span>hello@interia.com</span>
+                            <span>{email}</span>
                         </li>
                     </ul>
                 </div>

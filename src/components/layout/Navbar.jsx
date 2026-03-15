@@ -47,7 +47,7 @@ export default function Navbar({ contactData }) {
                 {/* Logo */}
                 <Link to="/" className="flex items-center gap-3 group">
                     <img src="/brand/logo-icon.jpg" alt="Afandi Interior Logo" className="w-10 h-10 object-cover rounded-lg" />
-                    <img src="/brand/logo-text.jpg" alt="Afandi Interior Text Logo" className="h-[46px] object-contain rounded-lg p-1 bg-white" />
+                    <span className={`text-2xl font-bold tracking-tight transition-colors duration-300 ${logoTextColor}`}>Afandi Interior</span>
                 </Link>
 
                 {/* Desktop Nav */}

@@ -46,7 +46,7 @@ export default function Navbar({ contactData }) {
 
                 {/* Logo */}
                 <Link to="/" className="flex items-center gap-3 group">
-                    <img src="/brand/logo-icon.png" alt="Afandi Interior Logo" className="w-14 h-14 object-contain drop-shadow-md" />
+                    <img src={isScrolled ? "/brand/logo-icon-dark.png" : "/brand/logo-icon-light.png"} alt="Afandi Interior Logo" className="w-14 h-14 object-contain drop-shadow-md transition-all duration-300" />
                     <div className="flex flex-col items-start ml-1 mt-1">
                         <span className={`font-['Playfair_Display'] text-[34px] font-bold leading-[0.85] transition-colors duration-300 ${isScrolled ? 'text-[#b08d57]' : 'text-white'}`}>Afandi</span>
                         <span className={`font-['Cinzel'] text-[11px] mt-1.5 tracking-[0.38em] font-bold transition-colors duration-300 ${isScrolled ? 'text-[#4a423e]' : 'text-slate-300'}`}>INTERIOR</span>

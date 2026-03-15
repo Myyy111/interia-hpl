@@ -6,7 +6,7 @@ export default function Hero({ cmsData }) {
     if (!cmsData) return null;
 
     return (
-        <section className="relative min-h-screen flex items-center pt-24 pb-20 justify-center bg-slate-900 overflow-hidden">
+        <section className="relative min-h-screen flex items-center pt-40 pb-20 lg:pt-32 justify-center bg-slate-900 overflow-hidden">
             {/* Background Image & Overlay */}
             <div className="absolute inset-0 z-0 text-white flex justify-center items-center overflow-hidden">
                 <img

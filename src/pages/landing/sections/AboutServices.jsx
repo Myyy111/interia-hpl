@@ -13,7 +13,7 @@ export function About({ cmsData }) {
                         Lebih Dari Sekadar Furniture
                     </div>
                     <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 leading-tight">
-                        Interia: Kombinasi <br /> <span className="text-indigo-600">Seni Desain</span> & <span className="text-teal-500">Keahlian</span>
+                        Afandi Interior: Kombinasi <br /> <span className="text-indigo-600">Seni Desain</span> & <span className="text-teal-500">Keahlian</span>
                     </h2>
                     <p className="text-lg text-slate-600 leading-relaxed font-light">
                         {cmsData.description}
@@ -40,7 +40,7 @@ export function About({ cmsData }) {
                     <img
                         src={cmsData.img || "https://images.unsplash.com/photo-1540932239986-30128078f3d5?q=80&w=1200&auto=format&fit=crop"}
                         className="w-full rounded-2xl shadow-xl border-4 border-white transform md:-rotate-3 hover:rotate-0 transition-transform duration-500"
-                        alt="Tim Workshop Interia"
+                        alt="Tim Workshop Afandi Interior"
                     />
                     <div className="absolute -bottom-10 -left-10 bg-white p-6 rounded-2xl shadow-2xl animate-float border border-slate-100">
                         <div className="flex items-center gap-4">
@@ -92,7 +92,7 @@ export function Services({ cmsData }) {
         <section id="layanan" className="py-24 bg-slate-50 relative">
             <div className="max-w-7xl mx-auto px-6 lg:px-8">
                 <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-                    <div className="text-sm font-bold text-indigo-600 uppercase tracking-[0.2em]">Layanan Interia</div>
+                    <div className="text-sm font-bold text-indigo-600 uppercase tracking-[0.2em]">Layanan Afandi Interior</div>
                     <h2 className="text-4xl font-extrabold text-slate-900">Spesialisasi Kami</h2>
                 </div>
 
@@ -106,7 +106,7 @@ export function Services({ cmsData }) {
                             <p className="text-slate-500 leading-relaxed font-light flex-1">{s.desc}</p>
 
                             <a 
-                                href={`https://wa.me/${cmsData?.phone?.replace(/[^0-9]/g, '') || ''}?text=Halo Interia, saya ingin bertanya tentang ${s.title}`}
+                                href={`https://wa.me/${cmsData?.phone?.replace(/[^0-9]/g, '') || ''}?text=Halo Afandi Interior, saya ingin bertanya tentang ${s.title}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="mt-8 flex items-center text-sm font-bold text-indigo-600 group-hover:text-indigo-800 uppercase tracking-widest gap-2"

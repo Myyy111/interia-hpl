@@ -22,10 +22,10 @@ const defaultData = {
     settings: {
         hero: {
             title: "Estetika Modern,\nPresisi Sempurna.",
-            subtitle: "Wujudkan ruangan impian Anda dengan Interia. Teknologi Configurator Cerdas kami membantu Anda merancang, mengestimasi harga, hingga memesan produksi ke workshop kami tanpa ribet."
+            subtitle: "Wujudkan ruangan impian Anda dengan Afandi Interior. Teknologi Configurator Cerdas kami membantu Anda merancang, mengestimasi harga, hingga memesan produksi ke workshop kami tanpa ribet."
         },
         about: {
-            description: "Workshop Interia tidak hanya mendesain; kami adalah eksekutor ahli dengan jam terbang ribuan jam di belakang mesin-mesin kayu. Spesialisasi kami adalah perpaduan antara gaya modern dengan kekuatan material yang tahan lama (Multiplek/Blockboard grade A).",
+            description: "Workshop Afandi Interior tidak hanya mendesain; kami adalah eksekutor ahli dengan jam terbang ribuan jam di belakang mesin-mesin kayu. Spesialisasi kami adalah perpaduan antara gaya modern dengan kekuatan material yang tahan lama (Multiplek/Blockboard grade A).",
             badgeValue: '5+',
             badgeTitle: 'Tahun Pengalaman',
             badgeSub: 'Workshop Produksi Sendiri',
@@ -33,14 +33,14 @@ const defaultData = {
         },
         contact: {
             phone: "+62 812 3456 7890",
-            email: "hello@interia.com",
+            email: "hello@afandi-interior.com",
             mapUrl: ""
         },
         faqs: [
             { q: 'Apakah harga di Configurator sudah termasuk pemasangan?', a: 'Ya, harga yang muncul di estimator sudah mencakup material, pengerjaan di workshop, dan jasa instalasi perakitan di rumah Anda.' },
             { q: 'Berapa lama proses pembuatan Kitchen Set?', a: 'Setelah Desain & Survey final, waktu pengerjaan di workshop kami rata-rata memakan waktu 2 hingga 3 minggu tergantung tingkat kesulitan dan aksesoris yang dipilih.' },
             { q: 'Saya punya gambar desain 3D sendiri, bisakah diproduksi?', a: 'Tentu bisa! Silakan upload gambar referensi Anda di tahapan konfigurator, dan tim kami akan menghubungi untuk penyesuaian detail bahan.' },
-            { q: 'Apakah Interia melayani luar kota?', a: 'Saat ini workshop kami melayani area Jabodetabek. Untuk di luar kota, silakan hubungi WhatsApp kami untuk negosiasi biaya transport tim instalasi.' }
+            { q: 'Apakah Afandi Interior melayani luar kota?', a: 'Saat ini workshop kami melayani area Jabodetabek. Untuk di luar kota, silakan hubungi WhatsApp kami untuk negosiasi biaya transport tim instalasi.' }
         ],
         testimonials: [
             { text: "Sangat terbantu dengan aplikasinya! Saya bisa coba-coba desain lemari dan langsung lihat harganya tanpa harus bolak-balik nanya admin.", name: "Rudi Hartono", loc: "Jakarta Selatan" },
@@ -60,7 +60,7 @@ const defaultData = {
         ],
         howItWorks: [
             { title: 'Online Configurator', desc: 'Pilih jenis perabot, masukkan ukuran dinding/ruangan secara instan, dan lihat harga estimasinya.' },
-            { title: 'Survey Lokasi', desc: 'Tim ukur profesional Interia akan datang mensurvey ruang Anda untuk sinkronisasi layout.' },
+            { title: 'Survey Lokasi', desc: 'Tim ukur profesional Afandi Interior akan datang mensurvey ruang Anda untuk sinkronisasi layout.' },
             { title: 'Produksi Workshop', desc: 'Pengerjaan 1-3 minggu di fasilitas mandiri (workshop kami) dengan material custom.' },
             { title: 'Instalasi', desc: 'Pemasangan rapi dan cepat minimal debu. Ruangan baru Anda siap digunakan.' }
         ],

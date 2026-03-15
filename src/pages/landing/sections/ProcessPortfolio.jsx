@@ -12,7 +12,7 @@ export function HowItWorks({ cmsData }) {
         {
             icon: <CalendarCheck className="w-8 h-8 text-white group-hover:scale-110 transition-transform" />,
             title: 'Survey Lokasi',
-            desc: 'Tim ukur profesional Interia akan datang mensurvey ruang Anda untuk sinkronisasi layout.',
+            desc: 'Tim ukur profesional Afandi Interior akan datang mensurvey ruang Anda untuk sinkronisasi layout.',
             color: 'bg-teal-500',
         },
         {
@@ -91,7 +91,7 @@ export function Portfolio({ cmsData }) {
                         <p className="text-slate-500 text-lg font-light">Eksplorasi estetika dan material dari klien sebelumnya.</p>
                     </div>
                     <a 
-                        href="https://instagram.com/interia_hpl" 
+                        href="https://instagram.com/afandi_interior" 
                         target="_blank" 
                         rel="noopener noreferrer"
                         className="px-6 py-3 border-2 border-slate-900 text-slate-900 hover:bg-slate-900 hover:text-white rounded-xl font-bold transition-colors"

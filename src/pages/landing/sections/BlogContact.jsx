@@ -54,7 +54,7 @@ export function Blog({ cmsData, contactData }) {
                                 <h3 className="font-bold text-xl text-slate-900 mb-3 group-hover:text-teal-600 transition-colors">{a.title}</h3>
                                 <p className="text-slate-500 text-sm leading-relaxed mb-6 font-light">{a.desc}</p>
                                 <a 
-                                    href={`https://wa.me/${contactData?.phone?.replace(/[^0-9]/g, '') || ''}?text=Halo Interia, saya ingin membaca lebih lanjut tentang artikel: ${a.title}`}
+                                    href={`https://wa.me/${contactData?.phone?.replace(/[^0-9]/g, '') || ''}?text=Halo Afandi Interior, saya ingin membaca lebih lanjut tentang artikel: ${a.title}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="text-sm font-bold text-indigo-600 uppercase tracking-widest cursor-pointer inline-flex items-center gap-2 group-hover:gap-3 transition-all"
@@ -122,9 +122,9 @@ export function Contact({ cmsData }) {
                     <div className="bg-slate-800 rounded-3xl p-6 border-2 border-slate-700 shadow-2xl relative">
                         <div className="absolute top-8 left-8 bg-white/95 backdrop-blur-md p-4 rounded-xl shadow-lg z-10 hidden md:block border border-slate-200">
                             <div className="flex items-center gap-3 mb-2">
-                                <div className="w-8 h-8 rounded-full bg-indigo-600 text-white font-bold flex flex-col items-center justify-center text-xs">IN</div>
+                                <img src="/brand/logo-icon.jpg" alt="Icon" className="w-8 h-8 rounded-full object-cover" />
                                 <div>
-                                    <h5 className="font-bold text-slate-900 leading-none">Interia Workshop</h5>
+                                    <h5 className="font-bold text-slate-900 leading-none">Afandi Interior Workshop</h5>
                                     <p className="text-[10px] text-slate-500">Jakarta Selatan</p>
                                 </div>
                             </div>

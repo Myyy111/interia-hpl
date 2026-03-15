@@ -8,7 +8,7 @@ export function Team({ cmsData }) {
         <section className="py-24 bg-white">
             <div className="max-w-7xl mx-auto px-6 lg:px-8">
                 <div className="text-center mb-16 space-y-4">
-                    <div className="text-sm font-bold text-teal-600 uppercase tracking-widest">Orang-Orang Hebat di Balik Interia</div>
+                    <div className="text-sm font-bold text-teal-600 uppercase tracking-widest">Orang-Orang Hebat di Balik Afandi Interior</div>
                     <h2 className="text-4xl font-extrabold text-slate-900">Tim Profesional Kami</h2>
                 </div>
 

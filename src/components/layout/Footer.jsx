@@ -4,7 +4,7 @@ import { MapPin, Phone, Mail, Instagram, Facebook, Twitter } from 'lucide-react'
 
 export default function Footer({ contactData }) {
     const phone = contactData?.phone || '+62 812-3456-7890';
-    const email = contactData?.email || 'hello@interia.com';
+    const email = contactData?.email || 'hello@afandi-interior.com';
     return (
         <footer className="bg-slate-900 text-slate-300 pt-16 pb-8 border-t border-slate-800">
             <div className="max-w-7xl mx-auto px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
@@ -12,13 +12,10 @@ export default function Footer({ contactData }) {
                 {/* Brand */}
                 <div className="space-y-6">
                     <Link to="/" className="flex items-center gap-3 group inline-flex mb-4">
-                        <div className="w-10 h-10 bg-indigo-600 flex items-center justify-center font-bold text-lg rounded-tl-xl rounded-br-xl rounded-tr-sm rounded-bl-sm text-white transition-all transform group-hover:rotate-12 group-hover:rounded-xl">
-                            IN
-                        </div>
-                        <span className="text-2xl font-bold tracking-tight text-white">Interia</span>
+                        <img src="/brand/logo-full.jpg" alt="Afandi Interior Logo" className="h-20 object-contain rounded-lg bg-white p-1" />
                     </Link>
                     <p className="text-sm leading-relaxed text-slate-400">
-                        Perusahaan desain dan produksi interior modern. Kami memadukan estetika premium dengan teknologi configurator untuk mewujudkan ruang impian Anda secara nyata dan presisi.
+                        Afandi Interior: Spesialis desain dan produksi interior premium. Kami memadukan estetika mewah dengan teknologi configurator untuk mewujudkan ruang impian Anda secara nyata dan presisi.
                     </p>
                     <div className="flex gap-4">
                         <a href="#" className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-indigo-600 hover:text-white transition-all shadow-md">
@@ -54,7 +51,7 @@ export default function Footer({ contactData }) {
                     <ul className="space-y-3">
                         <li><a href="#tentang" className="text-sm hover:text-indigo-400 transition-colors flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-slate-700"></span> Tentang Kami</a></li>
                         <li><a href="#portfolio" className="text-sm hover:text-indigo-400 transition-colors flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-slate-700"></span> Portfolio</a></li>
-                        <li><a href="#teknologi" className="text-sm hover:text-indigo-400 transition-colors flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-slate-700"></span> Teknologi Interia</a></li>
+                        <li><a href="#teknologi" className="text-sm hover:text-indigo-400 transition-colors flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-slate-700"></span> Teknologi Afandi</a></li>
                         <li><a href="#faq" className="text-sm hover:text-indigo-400 transition-colors flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-slate-700"></span> FAQ</a></li>
                     </ul>
                 </div>
@@ -84,7 +81,7 @@ export default function Footer({ contactData }) {
 
             <div className="max-w-7xl mx-auto px-6 lg:px-8 border-t border-slate-800 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
                 <p className="text-xs text-slate-500">
-                    &copy; {new Date().getFullYear()} Interia by WorkshopPro. All rights reserved.
+                    &copy; {new Date().getFullYear()} Afandi Interior. All rights reserved.
                 </p>
                 <div className="flex gap-6 text-xs text-slate-500">
                     <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>

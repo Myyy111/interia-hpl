@@ -105,7 +105,7 @@ export function Technology({ cmsData }) {
 
                 <div className="flex-1 space-y-8 order-1 md:order-2">
                     <div className="inline-flex items-center gap-2 text-indigo-400 font-bold tracking-widest uppercase text-sm bg-indigo-900/40 px-4 py-2 rounded-full border border-indigo-500/30">
-                        <Laptop size={16} /> Teknologi Interia
+                        <Laptop size={16} /> Teknologi Afandi Interior
                     </div>
 
                     <h2 className="text-4xl md:text-5xl font-extrabold text-white leading-tight">

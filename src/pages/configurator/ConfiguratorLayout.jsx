@@ -116,7 +116,7 @@ export default function ConfiguratorLayout() {
                     </div>
                     <h1 className="text-3xl font-bold text-slate-800">Pesanan Berhasil!</h1>
                     <p className="text-slate-600 text-lg">
-                        Terima kasih! Permintaan produksi custom furniture Anda telah kami terima. Tim workshop kami akan segera menghubungi Anda via WhatsApp untuk jadwal survey & konfirmasi desain.
+                        Terima kasih! Permintaan produksi custom furniture Anda telah kami terima. Tim workshop Afandi Interior akan segera menghubungi Anda via WhatsApp untuk jadwal survey & konfirmasi desain.
                     </p>
                     <button
                         onClick={() => window.location.reload()}
@@ -144,8 +144,8 @@ export default function ConfiguratorLayout() {
             <header className="bg-white/90 backdrop-blur-md border-b border-slate-200 sticky top-0 z-40 shadow-sm transition-all">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 rounded-lg bg-teal-600 flex items-center justify-center text-white font-bold shadow-sm">IN</div>
-                        <span className="text-xl font-bold text-slate-800 tracking-tight hidden sm:block">Interia<span className="text-teal-600">Pro</span></span>
+                        <img src="/brand/logo-icon.jpg" alt="Icon" className="w-8 h-8 rounded-lg object-cover shadow-sm" />
+                        <span className="text-xl font-bold text-slate-800 tracking-tight hidden sm:block">Afandi<span className="text-teal-600">Interior</span></span>
                     </div>
                     <div className="hidden md:flex items-center space-x-1 flex-1 justify-center max-w-2xl mx-8">
                         {STEPS.map((step, idx) => (

@@ -46,10 +46,8 @@ export default function Navbar({ contactData }) {
 
                 {/* Logo */}
                 <Link to="/" className="flex items-center gap-3 group">
-                    <div className={`w-10 h-10 flex items-center justify-center font-bold text-lg rounded-tl-xl rounded-br-xl rounded-tr-sm rounded-bl-sm transition-all duration-300 ${isScrolled ? 'bg-slate-900 text-white group-hover:bg-indigo-600' : 'bg-white text-slate-900'}`}>
-                        IN
-                    </div>
-                    <span className={`text-2xl font-bold tracking-tight transition-colors duration-300 ${logoTextColor}`}>Interia</span>
+                    <img src="/brand/logo-icon.jpg" alt="Afandi Interior Logo" className="w-10 h-10 object-cover rounded-lg" />
+                    <span className={`text-2xl font-bold tracking-tight transition-colors duration-300 ${logoTextColor}`}>Afandi Interior</span>
                 </Link>
 
                 {/* Desktop Nav */}

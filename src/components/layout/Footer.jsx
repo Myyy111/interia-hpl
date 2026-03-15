@@ -12,7 +12,7 @@ export default function Footer({ contactData }) {
                 {/* Brand */}
                 <div className="space-y-6">
                     <Link to="/" className="flex items-center gap-3 group inline-flex mb-4">
-                        <img src="/brand/logo-icon.jpg" alt="Afandi Interior Icon" className="w-16 h-16 object-contain rounded-2xl shadow-lg" />
+                        <img src="/brand/logo-icon.png" alt="Afandi Interior Icon" className="w-16 h-16 object-contain drop-shadow-md" />
                         <div className="flex flex-col items-start ml-1 mt-1">
                             <span className="font-['Playfair_Display'] text-[40px] font-bold leading-[0.85] text-white">Afandi</span>
                             <span className="font-['Cinzel'] text-[13px] mt-1.5 tracking-[0.38em] font-bold text-slate-400">INTERIOR</span>

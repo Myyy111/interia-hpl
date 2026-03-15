@@ -122,7 +122,7 @@ export function Contact({ cmsData }) {
                     <div className="bg-slate-800 rounded-3xl p-6 border-2 border-slate-700 shadow-2xl relative">
                         <div className="absolute top-8 left-8 bg-white/95 backdrop-blur-md p-4 rounded-xl shadow-lg z-10 hidden md:block border border-slate-200">
                             <div className="flex items-center gap-3 mb-2">
-                                <img src="/brand/logo-icon.jpg" alt="Icon" className="w-8 h-8 rounded-full object-cover" />
+                                <img src="/brand/logo-icon.png" alt="Icon" className="w-8 h-8 object-contain drop-shadow-sm" />
                                 <div>
                                     <h5 className="font-bold text-slate-900 leading-none">Afandi Interior Workshop</h5>
                                     <p className="text-[10px] text-slate-500">Jakarta Selatan</p>

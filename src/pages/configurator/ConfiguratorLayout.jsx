@@ -145,7 +145,10 @@ export default function ConfiguratorLayout() {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
                     <div className="flex items-center gap-2">
                         <img src="/brand/logo-icon.jpg" alt="Icon" className="w-8 h-8 rounded-lg object-cover shadow-sm" />
-                        <span className="text-xl font-bold text-slate-800 tracking-tight hidden sm:block">Afandi<span className="text-teal-600">Interior</span></span>
+                        <div className="hidden sm:flex flex-col items-center ml-1 mt-1">
+                            <span className="font-['Great_Vibes'] text-3xl leading-[0.8] text-[#b08d57] pr-1">Afandi</span>
+                            <span className="font-['Cinzel'] text-[9px] mt-1 tracking-[0.28em] font-bold pl-1 text-[#4a423e]">INTERIOR</span>
+                        </div>
                     </div>
                     <div className="hidden md:flex items-center space-x-1 flex-1 justify-center max-w-2xl mx-8">
                         {STEPS.map((step, idx) => (

@@ -47,7 +47,10 @@ export default function Navbar({ contactData }) {
                 {/* Logo */}
                 <Link to="/" className="flex items-center gap-3 group">
                     <img src="/brand/logo-icon.jpg" alt="Afandi Interior Logo" className="w-10 h-10 object-cover rounded-lg" />
-                    <span className={`text-2xl font-bold tracking-tight transition-colors duration-300 ${logoTextColor}`}>Afandi Interior</span>
+                    <div className="flex flex-col items-center ml-1 mt-1">
+                        <span className={`font-['Great_Vibes'] text-4xl leading-[0.8] transition-colors duration-300 ${isScrolled ? 'text-[#b08d57]' : 'text-white'} pr-1`}>Afandi</span>
+                        <span className={`font-['Cinzel'] text-[10px] mt-1 tracking-[0.28em] font-bold pl-1 transition-colors duration-300 ${isScrolled ? 'text-[#4a423e]' : 'text-white/90'}`}>INTERIOR</span>
+                    </div>
                 </Link>
 
                 {/* Desktop Nav */}

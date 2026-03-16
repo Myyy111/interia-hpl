@@ -5,16 +5,21 @@ export default function RoomPreview2D({ config }) {
 
     // Calculate SVG ViewBox dynamically to fit room and keep it proportional
     const bounds = useMemo(() => {
-        let maxWidth = room.width || 300;
-        let maxLength = room.length || 300;
+        const w = (room.width || 300);
+        const l = (room.length || 300);
+        
+        let maxWidth = w;
+        let maxLength = l;
 
         if (room.shape === 'L-shape') {
-            maxWidth = Math.max(room.width, room.LSide || 0); // rough bounding box
+            maxWidth = Math.max(w, room.LSide || 0);
+            maxLength = l * 1.5;
         } else if (room.shape === 'U-shape') {
-            maxWidth = Math.max(room.width, (room.USideL || 0) + (room.USideR || 0)); // rough
+            maxWidth = (room.USideL || 150) + w + (room.USideR || 150);
+            maxLength = l + 150;
         }
 
-        const margin = 50;
+        const margin = 60;
         return `-${margin} -${margin} ${maxWidth + margin * 2} ${maxLength + margin * 2}`;
     }, [room]);
 
@@ -82,17 +87,17 @@ export default function RoomPreview2D({ config }) {
             </div>
 
             <div className="mt-4 grid grid-cols-3 gap-2 text-center">
-                <div className="bg-slate-50 p-2 rounded-lg">
-                    <div className="text-[10px] text-slate-400 font-bold uppercase">Panjang</div>
-                    <div className="font-semibold text-slate-700">{room.length || 0} cm</div>
+                <div className="bg-slate-50 p-2 rounded-lg border border-slate-100">
+                    <div className="text-[10px] text-slate-400 font-bold uppercase tracking-tighter">Panjang</div>
+                    <div className="font-bold text-slate-700 text-xs sm:text-sm">{room.length || 0} cm</div>
                 </div>
-                <div className="bg-slate-50 p-2 rounded-lg">
-                    <div className="text-[10px] text-slate-400 font-bold uppercase">Lebar</div>
-                    <div className="font-semibold text-slate-700">{room.width || 0} cm</div>
+                <div className="bg-slate-50 p-2 rounded-lg border border-slate-100">
+                    <div className="text-[10px] text-slate-400 font-bold uppercase tracking-tighter">Lebar</div>
+                    <div className="font-bold text-slate-700 text-xs sm:text-sm">{room.width || 0} cm</div>
                 </div>
-                <div className="bg-slate-50 p-2 rounded-lg">
-                    <div className="text-[10px] text-slate-400 font-bold uppercase">Area</div>
-                    <div className="font-semibold text-slate-700">{((room.length || 0) * (room.width || 0) / 10000).toFixed(1)} m²</div>
+                <div className="bg-slate-50 p-2 rounded-lg border border-slate-100">
+                    <div className="text-[10px] text-slate-400 font-bold uppercase tracking-tighter">Volume</div>
+                    <div className="font-bold text-teal-600 text-xs sm:text-sm">{((room.length || 0) * (room.width || 0) * (room.height || 0) / 1000000).toFixed(2)} m³</div>
                 </div>
             </div>
         </div>

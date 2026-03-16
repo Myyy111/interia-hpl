@@ -42,7 +42,13 @@ export default function ConfiguratorLayout() {
     }, []);
 
     const updateConfig = (section, data) => {
-        setConfig(prev => ({ ...prev, [section]: { ...prev[section], ...data } }));
+        setConfig(prev => {
+            const current = prev[section];
+            if (Array.isArray(current)) {
+                return { ...prev, [section]: data };
+            }
+            return { ...prev, [section]: { ...current, ...data } };
+        });
     };
 
     const setConfigDirect = (section, data) => {
@@ -224,11 +230,11 @@ export default function ConfiguratorLayout() {
             </main>
 
             {/* Mobile Sticky Bottom Bar Navigation & Price */}
-            <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 p-4 pb-safe z-50 shadow-[0_-10px_40px_rgba(0,0,0,0.1)] flex items-center justify-between gap-4">
+            <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 p-4 pb-safe z-50 shadow-[0_-15px_40px_rgba(0,0,0,0.1)] flex items-center justify-between gap-4">
                 <div className="flex flex-col">
-                    <span className="text-[10px] uppercase font-bold text-slate-500 tracking-wider">Estimasi Harga</span>
+                    <span className="text-[10px] uppercase font-bold text-slate-500 tracking-wider">Estimasi Biaya</span>
                     <span className="text-xl font-black text-indigo-700 leading-none mt-1">
-                        Rp {estimatePrice() > 0 ? (estimatePrice() / 1000000).toFixed(1) + ' Jt' : '0'}
+                        Rp {estimatePrice() > 0 ? estimatePrice().toLocaleString('id-ID') : '0'}
                     </span>
                 </div>
 

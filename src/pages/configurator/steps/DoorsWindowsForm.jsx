@@ -26,13 +26,13 @@ export default function DoorsWindowsForm({ config, updateConfig }) {
                     onClick={() => addFixture('door')}
                     className="flex-1 border-2 border-indigo-500 text-indigo-700 bg-indigo-50 hover:bg-indigo-100 hover:scale-[1.02] py-4 rounded-xl font-bold flex items-center justify-center gap-2 transition-all shadow-sm"
                 >
-                    <Plus size={20} /> + Tambah Pintu
+                    <Plus size={20} /> Tambah Pintu
                 </button>
                 <button
                     onClick={() => addFixture('window')}
                     className="flex-1 border-2 border-teal-500 text-teal-700 bg-teal-50 hover:bg-teal-100 hover:scale-[1.02] py-4 rounded-xl font-bold flex items-center justify-center gap-2 transition-all shadow-sm"
                 >
-                    <Plus size={20} /> + Tambah Jendela
+                    <Plus size={20} /> Tambah Jendela
                 </button>
             </div>
 

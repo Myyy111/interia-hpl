@@ -7,6 +7,9 @@ import AdminDashboard from './admin/AdminDashboard';
 import AdminOrders from './admin/AdminOrders';
 import AdminProducts from './admin/AdminProducts';
 import AdminSettings from './admin/AdminSettings';
+import CMSGeneral from './admin/cms/CMSGeneral';
+import CMSCatalog from './admin/cms/CMSCatalog';
+import CMSCommunity from './admin/cms/CMSCommunity';
 
 function App() {
   return (
@@ -23,7 +26,11 @@ function App() {
           <Route index element={<AdminDashboard />} />
           <Route path="orders" element={<AdminOrders />} />
           <Route path="products" element={<AdminProducts />} />
-          <Route path="settings" element={<AdminSettings />} />
+          <Route path="settings" element={<AdminSettings />}>
+            <Route index element={<CMSGeneral />} />
+            <Route path="catalog" element={<CMSCatalog />} />
+            <Route path="community" element={<CMSCommunity />} />
+          </Route>
         </Route>
       </Routes>
     </Router>

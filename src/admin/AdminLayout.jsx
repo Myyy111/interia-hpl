@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, ShoppingCart, Package, Settings, LogOut } from 'lucide-react';
+import { LayoutDashboard, ShoppingCart, Package, Settings, LogOut, ChevronDown } from 'lucide-react';
 import AdminLogin from './AdminLogin';
 
 const AdminLayout = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+    const [showSettingsDropdown, setShowSettingsDropdown] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -51,10 +52,34 @@ const AdminLayout = () => {
                         <Package size={20} />
                         <span>Produk & Harga</span>
                     </NavLink>
-                    <NavLink to="/admin/settings" className={({ isActive }) => `flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${isActive ? 'bg-teal-500/10 text-teal-400' : 'text-slate-400 hover:text-white hover:bg-slate-800'}`}>
-                        <Settings size={20} />
-                        <span>Pengaturan Web</span>
-                    </NavLink>
+
+                    {/* Dropdown Pengaturan Web */}
+                    <div className="pt-2">
+                        <button 
+                            onClick={() => setShowSettingsDropdown(!showSettingsDropdown)}
+                            className={`w-full flex items-center justify-between px-4 py-3 rounded-lg text-sm font-medium transition-colors ${showSettingsDropdown ? 'text-white' : 'text-slate-400 hover:text-white hover:bg-slate-800'}`}
+                        >
+                            <div className="flex items-center space-x-3">
+                                <Settings size={20} />
+                                <span>Pengaturan Web</span>
+                            </div>
+                            <ChevronDown size={16} className={`transform transition-transform ${showSettingsDropdown ? 'rotate-180' : ''}`} />
+                        </button>
+                        
+                        {showSettingsDropdown && (
+                            <div className="mt-2 ml-4 pl-4 border-l border-slate-800 space-y-1">
+                                <NavLink to="/admin/settings" end className={({ isActive }) => `block px-4 py-2 rounded-lg text-xs font-medium transition-colors ${isActive ? 'text-teal-400 bg-teal-500/5' : 'text-slate-500 hover:text-slate-300'}`}>
+                                    Umum & Hero
+                                </NavLink>
+                                <NavLink to="/admin/settings/catalog" className={({ isActive }) => `block px-4 py-2 rounded-lg text-xs font-medium transition-colors ${isActive ? 'text-teal-400 bg-teal-500/5' : 'text-slate-500 hover:text-slate-300'}`}>
+                                    Katalog & Portofolio
+                                </NavLink>
+                                <NavLink to="/admin/settings/community" className={({ isActive }) => `block px-4 py-2 rounded-lg text-xs font-medium transition-colors ${isActive ? 'text-teal-400 bg-teal-500/5' : 'text-slate-500 hover:text-slate-300'}`}>
+                                    Tim & Testimoni
+                                </NavLink>
+                            </div>
+                        )}
+                    </div>
                 </nav>
             </aside>
 

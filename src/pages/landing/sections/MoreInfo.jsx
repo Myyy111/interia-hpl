@@ -12,15 +12,15 @@ export function Team({ cmsData }) {
                     <h2 className="text-4xl font-extrabold text-slate-900">Tim Profesional Kami</h2>
                 </div>
 
-                <div className="flex md:grid md:grid-cols-3 gap-8 overflow-x-auto md:overflow-visible pb-8 md:pb-0 snap-x snap-mandatory hide-scrollbar">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8">
                     {members.map((m, i) => (
-                        <div key={i} className="group flex flex-col items-center shrink-0 w-[70vw] md:w-auto snap-center">
-                            <div className="w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden mb-6 shadow-xl border-4 border-slate-50 relative shrink-0">
+                        <div key={i} className="group flex flex-col items-center">
+                            <div className="w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden mb-6 shadow-xl border-4 border-slate-50 relative">
                                 <img src={m.img} alt={m.name} className="w-full h-full object-cover grayscale-0 md:grayscale md:group-hover:grayscale-0 transition-all duration-500 md:group-hover:scale-110" />
                                 <div className="absolute inset-0 bg-teal-500/20 mix-blend-multiply opacity-0 md:group-hover:opacity-100 transition-opacity"></div>
                             </div>
-                            <h3 className="text-lg md:text-xl font-bold text-slate-900">{m.name}</h3>
-                            <p className="text-slate-500 font-medium text-sm md:text-base">{m.role}</p>
+                            <h3 className="text-xl font-bold text-slate-900">{m.name}</h3>
+                            <p className="text-slate-500 font-medium">{m.role}</p>
                         </div>
                     ))}
                 </div>

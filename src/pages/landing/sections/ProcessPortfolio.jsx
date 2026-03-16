@@ -100,12 +100,12 @@ export function Portfolio({ cmsData }) {
                     </a>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 auto-rows-[300px] gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-3 md:auto-rows-[300px] gap-6">
                     {works.map((w, i) => (
-                        <div key={i} className={`relative rounded-3xl overflow-hidden group shadow-md ${w.span} group-hover:shadow-2xl transition-all duration-500`}>
-                            <img src={w.img} alt={w.title} className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" />
-                            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent flex items-end p-6 md:p-8">
-                                <h3 className="text-lg md:text-xl font-bold text-white shadow-sm inline-block px-4 py-2 backdrop-blur-md bg-white/10 rounded-lg translate-y-0 md:translate-y-4 md:group-hover:translate-y-0 transition-transform duration-300">
+                        <div key={i} className={`relative rounded-3xl overflow-hidden group shadow-md transition-all duration-500 ${w.span} ${w.span.includes('col-span-2') ? 'md:col-span-2' : ''} h-[400px] md:h-auto`}>
+                            <img src={w.img} alt={w.title} className="w-full h-full object-cover transform md:group-hover:scale-105 transition-transform duration-700" />
+                            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/10 to-transparent flex items-end p-6 md:p-8">
+                                <h3 className="text-lg md:text-xl font-bold text-white shadow-sm inline-block px-4 py-2 backdrop-blur-md bg-white/10 rounded-xl translate-y-0 md:translate-y-4 md:group-hover:translate-y-0 transition-transform duration-300 border border-white/10">
                                      {w.title}
                                  </h3>
                              </div>

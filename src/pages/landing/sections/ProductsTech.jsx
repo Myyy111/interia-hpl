@@ -47,16 +47,18 @@ export function Products({ cmsData }) {
                             <img src={p.img} alt={p.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                             <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/40 to-transparent"></div>
 
-                            <div className="absolute inset-x-0 bottom-0 p-8 transform group-hover:-translate-y-4 transition-transform duration-500">
-                                <h3 className="text-2xl font-bold text-white mb-4">{p.title}</h3>
-                                <ul className="space-y-2 mb-6">
-                                    {(typeof p.features === 'string' ? p.features.split(',') : p.features || []).map((feat, idx) => (
-                                        <li key={idx} className="flex items-center text-slate-300 font-medium text-sm gap-2 opacity-0 group-hover:opacity-100 transition-opacity" style={{ transitionDelay: `${idx * 100}ms` }}>
-                                            <CheckCircle2 size={16} className="text-teal-400" /> {feat.trim()}
-                                        </li>
-                                    ))}
-                                </ul>
-                                <Link to="/configurator" className="flex items-center gap-2 cursor-pointer text-indigo-300 hover:text-indigo-200 uppercase text-sm font-bold tracking-wider">
+                            <div className="absolute inset-0 p-8 flex flex-col justify-end transform group-hover:-translate-y-2 transition-transform duration-500">
+                                <h3 className="text-2xl font-bold text-white mb-0 leading-tight">{p.title}</h3>
+                                <div className="max-h-0 opacity-0 overflow-hidden group-hover:max-h-48 group-hover:opacity-100 transition-all duration-500 ease-in-out">
+                                    <ul className="space-y-2 pt-4 pb-2">
+                                        {(typeof p.features === 'string' ? p.features.split(',') : p.features || []).map((feat, idx) => (
+                                            <li key={idx} className="flex items-center text-slate-300 font-medium text-sm gap-2">
+                                                <CheckCircle2 size={16} className="text-teal-400" /> {feat.trim()}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                                <Link to="/configurator" className="flex items-center gap-2 cursor-pointer text-indigo-300 hover:text-indigo-200 uppercase text-sm font-bold tracking-wider mt-2">
                                     Desain Sekarang &rarr;
                                 </Link>
                             </div>

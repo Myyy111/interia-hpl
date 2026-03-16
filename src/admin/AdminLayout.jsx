@@ -20,7 +20,7 @@ const AdminLayout = () => {
     const handleLogout = () => {
         localStorage.removeItem('admin_auth');
         setIsAuthenticated(false);
-        navigate('/');
+        navigate('/admin');
     };
 
     if (isLoading) {

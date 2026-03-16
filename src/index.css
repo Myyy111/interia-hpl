@@ -54,7 +54,7 @@ body {
 }
 
 ::selection {
-  background-color: #818cf8;
+  background-color: #d4a362;
   color: #ffffff;
 }
 
@@ -69,12 +69,12 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
+  background: #d6d3d1;
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+  background: #b08d57;
 }
 
 /* Base input remove typical tap highlight on mobile */
@@ -87,13 +87,35 @@ a {
 }
 
 @keyframes shine {
-  0% {
-    transform: translateX(-150%) skewX(-20deg);
-  }
+  0% { transform: translateX(-150%) skewX(-20deg); }
+  100% { transform: translateX(200%) skewX(-20deg); }
+}
 
-  100% {
-    transform: translateX(200%) skewX(-20deg);
-  }
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+@keyframes slow-scale {
+  0% { transform: scale(1.05); }
+  100% { transform: scale(1.15); }
+}
+
+@keyframes fade-in-up {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.animate-float {
+  animation: float 5s ease-in-out infinite;
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.8s ease-out forwards;
+}
+
+.perspective-1000 {
+  perspective: 1000px;
 }
 
 .hide-scrollbar::-webkit-scrollbar {
@@ -102,4 +124,4 @@ a {
 .hide-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
-}
+}

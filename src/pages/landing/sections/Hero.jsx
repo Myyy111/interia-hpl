@@ -19,33 +19,38 @@ export default function Hero({ cmsData }) {
 
             <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 w-full text-center md:text-left flex flex-col md:flex-row items-center justify-between gap-12">
                 <div className="max-w-2xl text-left space-y-8 flex-1 animate-fade-in-up">
-                    <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-indigo-500/30 bg-indigo-500/10 backdrop-blur-md shadow-sm">
-                        <span className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse"></span>
-                        <span className="text-xs font-semibold text-indigo-300 uppercase tracking-widest text-shadow-sm">Interior Design & Custom Furniture</span>
+                    <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-teal-500/30 bg-teal-500/10 backdrop-blur-md shadow-sm">
+                        <span className="w-2 h-2 rounded-full bg-teal-500 animate-pulse"></span>
+                        <span className="text-xs font-black text-teal-300 uppercase tracking-[0.3em] drop-shadow-sm">Interior Design & Custom Furniture</span>
                     </div>
 
-                    <h1 className="text-5xl md:text-7xl font-extrabold text-white tracking-tight leading-[1.1] whitespace-pre-line">
-                        {cmsData.title}
+                    <h1 className="text-5xl md:text-7xl font-extrabold text-white tracking-tight leading-[1.05] whitespace-pre-line">
+                        {cmsData.title.split('\n').map((line, i) => (
+                            <React.Fragment key={i}>
+                                {i === 0 ? line : <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-teal-200">{line}</span>}
+                                {i < cmsData.title.split('\n').length - 1 && <br />}
+                            </React.Fragment>
+                        ))}
                     </h1>
 
                     <p className="text-lg md:text-xl text-slate-300 leading-relaxed font-light max-w-xl">
                         {cmsData.subtitle}
                     </p>
 
-                    <div className="flex flex-col sm:flex-row gap-4 pt-4">
+                    <div className="flex flex-col sm:flex-row gap-5 pt-4">
                         <Link
                             to="/configurator"
-                            className="relative inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-indigo-600 to-indigo-500 text-white rounded-xl font-bold transition-all shadow-[0_0_40px_rgba(79,70,229,0.4)] hover:shadow-[0_0_60px_rgba(79,70,229,0.6)] transform hover:-translate-y-1 hover:scale-105 text-lg group overflow-hidden"
+                            className="relative inline-flex items-center justify-center gap-3 px-10 py-5 bg-teal-600 text-white rounded-2xl font-black transition-all shadow-[0_20px_50px_rgba(176,141,87,0.3)] hover:shadow-[0_25px_60px_rgba(176,141,87,0.5)] transform hover:-translate-y-1.5 active:scale-95 text-lg group overflow-hidden"
                         >
-                            <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-[150%] skew-x-[-20deg] group-hover:animate-[shine_1.5s_ease-out]"></span>
+                            <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-[150%] skew-x-[-20deg] group-hover:animate-[shine_2s_ease-out]"></span>
                             <span className="relative z-10 flex items-center gap-2">
                                 Mulai Desain Sekarang
-                                <MoveRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                                <MoveRight size={22} className="group-hover:translate-x-1.5 transition-transform" />
                             </span>
                         </Link>
                         <a
                             href="#portfolio"
-                            className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/5 hover:bg-white/10 text-white backdrop-blur-md border border-white/10 hover:border-white/20 rounded-xl font-bold transition-all hover:-translate-y-1 text-lg"
+                            className="inline-flex items-center justify-center gap-2 px-10 py-5 bg-white/5 hover:bg-white/10 text-white backdrop-blur-md border border-white/20 rounded-2xl font-black transition-all hover:-translate-y-1.5 active:scale-95 text-lg"
                         >
                             Lihat Portfolio
                         </a>

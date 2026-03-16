@@ -58,6 +58,13 @@ export function Testimonials({ cmsData }) {
                         </div>
                     ))}
                 </div>
+
+                {/* Mobile Slider Dots Indicator */}
+                <div className="flex md:hidden justify-center gap-2.5 mt-6">
+                    {reviews.map((_, i) => (
+                        <div key={i} className="w-1.5 h-1.5 rounded-full bg-slate-700"></div>
+                    ))}
+                </div>
             </div>
         </section>
     );

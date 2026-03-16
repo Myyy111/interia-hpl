@@ -92,27 +92,30 @@ export function Technology({ cmsData }) {
 
             <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10 flex flex-col md:flex-row items-center gap-16">
                 <div className="flex-1 w-full flex items-center justify-center perspective-1000 order-2 md:order-1">
-                    <div className="relative transform rotate-y-[15deg] rotate-x-[5deg] bg-slate-800 rounded-3xl p-4 shadow-2xl border border-slate-700 w-full max-w-lg">
+                    <div className="relative transform rotate-y-[15deg] rotate-x-[5deg] bg-slate-800 rounded-3xl p-4 shadow-2xl border border-slate-700 w-full max-w-lg group">
                         <div className="flex gap-2 mb-4 border-b border-slate-700 pb-4">
-                            <div className="w-3 h-3 rounded-full bg-rose-500"></div>
-                            <div className="w-3 h-3 rounded-full bg-amber-500"></div>
-                            <div className="w-3 h-3 rounded-full bg-emerald-500"></div>
+                            <div className="w-3 h-3 rounded-full bg-rose-500/80"></div>
+                            <div className="w-3 h-3 rounded-full bg-amber-500/80"></div>
+                            <div className="w-3 h-3 rounded-full bg-emerald-500/80"></div>
                         </div>
                         {/* Mockup UI configurator */}
                         <div className="bg-slate-900 rounded-xl p-6 border border-slate-700 h-64 flex flex-col justify-between overflow-hidden relative">
-                            <div className="absolute top-0 right-0 w-32 h-32 bg-teal-500/20 rounded-bl-full blur-xl"></div>
+                            <div className="absolute top-0 right-0 w-32 h-32 bg-teal-500/10 rounded-bl-full blur-xl group-hover:bg-teal-500/20 transition-all"></div>
                             <div className="space-y-4">
-                                <div className="h-4 w-1/3 bg-slate-700 rounded animate-pulse"></div>
-                                <div className="h-6 w-2/3 bg-slate-600 rounded"></div>
+                                <div className="h-4 w-1/3 bg-slate-800 rounded animate-pulse"></div>
+                                <div className="h-7 w-2/3 bg-slate-700 rounded-lg"></div>
                             </div>
 
                             <div className="grid grid-cols-2 gap-4 mt-8">
-                                <div className="aspect-square bg-slate-800 rounded-lg border border-indigo-500/50 flex flex-col items-center justify-center relative shadow-[0_0_15px_rgba(99,102,241,0.2)]">
-                                    <span className="w-8 h-8 rounded border-2 border-indigo-400"></span>
-                                    <span className="text-[10px] mt-2 font-bold text-indigo-400">P. Panjang</span>
+                                <div className="aspect-square bg-slate-800/50 rounded-xl border border-teal-500/40 flex flex-col items-center justify-center relative shadow-[0_0_20px_rgba(176,141,87,0.15)] group-hover:shadow-[0_0_30px_rgba(176,141,87,0.25)] transition-all">
+                                    <div className="w-10 h-10 rounded border-2 border-teal-400/80 flex items-center justify-center">
+                                       <div className="w-6 h-6 border border-teal-400/30"></div>
+                                    </div>
+                                    <span className="text-[10px] mt-2 font-black text-teal-400 uppercase tracking-tighter">P. Panjang</span>
                                 </div>
-                                <div className="aspect-square bg-slate-800 rounded-lg border border-slate-600 flex items-center justify-center opacity-50">
-                                    <span className="text-[10px] font-bold">L-Shape</span>
+                                <div className="aspect-square bg-slate-800/30 rounded-xl border border-slate-700 flex flex-col items-center justify-center opacity-40">
+                                    <div className="w-10 h-10 rounded border-2 border-slate-600"></div>
+                                    <span className="text-[10px] mt-2 font-bold uppercase tracking-tighter">L-Shape</span>
                                 </div>
                             </div>
                         </div>
@@ -120,36 +123,36 @@ export function Technology({ cmsData }) {
                 </div>
 
                 <div className="flex-1 space-y-8 order-1 md:order-2">
-                    <div className="inline-flex items-center gap-2 text-indigo-400 font-bold tracking-widest uppercase text-sm bg-indigo-900/40 px-4 py-2 rounded-full border border-indigo-500/30">
+                    <div className="inline-flex items-center gap-2 text-teal-400 font-black tracking-[0.2em] uppercase text-xs bg-teal-900/40 px-5 py-2.5 rounded-full border border-teal-500/30 shadow-lg shadow-teal-900/20">
                         <Laptop size={16} /> Teknologi Afandi Interior
                     </div>
 
-                    <h2 className="text-4xl md:text-5xl font-extrabold text-white leading-tight">
+                    <h2 className="text-4xl md:text-6xl font-extrabold text-white leading-[1.1] tracking-tight">
                         {cmsData.title}
                     </h2>
 
-                    <p className="text-lg text-slate-300 font-light leading-relaxed">
+                    <p className="text-lg text-slate-400 font-light leading-relaxed max-w-xl">
                         {cmsData.desc}
                     </p>
 
-                    <div className="space-y-6 pt-4">
-                        <div className="flex gap-4">
-                            <div className="w-12 h-12 rounded-full bg-slate-800 flex items-center justify-center shrink-0 border border-slate-700 shadow-inner">
-                                <Maximize className="text-teal-400" />
+                    <div className="space-y-8 pt-4">
+                        <div className="flex gap-5 group">
+                            <div className="w-14 h-14 rounded-2xl bg-slate-800 flex items-center justify-center shrink-0 border border-slate-700 shadow-xl group-hover:border-teal-500/50 transition-colors">
+                                <Maximize className="text-teal-400 group-hover:scale-110 transition-transform" />
                             </div>
                             <div>
-                                <h4 className="font-bold text-xl mb-1">Input Denah presisi</h4>
-                                <p className="text-slate-400">Masukkan bentuk ruangan asli Anda beserta posisi celah pintu/jendela.</p>
+                                <h4 className="font-black text-xl mb-1.5 text-white">Input Denah Presisi</h4>
+                                <p className="text-slate-500 text-sm leading-relaxed">Masukkan ukuran dan konfigurasi dinding asli Anda secara milimeter.</p>
                             </div>
                         </div>
 
-                        <div className="flex gap-4">
-                            <div className="w-12 h-12 rounded-full bg-slate-800 flex items-center justify-center shrink-0 border border-slate-700 shadow-inner">
-                                <CircleDollarSign className="text-indigo-400" />
+                        <div className="flex gap-5 group">
+                            <div className="w-14 h-14 rounded-2xl bg-slate-800 flex items-center justify-center shrink-0 border border-slate-700 shadow-xl group-hover:border-teal-500/50 transition-colors">
+                                <CircleDollarSign className="text-teal-400 group-hover:scale-110 transition-transform" />
                             </div>
                             <div>
-                                <h4 className="font-bold text-xl mb-1">Estimasi Harga Tepat</h4>
-                                <p className="text-slate-400">Harga otomatis menyesuaikan luas dan material (HPL/PVC/Solid) yang Anda pilih secara instan tanpa perlu tebak-tebak biaya.</p>
+                                <h4 className="font-black text-xl mb-1.5 text-white">Estimasi Harga Tepat</h4>
+                                <p className="text-slate-500 text-sm leading-relaxed">Transparansi biaya instan berdasarkan luas dan jenis HPL pilihan Anda.</p>
                             </div>
                         </div>
                     </div>
@@ -157,9 +160,9 @@ export function Technology({ cmsData }) {
                     <div className="pt-8">
                         <Link
                             to="/configurator"
-                            className="inline-flex items-center gap-3 px-8 py-4 bg-teal-500 hover:bg-teal-600 text-slate-900 rounded-xl font-black text-lg shadow-lg shadow-teal-500/20 transform hover:-translate-y-1 transition-all group"
+                            className="inline-flex items-center gap-4 px-10 py-5 bg-teal-600 hover:bg-teal-500 text-white rounded-2xl font-black text-lg shadow-[0_20px_40px_rgba(176,141,87,0.2)] hover:shadow-[0_25px_50px_rgba(176,141,87,0.4)] transform hover:-translate-y-1.5 transition-all group active:scale-95"
                         >
-                            Coba Configurator Sekarang <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                            Coba Configurator <ArrowRight size={22} className="group-hover:translate-x-2 transition-transform" />
                         </Link>
                     </div>
                 </div>

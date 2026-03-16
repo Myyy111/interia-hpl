@@ -41,9 +41,10 @@ export function Blog({ cmsData, contactData }) {
                     </button>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {/* Mobile Slider / Desktop Grid */}
+                <div className="flex md:grid md:grid-cols-3 gap-8 overflow-x-auto md:overflow-visible pb-8 md:pb-0 snap-x snap-mandatory hide-scrollbar">
                     {articles.map((a, i) => (
-                        <article key={i} className="bg-slate-50 rounded-2xl overflow-hidden border border-slate-100 group shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                        <article key={i} className="bg-slate-50 rounded-2xl overflow-hidden border border-slate-100 group shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 shrink-0 w-[85vw] md:w-auto snap-center">
                             <div className="h-48 overflow-hidden relative">
                                 <div className="absolute top-4 left-4 bg-white/90 backdrop-blur text-xs font-bold text-slate-900 px-3 py-1.5 rounded-full z-10 shadow-sm">
                                     {a.date}
@@ -51,19 +52,26 @@ export function Blog({ cmsData, contactData }) {
                                 <img src={a.img} alt={a.title} className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" />
                             </div>
                             <div className="p-6">
-                                <h3 className="font-bold text-xl text-slate-900 mb-3 group-hover:text-teal-600 transition-colors">{a.title}</h3>
+                                <h3 className="font-bold text-xl text-slate-900 mb-3 group-hover:text-teal-600 transition-colors uppercase tracking-tight leading-tight">{a.title}</h3>
                                 <p className="text-slate-500 text-sm leading-relaxed mb-6 font-light">{a.desc}</p>
                                 <a 
                                     href={`https://wa.me/${contactData?.phone?.replace(/[^0-9]/g, '') || ''}?text=Halo Afandi Interior, saya ingin membaca lebih lanjut tentang artikel: ${a.title}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="text-sm font-bold text-indigo-600 uppercase tracking-widest cursor-pointer inline-flex items-center gap-2 group-hover:gap-3 transition-all"
+                                    className="text-sm font-bold text-teal-600 uppercase tracking-[0.2em] cursor-pointer inline-flex items-center gap-2 group-hover:gap-3 transition-all"
                                 >
                                     Baca Selengkapnya
                                     <ArrowRight size={16} />
                                 </a>
                             </div>
                         </article>
+                    ))}
+                </div>
+
+                {/* Mobile Slider Dots */}
+                <div className="flex md:hidden justify-center gap-2.5 mt-6">
+                    {articles.map((_, i) => (
+                        <div key={i} className="w-1.5 h-1.5 rounded-full bg-slate-200"></div>
                     ))}
                 </div>
             </div>

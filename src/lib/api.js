@@ -190,6 +190,26 @@ export const api = {
         
         if (error) throw error;
         return newData.settings;
+    },
+    saveDesign: async (config, totalPrice) => {
+        const { data, error } = await supabase
+            .from('orders')
+            .insert([{ data: { config, totalPrice, isDraft: true, status: 'Draft' } }])
+            .select()
+            .single();
+        
+        if (error) throw error;
+        return data.id;
+    },
+    getDesign: async (id) => {
+        const { data, error } = await supabase
+            .from('orders')
+            .select('data')
+            .eq('id', id)
+            .single();
+        
+        if (error) throw error;
+        return data.data;
     }
 };
 

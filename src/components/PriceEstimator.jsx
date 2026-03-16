@@ -1,35 +1,65 @@
 import React from 'react';
+import { TrendingUp, Zap } from 'lucide-react';
 
 export default function PriceEstimator({ price }) {
+    const isReady = price > 0;
+
     return (
-        <div className="bg-gradient-to-br from-indigo-900 to-slate-900 rounded-2xl shadow-xl border border-indigo-800/50 p-6 text-white relative overflow-hidden">
-            <div className="absolute -top-12 -right-12 w-32 h-32 bg-indigo-500/20 rounded-full blur-2xl"></div>
-            <div className="absolute bottom-[-10%] -left-12 w-40 h-40 bg-teal-500/20 rounded-full blur-3xl"></div>
+        <div className="bg-gradient-to-br from-slate-800 via-slate-900 to-slate-950 rounded-2xl shadow-xl border border-slate-700/50 p-6 text-white relative overflow-hidden">
+            {/* Background glow */}
+            <div className="absolute -top-10 -right-10 w-36 h-36 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute bottom-0 -left-12 w-44 h-44 bg-teal-500/10 rounded-full blur-3xl pointer-events-none" />
 
             <div className="relative z-10">
-                <h3 className="text-sm font-semibold text-indigo-200 uppercase tracking-wider mb-2 flex items-center gap-2">
-                    Estimasi Biaya Produksi
-                </h3>
-
-                <div className="flex flex-col mt-4">
-                    <span className="text-4xl font-extrabold tracking-tight">
-                        Rp {price > 0 ? price.toLocaleString('id-ID') : '0'}
+                {/* Label */}
+                <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2">
+                        <TrendingUp size={14} className="text-teal-400" />
+                        Estimasi Biaya Produksi
+                    </h3>
+                    <span className="flex items-center gap-1 text-[10px] font-bold text-amber-400 bg-amber-400/10 border border-amber-400/20 px-2 py-0.5 rounded-full">
+                        <Zap size={10} /> Real-time
                     </span>
-                    <p className="text-sm text-indigo-300 mt-2 leading-relaxed">
-                        Estimasi harga dapat berubah setelah dilakukan survey langsung ke lokasi dan kesepakatan desain final.
-                        Harga sudah termasuk biaya pengiriman dan instalasi standar.
-                    </p>
                 </div>
-            </div>
 
-            <div className="mt-8 relative z-10">
-                <div className="h-2 w-full bg-indigo-950/50 rounded-full overflow-hidden">
-                    <div className="h-full bg-gradient-to-r from-teal-400 to-indigo-400 w-full animate-pulse opacity-70"></div>
+                {/* Price */}
+                <div className="mb-3">
+                    {isReady ? (
+                        <>
+                            <div className="text-4xl font-extrabold tracking-tight leading-none">
+                                Rp {price.toLocaleString('id-ID')}
+                            </div>
+                            <p className="text-sm text-slate-400 mt-2 leading-relaxed">
+                                Harga sudah termasuk material, pengerjaan, & instalasi standar Jabodetabek.
+                            </p>
+                        </>
+                    ) : (
+                        <>
+                            <div className="text-2xl font-bold text-slate-500 leading-none">Belum dihitung</div>
+                            <p className="text-sm text-slate-500 mt-2">Pilih produk & material untuk melihat estimasi harga.</p>
+                        </>
+                    )}
                 </div>
-                <div className="mt-2 flex justify-between text-[10px] text-indigo-300 uppercase font-bold tracking-widest">
-                    <span>Real-time</span>
-                    <span>Perhitungan</span>
+
+                {/* Progress / indicator bar */}
+                <div className="mt-4">
+                    <div className="h-1.5 w-full bg-slate-700/50 rounded-full overflow-hidden">
+                        <div className={`h-full rounded-full transition-all duration-700 ${isReady ? 'bg-gradient-to-r from-amber-400 to-teal-400' : 'bg-slate-600 animate-pulse'}`}
+                            style={{ width: isReady ? '100%' : '30%' }}
+                        />
+                    </div>
+                    <div className="flex justify-between text-[10px] text-slate-500 uppercase tracking-widest font-bold mt-1.5">
+                        <span>{isReady ? 'Kalkulasi lengkap' : 'Menunggu input...'}</span>
+                        <span>Estimasi</span>
+                    </div>
                 </div>
+
+                {/* Disclaimer */}
+                {isReady && (
+                    <p className="text-[10px] text-slate-500 mt-3 border-t border-slate-700/50 pt-3">
+                        *Harga final setelah survey langsung. Dapat berubah ±10-15%.
+                    </p>
+                )}
             </div>
         </div>
     );

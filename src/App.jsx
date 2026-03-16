@@ -11,29 +11,38 @@ import CMSGeneral from './admin/cms/CMSGeneral';
 import CMSCatalog from './admin/cms/CMSCatalog';
 import CMSCommunity from './admin/cms/CMSCommunity';
 
+import ErrorBoundary from './components/ErrorBoundary';
+
+import NotFound from './pages/NotFound';
+
 function App() {
   return (
-    <Router>
-      <Routes>
-        {/* Landing Page Publik */}
-        <Route path="/" element={<Home />} />
+    <ErrorBoundary>
+      <Router>
+        <Routes>
+          {/* Landing Page Publik */}
+          <Route path="/" element={<Home />} />
 
-        {/* Configurator App */}
-        <Route path="/configurator" element={<ConfiguratorLayout />} />
+          {/* Configurator App */}
+          <Route path="/configurator" element={<ConfiguratorLayout />} />
 
-        {/* Admin Dashboard */}
-        <Route path="/admin" element={<AdminLayout />}>
-          <Route index element={<AdminDashboard />} />
-          <Route path="orders" element={<AdminOrders />} />
-          <Route path="products" element={<AdminProducts />} />
-          <Route path="settings" element={<AdminSettings />}>
-            <Route index element={<CMSGeneral />} />
-            <Route path="catalog" element={<CMSCatalog />} />
-            <Route path="community" element={<CMSCommunity />} />
+          {/* admin Dashboard */}
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route index element={<AdminDashboard />} />
+            <Route path="orders" element={<AdminOrders />} />
+            <Route path="products" element={<AdminProducts />} />
+            <Route path="settings" element={<AdminSettings />}>
+              <Route index element={<CMSGeneral />} />
+              <Route path="catalog" element={<CMSCatalog />} />
+              <Route path="community" element={<CMSCommunity />} />
+            </Route>
           </Route>
-        </Route>
-      </Routes>
-    </Router>
+
+          {/* 404 Page */}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Router>
+    </ErrorBoundary>
   );
 }
 

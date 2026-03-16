@@ -1,3 +1,9 @@
 {
-  "name": "afandi-interior"
+  "name": "afandi-interior",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
 }

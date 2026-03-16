@@ -1,6 +1,11 @@
-const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+import { createClient } from '@supabase/supabase-js';
 
-const DB_KEY = 'hpl_configurator_db';
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+export const supabase = createClient(supabaseUrl, supabaseKey);
+
+const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 const defaultData = {
     products: [
@@ -85,100 +90,106 @@ const defaultData = {
             { title: 'Warna Interior Paling Dicari', date: '08 Feb 2026', img: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?q=80&w=600&auto=format&fit=crop', desc: 'Dari Sage Green hingga warna-warna earth tone yang menenangkan...' },
             { title: 'Perbedaan Multiplek vs Blockboard', date: '24 Jan 2026', img: 'https://images.unsplash.com/photo-1540518614846-7eded433c457?q=80&w=600&auto=format&fit=crop', desc: 'Sebelum membuat lemari custom, kenali jenis kayu inti terbaik untuk budget Anda.' }
         ]
-    },
-    orders: []
+    }
 };
 
-const getDB = () => {
-    const db = localStorage.getItem(DB_KEY);
-    if (!db) {
-        localStorage.setItem(DB_KEY, JSON.stringify(defaultData));
+const getWebsiteData = async () => {
+    try {
+        const { data, error } = await supabase
+            .from('website_data')
+            .select('content')
+            .eq('id', 'primary_data')
+            .maybeSingle();
+
+        if (error) throw error;
+        
+        if (!data) {
+            // Seed default data if not exists
+            const { error: seedError } = await supabase
+                .from('website_data')
+                .insert([{ id: 'primary_data', content: defaultData }]);
+            if (seedError) console.error('Seeding error:', seedError);
+            return defaultData;
+        }
+        
+        return data.content;
+    } catch (e) {
+        console.error('Supabase fetch error, using local defaults:', e);
         return defaultData;
     }
-    return JSON.parse(db);
-};
-
-const saveDB = (data) => {
-    localStorage.setItem(DB_KEY, JSON.stringify(data));
 };
 
 export const api = {
     getProducts: async () => {
-        await delay(300);
-        return getDB().products;
+        const data = await getWebsiteData();
+        return data.products;
     },
     getMaterials: async () => {
-        await delay(300);
-        return getDB().materials;
+        const data = await getWebsiteData();
+        return data.materials;
     },
     getAccessories: async () => {
-        await delay(300);
-        return getDB().accessories;
+        const data = await getWebsiteData();
+        return data.accessories;
     },
     getOrders: async () => {
-        await delay(300);
-        return getDB().orders;
+        const { data, error } = await supabase
+            .from('orders')
+            .select('*')
+            .order('created_at', { ascending: false });
+        
+        if (error) {
+            console.error('Orders fetch error:', error);
+            return [];
+        }
+        return data.map(item => ({ ...item.data, id: item.id, createdAt: item.created_at }));
     },
     submitOrder: async (orderData) => {
-        await delay(500);
-        const db = getDB();
-        const newOrder = {
-            ...orderData,
-            id: 'ORD-' + Math.random().toString(36).substring(2, 9).toUpperCase(),
-            createdAt: new Date().toISOString(),
-            status: 'pending'
-        };
-        db.orders.unshift(newOrder); // Add to beginning
-        saveDB(db);
-        return newOrder;
+        const { data, error } = await supabase
+            .from('orders')
+            .insert([{ data: orderData }])
+            .select()
+            .single();
+        
+        if (error) throw error;
+        return { ...data.data, id: data.id, createdAt: data.created_at };
     },
     updateOrderStatus: async (id, status) => {
-        await delay(300);
-        const db = getDB();
-        const orderIndex = db.orders.findIndex(o => o.id === id);
-        if (orderIndex > -1) {
-            db.orders[orderIndex].status = status;
-            saveDB(db);
-            return db.orders[orderIndex];
-        }
-        throw new Error('Order not found');
-    },
-    // Admin endpoints
-    addProduct: async (product) => {
-        await delay(300);
-        const db = getDB();
-        const newProd = { ...product, id: Date.now().toString() };
-        db.products.push(newProd);
-        saveDB(db);
-        return newProd;
-    },
-    updateProduct: async (id, data) => {
-        await delay(300);
-        const db = getDB();
-        const index = db.products.findIndex(p => p.id === id);
-        if (index > -1) {
-            db.products[index] = { ...db.products[index], ...data };
-            saveDB(db);
-            return db.products[index];
-        }
-    },
-    deleteProduct: async (id) => {
-        await delay(300);
-        const db = getDB();
-        db.products = db.products.filter(p => p.id !== id);
-        saveDB(db);
-        return true;
+        const { data: currentOrder, error: fetchError } = await supabase
+            .from('orders')
+            .select('data')
+            .eq('id', id)
+            .single();
+        
+        if (fetchError) throw fetchError;
+
+        const updatedData = { ...currentOrder.data, status };
+        
+        const { data, error } = await supabase
+            .from('orders')
+            .update({ data: updatedData })
+            .eq('id', id)
+            .select()
+            .single();
+        
+        if (error) throw error;
+        return { ...data.data, id: data.id, createdAt: data.created_at };
     },
     getSettings: async () => {
-        await delay(300);
-        const dbSettings = getDB().settings || {};
-        return { ...defaultData.settings, ...dbSettings };
+        const data = await getWebsiteData();
+        return data.settings;
     },
     updateSettings: async (settingsData) => {
-        await delay(500);
-        const db = getDB();
-        db.settings = settingsData;
-        saveDB(db);
-        return db.settings;
+        const currentData = await getWebsiteData();
+        const newData = { ...currentData, settings: settingsData };
+        
+        const { error } = await supabase
+            .from('website_data')
+            .update({ content: newData })
+            .eq('id', 'primary_data');
+        
+        if (error) throw error;
+        return newData.settings;
     }
 };
+

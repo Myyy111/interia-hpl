@@ -104,11 +104,11 @@ export function Portfolio({ cmsData }) {
                     {works.map((w, i) => (
                         <div key={i} className={`relative rounded-3xl overflow-hidden group shadow-md ${w.span} group-hover:shadow-2xl transition-all duration-500`}>
                             <img src={w.img} alt={w.title} className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" />
-                            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent flex items-end p-8">
-                                <h3 className="text-xl font-bold text-white shadow-sm inline-block px-4 py-2 backdrop-blur-md bg-white/10 rounded-lg translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                                    {w.title}
-                                </h3>
-                            </div>
+                            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent flex items-end p-6 md:p-8">
+                                <h3 className="text-lg md:text-xl font-bold text-white shadow-sm inline-block px-4 py-2 backdrop-blur-md bg-white/10 rounded-lg translate-y-0 md:translate-y-4 md:group-hover:translate-y-0 transition-transform duration-300">
+                                     {w.title}
+                                 </h3>
+                             </div>
                         </div>
                     ))}
                 </div>

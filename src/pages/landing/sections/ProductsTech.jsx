@@ -47,18 +47,21 @@ export function Products({ cmsData }) {
                             <img src={p.img} alt={p.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                             <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/40 to-transparent"></div>
 
-                            <div className="absolute inset-0 p-8 flex flex-col justify-end transform group-hover:-translate-y-2 transition-transform duration-500">
-                                <h3 className="text-2xl font-bold text-white mb-0 leading-tight">{p.title}</h3>
-                                <div className="max-h-0 opacity-0 overflow-hidden group-hover:max-h-48 group-hover:opacity-100 transition-all duration-500 ease-in-out">
-                                    <ul className="space-y-2 pt-4 pb-2">
+                            <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-end transform md:group-hover:-translate-y-2 transition-transform duration-500">
+                                <h3 className="text-xl md:text-2xl font-bold text-white mb-0 leading-tight">{p.title}</h3>
+                                
+                                {/* Features: Auto-show on mobile, hover-show on desktop */}
+                                <div className="max-h-48 opacity-100 md:max-h-0 md:opacity-0 overflow-hidden md:group-hover:max-h-48 md:group-hover:opacity-100 transition-all duration-500 ease-in-out">
+                                    <ul className="space-y-1.5 md:space-y-2 pt-3 md:pt-4 pb-2">
                                         {(typeof p.features === 'string' ? p.features.split(',') : p.features || []).map((feat, idx) => (
-                                            <li key={idx} className="flex items-center text-slate-300 font-medium text-sm gap-2">
-                                                <CheckCircle2 size={16} className="text-teal-400" /> {feat.trim()}
+                                            <li key={idx} className="flex items-center text-slate-300 font-medium text-[13px] md:text-sm gap-2">
+                                                <CheckCircle2 size={14} className="text-teal-400 shrink-0" /> {feat.trim()}
                                             </li>
                                         ))}
                                     </ul>
                                 </div>
-                                <Link to="/configurator" className="flex items-center gap-2 cursor-pointer text-indigo-300 hover:text-indigo-200 uppercase text-sm font-bold tracking-wider mt-2">
+                                
+                                <Link to="/configurator" className="flex items-center gap-2 cursor-pointer text-indigo-300 hover:text-indigo-200 uppercase text-[12px] md:text-sm font-bold tracking-wider mt-2">
                                     Desain Sekarang &rarr;
                                 </Link>
                             </div>

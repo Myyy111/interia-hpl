@@ -41,10 +41,14 @@ export function Products({ cmsData }) {
                     </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {/* Mobile Slider / Desktop Grid */}
+                <div className="flex md:grid md:grid-cols-2 gap-8 overflow-x-auto md:overflow-visible pb-8 md:pb-0 snap-x snap-mandatory hide-scrollbar">
                     {products.map((p, i) => (
-                        <div key={i} className="group overflow-hidden rounded-3xl relative h-[450px] cursor-pointer shadow-md hover:shadow-2xl transition-all duration-500">
-                            <img src={p.img} alt={p.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                        <div 
+                            key={i} 
+                            className="group overflow-hidden rounded-3xl relative h-[450px] shrink-0 w-[85vw] md:w-auto snap-center cursor-pointer shadow-md hover:shadow-2xl transition-all duration-500"
+                        >
+                            <img src={p.img} alt={p.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 md:group-hover:scale-105" />
                             <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/40 to-transparent"></div>
 
                             <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-end transform md:group-hover:-translate-y-2 transition-transform duration-500">
@@ -66,6 +70,13 @@ export function Products({ cmsData }) {
                                 </Link>
                             </div>
                         </div>
+                    ))}
+                </div>
+
+                {/* Mobile Scroll Indicator */}
+                <div className="flex md:hidden justify-center gap-2 mt-2">
+                    {products.map((_, i) => (
+                        <div key={i} className="w-1.5 h-1.5 rounded-full bg-slate-300"></div>
                     ))}
                 </div>
             </div>

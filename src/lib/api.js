@@ -5,7 +5,7 @@ const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
 export const supabase = createClient(supabaseUrl, supabaseKey);
 
-const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
 
 const defaultData = {
     products: [

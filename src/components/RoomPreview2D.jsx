@@ -1,18 +1,73 @@
 import React, { useMemo } from 'react';
 
-// Material color mapping (must match DesignConfigForm)
-const MATERIAL_COLORS = {
-    '1': { fill: '#e8d5b7', stroke: '#c4a882', label: 'HPL' },
-    '2': { fill: '#d4e8d4', stroke: '#7ab87a', label: 'PVC' },
-    '3': { fill: '#c4a882', stroke: '#8b6f47', label: 'Kayu' },
+import { MATERIAL_COLORS } from '../lib/constants';
+const FurnitureBlocks = ({ productSelection, room, matColor }) => {
+    if (!productSelection?.shape) return null;
+    const w = room.width || 300;
+    const l = room.length || 300;
+    const depth = 65; // kitchen counter depth ~65cm
+
+    const style = { fill: matColor.fill, stroke: matColor.stroke, strokeWidth: 2 };
+
+    if (productSelection.shape === 'Lurus') {
+        return <rect x={10} y={10} width={w - 20} height={depth} rx="4" {...style} opacity="0.9" />;
+    }
+    if (productSelection.shape === 'L-shape') {
+        return (
+            <>
+                <rect x={10} y={10} width={w - 20} height={depth} rx="4" {...style} opacity="0.9" />
+                <rect x={10} y={10} width={depth} height={l - 20} rx="4" {...style} opacity="0.9" />
+            </>
+        );
+    }
+    if (productSelection.shape === 'U-shape') {
+        return (
+            <>
+                <rect x={10} y={10} width={w - 20} height={depth} rx="4" {...style} opacity="0.9" />
+                <rect x={10} y={10} width={depth} height={l - 20} rx="4" {...style} opacity="0.9" />
+                <rect x={w - 10 - depth} y={10} width={depth} height={l - 20} rx="4" {...style} opacity="0.9" />
+            </>
+        );
+    }
+    return <rect x={10} y={10} width={w - 20} height={depth} rx="4" {...style} opacity="0.9" />;
 };
 
-// Wall position mapping
-const WALL_POS = {
-    Utara: 'A',
-    Selatan: 'B',
-    Barat: 'C',
-    Timur: 'D',
+const FixtureElements = ({ fixtures, room }) => {
+    const w = room.width || 300;
+    const l = room.length || 300;
+
+    return fixtures.map((f) => {
+        let x, y, fw, fh;
+        const isHoriz = f.position === 'Utara' || f.position === 'Selatan';
+        const wallThick = 8;
+        const offset = f.offset || 0;
+
+        if (f.position === 'Utara') { x = offset; y = -wallThick / 2; fw = f.width; fh = wallThick; }
+        else if (f.position === 'Selatan') { x = offset; y = l - wallThick / 2; fw = f.width; fh = wallThick; }
+        else if (f.position === 'Barat') { x = -wallThick / 2; y = offset; fw = wallThick; fh = f.width; }
+        else { x = w - wallThick / 2; y = offset; fw = wallThick; fh = f.width; }
+
+        const color = f.type === 'door' ? '#f59e0b' : '#38bdf8';
+        const strokeCol = f.type === 'door' ? '#d97706' : '#0284c7';
+
+        return (
+            <g key={f.id}>
+                <rect x={x} y={y} width={fw} height={fh} fill={color} stroke={strokeCol} strokeWidth={1.5} rx={2} opacity={0.9} />
+                <text
+                    x={x + fw / 2}
+                    y={isHoriz ? y - 6 : y + fh / 2}
+                    fontSize={12}
+                    textAnchor="middle"
+                    dominantBaseline={isHoriz ? 'auto' : 'middle'}
+                    fill="#64748b"
+                    fontWeight="bold"
+                    fontFamily="system-ui"
+                >
+                    {f.type === 'door' ? '🚪' : '🪟'}
+                </text>
+            </g>
+        );
+    });
 };
 
 export default function RoomPreview2D({ config }) {
@@ -38,79 +93,6 @@ export default function RoomPreview2D({ config }) {
         const margin = 80; // extra space for labels
         return { vb: `-${margin} -${margin} ${maxWidth + margin * 2} ${maxLength + margin * 2}`, w: maxWidth, l: maxLength };
     }, [room]);
-
-    // Furniture position (simplified top-down view)
-    const FurnitureBlocks = () => {
-        if (!productSelection?.shape) return null;
-        const w = room.width || 300;
-        const l = room.length || 300;
-        const depth = 65; // kitchen counter depth ~65cm
-
-        const style = { fill: matColor.fill, stroke: matColor.stroke, strokeWidth: 2 };
-
-        if (productSelection.shape === 'Lurus') {
-            return <rect x={10} y={10} width={w - 20} height={depth} rx="4" {...style} opacity="0.9" />;
-        }
-        if (productSelection.shape === 'L-shape') {
-            return (
-                <>
-                    <rect x={10} y={10} width={w - 20} height={depth} rx="4" {...style} opacity="0.9" />
-                    <rect x={10} y={10} width={depth} height={l - 20} rx="4" {...style} opacity="0.9" />
-                </>
-            );
-        }
-        if (productSelection.shape === 'U-shape') {
-            return (
-                <>
-                    <rect x={10} y={10} width={w - 20} height={depth} rx="4" {...style} opacity="0.9" />
-                    <rect x={10} y={10} width={depth} height={l - 20} rx="4" {...style} opacity="0.9" />
-                    <rect x={w - 10 - depth} y={10} width={depth} height={l - 20} rx="4" {...style} opacity="0.9" />
-                </>
-            );
-        }
-        return <rect x={10} y={10} width={w - 20} height={depth} rx="4" {...style} opacity="0.9" />;
-    };
-
-    // Draw door/window on walls
-    const FixtureElements = () => {
-        const w = room.width || 300;
-        const l = room.length || 300;
-
-        return fixtures.map((f) => {
-            let x, y, fw, fh;
-            const isHoriz = f.position === 'Utara' || f.position === 'Selatan';
-            const wallThick = 8;
-            const offset = f.offset || 0;
-
-            if (f.position === 'Utara') { x = offset; y = -wallThick / 2; fw = f.width; fh = wallThick; }
-            else if (f.position === 'Selatan') { x = offset; y = l - wallThick / 2; fw = f.width; fh = wallThick; }
-            else if (f.position === 'Barat') { x = -wallThick / 2; y = offset; fw = wallThick; fh = f.width; }
-            else { x = w - wallThick / 2; y = offset; fw = wallThick; fh = f.width; }
-
-            const color = f.type === 'door' ? '#f59e0b' : '#38bdf8';
-            const strokeCol = f.type === 'door' ? '#d97706' : '#0284c7';
-            const label = WALL_POS[f.position] || f.position;
-
-            return (
-                <g key={f.id}>
-                    <rect x={x} y={y} width={fw} height={fh} fill={color} stroke={strokeCol} strokeWidth={1.5} rx={2} opacity={0.9} />
-                    {/* Small label */}
-                    <text
-                        x={x + fw / 2}
-                        y={isHoriz ? y - 6 : y + fh / 2}
-                        fontSize={12}
-                        textAnchor="middle"
-                        dominantBaseline={isHoriz ? 'auto' : 'middle'}
-                        fill="#64748b"
-                        fontWeight="bold"
-                        fontFamily="system-ui"
-                    >
-                        {f.type === 'door' ? '🚪' : '🪟'}
-                    </text>
-                </g>
-            );
-        });
-    };
 
     const w = room.width || 300;
     const l = room.length || 300;
@@ -170,16 +152,17 @@ export default function RoomPreview2D({ config }) {
                     })()}
 
                     {/* ── FURNITURE (dynamic color) ── */}
-                    <FurnitureBlocks />
+                    <FurnitureBlocks productSelection={productSelection} room={room} matColor={matColor} />
 
                     {/* ── FIXTURES ── */}
-                    <FixtureElements />
+                    <FixtureElements fixtures={fixtures} room={room} />
 
                     {/* ── DIMENSION LABELS ── */}
                     {/* Width label (top) */}
                     <text x={w / 2} y={-fontSz * 1.8} fontSize={fontSz} textAnchor="middle" fill="#a4723c" fontWeight="bold" fontFamily="system-ui">
                         P: {(w / 100).toFixed(2)}m
                     </text>
+                    
                     {/* ↕ length label (left side) */}
                     <text x={-fontSz * 1.5} y={l / 2} fontSize={fontSz} textAnchor="middle" fill="#a4723c" fontWeight="bold" fontFamily="system-ui" transform={`rotate(-90, ${-fontSz * 1.5}, ${l / 2})`}>
                         L: {(l / 100).toFixed(2)}m

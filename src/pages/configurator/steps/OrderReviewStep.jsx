@@ -1,16 +1,16 @@
+import React, { useState } from 'react';
 import { CheckCircle2, Package, Ruler, DoorOpen, Layers, ShoppingBag, Camera, Share2, Save, Copy, Check, Info as InfoIcon } from 'lucide-react';
 import { trackEvent, ANALYTICS_EVENTS } from '../../../lib/analytics';
 import { api } from '../../../lib/api';
-
-const WALL_LABELS = { Utara: 'Dinding A (Depan)', Selatan: 'Dinding B (Belakang)', Barat: 'Dinding C (Kiri)', Timur: 'Dinding D (Kanan)' };
+import { WALL_LABELS } from '../../../lib/constants';
 
 export default function OrderReviewStep({ config, metadata, estimatedPrice }) {
     const { room, fixtures, photos, productSelection, design } = config;
     const { products, materials, accessories } = metadata;
 
-    const [isSaving, setIsSaving] = React.useState(false);
-    const [shareUrl, setShareUrl] = React.useState('');
-    const [copied, setCopied] = React.useState(false);
+    const [isSaving, setIsSaving] = useState(false);
+    const [shareUrl, setShareUrl] = useState('');
+    const [copied, setCopied] = useState(false);
 
     const handleSave = async () => {
         setIsSaving(true);
@@ -37,22 +37,7 @@ export default function OrderReviewStep({ config, metadata, estimatedPrice }) {
     const selectedMaterial = materials.find(m => m.id === design.materialId);
     const selectedAccessories = accessories.filter(a => design.accessories.includes(a.id));
 
-    const SectionCard = ({ icon: Icon, title, color, children }) => (
-        <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
-            <div className={`px-5 py-3 flex items-center gap-2 border-b border-slate-100 ${color}`}>
-                <Icon size={16} />
-                <span className="font-bold text-sm">{title}</span>
-            </div>
-            <div className="px-5 py-4 space-y-2">{children}</div>
-        </div>
-    );
 
-    const Row = ({ label, value }) => (
-        <div className="flex justify-between items-start gap-4">
-            <span className="text-sm text-slate-500 shrink-0">{label}</span>
-            <span className="text-sm font-semibold text-slate-800 text-right">{value || '-'}</span>
-        </div>
-    );
 
     return (
         <div className="space-y-4 pb-6">
@@ -215,3 +200,20 @@ export default function OrderReviewStep({ config, metadata, estimatedPrice }) {
         </div>
     );
 }
+
+const SectionCard = ({ icon: Icon, title, color, children }) => (
+    <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
+        <div className={`px-5 py-3 flex items-center gap-2 border-b border-slate-100 ${color}`}>
+            {Icon && <Icon size={16} />}
+            <span className="font-bold text-sm">{title}</span>
+        </div>
+        <div className="px-5 py-4 space-y-2">{children}</div>
+    </div>
+);
+
+const Row = ({ label, value }) => (
+    <div className="flex justify-between items-start gap-4">
+        <span className="text-sm text-slate-500 shrink-0">{label}</span>
+        <span className="text-sm font-semibold text-slate-800 text-right">{value || '-'}</span>
+    </div>
+);

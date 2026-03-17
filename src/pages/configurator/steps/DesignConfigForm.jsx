@@ -1,12 +1,7 @@
 import React from 'react';
 import { CheckCircle2, Info } from 'lucide-react';
 
-// Material color palette for preview
-export const MATERIAL_COLORS = {
-    '1': { fill: '#e8d5b7', stroke: '#c4a882', name: 'Multiplek + HPL' },    // wood/beige
-    '2': { fill: '#d4e8d4', stroke: '#7ab87a', name: 'PVC' },                 // green-ish
-    '3': { fill: '#c4a882', stroke: '#8b6f47', name: 'Kayu Solid' },          // dark wood
-};
+import { MATERIAL_COLORS } from '../../../lib/constants';
 
 export default function DesignConfigForm({ config, updateConfig, metadata }) {
     const { design } = config;

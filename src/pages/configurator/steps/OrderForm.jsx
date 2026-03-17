@@ -55,7 +55,6 @@ function buildWhatsAppMessage({ config, metadata, estimatedPrice, customerData }
 export default function OrderForm({ onSubmit, isSubmitting, config, metadata, estimatedPrice }) {
     const [formData, setFormData] = useState({ name: '', phone: '', address: '', notes: '' });
     const [errors, setErrors] = useState({});
-    const [submitted, setSubmitted] = useState(false);
 
     const handleChange = (e) => {
         setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
@@ -81,7 +80,6 @@ export default function OrderForm({ onSubmit, isSubmitting, config, metadata, es
             return;
         }
         await onSubmit(formData);
-        setSubmitted(true);
     };
 
     const handleWhatsApp = () => {
@@ -90,37 +88,7 @@ export default function OrderForm({ onSubmit, isSubmitting, config, metadata, es
         window.open(`https://wa.me/${WA_SALES_NUMBER}?text=${waMsg}`, '_blank');
     };
 
-    const InputField = ({ label, name, type = 'text', placeholder, icon: Icon, required, multiline }) => (
-        <div>
-            <label className="block text-sm font-semibold text-slate-700 mb-1.5 flex items-center gap-1.5">
-                {Icon && <Icon size={14} className="text-slate-400" />}
-                {label}
-                {required && <span className="text-rose-500 text-xs">*</span>}
-            </label>
-            {multiline ? (
-                <textarea
-                    name={name}
-                    value={formData[name]}
-                    onChange={handleChange}
-                    rows="3"
-                    placeholder={placeholder}
-                    className={`w-full border-2 p-4 rounded-xl transition-all font-medium outline-none resize-none text-slate-800 placeholder-slate-300 ${errors[name] ? 'border-rose-400 bg-rose-50 focus:border-rose-500 focus:ring-4 focus:ring-rose-500/20' : 'border-slate-200 bg-slate-50 focus:border-teal-500 focus:ring-4 focus:ring-teal-500/20 focus:bg-white'}`}
-                />
-            ) : (
-                <input
-                    type={type}
-                    name={name}
-                    value={formData[name]}
-                    onChange={handleChange}
-                    placeholder={placeholder}
-                    className={`w-full border-2 p-4 rounded-xl transition-all font-medium outline-none text-slate-800 placeholder-slate-300 ${errors[name] ? 'border-rose-400 bg-rose-50 focus:border-rose-500 focus:ring-4 focus:ring-rose-500/20' : 'border-slate-200 bg-slate-50 focus:border-teal-500 focus:ring-4 focus:ring-teal-500/20 focus:bg-white'}`}
-                />
-            )}
-            {errors[name] && (
-                <p className="text-rose-500 text-xs font-medium mt-1 pl-1">⚠ {errors[name]}</p>
-            )}
-        </div>
-    );
+
 
     return (
         <form id="order-form" onSubmit={handleSubmit} className="space-y-6 pb-6">
@@ -134,10 +102,10 @@ export default function OrderForm({ onSubmit, isSubmitting, config, metadata, es
 
             {/* Form Fields */}
             <div className="space-y-4">
-                <InputField label="Nama Lengkap" name="name" placeholder="Contoh: Budi Santoso" icon={User} required />
-                <InputField label="Nomor WhatsApp Aktif" name="phone" type="tel" placeholder="081234567890" icon={Phone} required />
-                <InputField label="Alamat Lengkap" name="address" placeholder="Jl. Contoh No. 123, Kota, Provinsi..." icon={MapPin} required multiline />
-                <InputField label="Catatan Tambahan" name="notes" placeholder="Request khusus, warna preferensi, atau pertanyaan..." icon={FileText} multiline />
+                <InputField label="Nama Lengkap" name="name" value={formData.name} onChange={handleChange} errors={errors} placeholder="Contoh: Budi Santoso" icon={User} required />
+                <InputField label="Nomor WhatsApp Aktif" name="phone" value={formData.phone} onChange={handleChange} errors={errors} type="tel" placeholder="081234567890" icon={Phone} required />
+                <InputField label="Alamat Lengkap" name="address" value={formData.address} onChange={handleChange} errors={errors} placeholder="Jl. Contoh No. 123, Kota, Provinsi..." icon={MapPin} required multiline />
+                <InputField label="Catatan Tambahan" name="notes" value={formData.notes} onChange={handleChange} errors={errors} placeholder="Request khusus, warna preferensi, atau pertanyaan..." icon={FileText} multiline />
             </div>
 
             {/* Price Summary Before Submit */}
@@ -187,3 +155,35 @@ export default function OrderForm({ onSubmit, isSubmitting, config, metadata, es
         </form>
     );
 }
+
+const InputField = ({ label, name, value, onChange, errors, type = 'text', placeholder, icon: Icon, required, multiline }) => (
+    <div>
+        <label className="block text-sm font-semibold text-slate-700 mb-1.5 flex items-center gap-1.5">
+            {Icon && <Icon size={14} className="text-slate-400" />}
+            {label}
+            {required && <span className="text-rose-500 text-xs">*</span>}
+        </label>
+        {multiline ? (
+            <textarea
+                name={name}
+                value={value}
+                onChange={onChange}
+                rows="3"
+                placeholder={placeholder}
+                className={`w-full border-2 p-4 rounded-xl transition-all font-medium outline-none resize-none text-slate-800 placeholder-slate-300 ${errors[name] ? 'border-rose-400 bg-rose-50 focus:border-rose-500 focus:ring-4 focus:ring-rose-500/20' : 'border-slate-200 bg-slate-50 focus:border-teal-500 focus:ring-4 focus:ring-teal-500/20 focus:bg-white'}`}
+            />
+        ) : (
+            <input
+                type={type}
+                name={name}
+                value={value}
+                onChange={onChange}
+                placeholder={placeholder}
+                className={`w-full border-2 p-4 rounded-xl transition-all font-medium outline-none text-slate-800 placeholder-slate-300 ${errors[name] ? 'border-rose-400 bg-rose-50 focus:border-rose-500 focus:ring-4 focus:ring-rose-500/20' : 'border-slate-200 bg-slate-50 focus:border-teal-500 focus:ring-4 focus:ring-teal-500/20 focus:bg-white'}`}
+            />
+        )}
+        {errors[name] && (
+            <p className="text-rose-500 text-xs font-medium mt-1 pl-1">⚠ {errors[name]}</p>
+        )}
+    </div>
+);

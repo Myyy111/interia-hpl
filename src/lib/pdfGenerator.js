@@ -13,7 +13,7 @@ export async function generateQuotationPDF({ config, metadata, estimatedPrice, c
     // --- BRAND COLORS ---
     const colorGold = [176, 141, 87]; // #b08d57
     const colorEspresso = [74, 66, 62]; // #4a423e
-    const colorTeal = [20, 184, 166]; // #14b8a6
+
 
     // --- HEADER ---
     doc.setFillColor(...colorEspresso);

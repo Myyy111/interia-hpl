@@ -4,19 +4,14 @@ import { LayoutDashboard, ShoppingCart, Package, Settings, LogOut, ChevronDown }
 import AdminLogin from './AdminLogin';
 
 const AdminLayout = () => {
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [isLoading, setIsLoading] = useState(true);
+    const [isAuthenticated, setIsAuthenticated] = useState(() => localStorage.getItem('admin_auth') === 'true');
+    const [isLoading] = useState(false);
     const [showSettingsDropdown, setShowSettingsDropdown] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
-        const auth = localStorage.getItem('admin_auth');
-        if (auth === 'true') {
-            setIsAuthenticated(true);
-        }
-        setIsLoading(false);
-        // Close mobile menu on route change
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setIsMobileMenuOpen(false);
     }, [navigate]);
 

@@ -18,7 +18,10 @@ const CMSCatalog = () => {
             await api.updateSettings(settings);
             setMessage('Berhasil disimpan!');
             setTimeout(() => setMessage(''), 3000);
-        } catch (e) { setMessage('Gagal simpan'); }
+        } catch (error) { 
+            console.error(error);
+            setMessage('Gagal simpan'); 
+        }
         setIsSaving(false);
     };
 

@@ -35,33 +35,7 @@ export default function RoomSizeForm({ config, updateConfig }) {
         updateConfig('room', { shape });
     };
 
-    const InputField = ({ label, name, placeholder, unit = 'cm', tooltip }) => (
-        <div>
-            <label className="block text-sm font-semibold text-slate-700 mb-1.5 flex items-center gap-1">
-                {label} <span className="text-slate-400 font-normal text-xs">({unit})</span>
-                {tooltip && <Tooltip text={tooltip} />}
-            </label>
-            <div className="relative">
-                <input
-                    type="number"
-                    name={name}
-                    value={room[name] || ''}
-                    onChange={handleChange}
-                    placeholder={placeholder}
-                    min="50"
-                    max="2000"
-                    step="10"
-                    className="w-full border-2 border-slate-200 bg-slate-50 p-4 pr-12 rounded-xl focus:border-teal-500 focus:ring-4 focus:ring-teal-500/20 transition-all font-semibold outline-none text-slate-800 placeholder-slate-300"
-                />
-                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm font-bold text-slate-400">{unit}</span>
-            </div>
-            {room[name] > 0 && (
-                <p className="text-xs text-teal-600 font-medium mt-1 pl-1">
-                    ≈ {(room[name] / 100).toFixed(2)} meter
-                </p>
-            )}
-        </div>
-    );
+
 
     return (
         <div className="space-y-8 pb-6">
@@ -113,18 +87,24 @@ export default function RoomSizeForm({ config, updateConfig }) {
                 <InputField
                     label="Panjang Utama"
                     name="length"
+                    value={room.length}
+                    onChange={handleChange}
                     placeholder="300"
                     tooltip="Panjang terpanjang ruangan. Contoh: ruangan 3 meter masukkan 300"
                 />
                 <InputField
                     label="Lebar Utama"
                     name="width"
+                    value={room.width}
+                    onChange={handleChange}
                     placeholder="300"
                     tooltip="Lebar ruangan dari kiri ke kanan. Contoh: 4 meter = 400 cm"
                 />
                 <InputField
                     label="Tinggi Plafon"
                     name="height"
+                    value={room.height}
+                    onChange={handleChange}
                     placeholder="280"
                     tooltip="Tinggi ruangan dari lantai ke plafon. Umumnya 240-300 cm"
                 />
@@ -201,3 +181,31 @@ export default function RoomSizeForm({ config, updateConfig }) {
         </div>
     );
 }
+
+const InputField = ({ label, name, value, onChange, placeholder, unit = 'cm', tooltip }) => (
+    <div>
+        <label className="block text-sm font-semibold text-slate-700 mb-1.5 flex items-center gap-1">
+            {label} <span className="text-slate-400 font-normal text-xs">({unit})</span>
+            {tooltip && <Tooltip text={tooltip} />}
+        </label>
+        <div className="relative">
+            <input
+                type="number"
+                name={name}
+                value={value || ''}
+                onChange={onChange}
+                placeholder={placeholder}
+                min="50"
+                max="2000"
+                step="10"
+                className="w-full border-2 border-slate-200 bg-slate-50 p-4 pr-12 rounded-xl focus:border-teal-500 focus:ring-4 focus:ring-teal-500/20 transition-all font-semibold outline-none text-slate-800 placeholder-slate-300"
+            />
+            <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm font-bold text-slate-400">{unit}</span>
+        </div>
+        {value > 0 && (
+            <p className="text-xs text-teal-600 font-medium mt-1 pl-1">
+                ≈ {(value / 100).toFixed(2)} meter
+            </p>
+        )}
+    </div>
+);

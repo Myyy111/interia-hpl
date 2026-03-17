@@ -8,8 +8,8 @@ export default function AdminOrders() {
     const [loading, setLoading] = useState(true);
     const [selectedOrder, setSelectedOrder] = useState(null);
 
-    const fetchOrders = () => {
-        setLoading(true);
+    const fetchOrders = (showLoader = false) => {
+        if (showLoader) setLoading(true);
         api.getOrders().then((data) => {
             // Hanya tampilkan order yang sudah di-submit beneran (punya customer & bukan sekadar Draft)
             const realOrders = data.filter(o => o.status !== 'Draft' && o.customer?.name);
@@ -22,12 +22,14 @@ export default function AdminOrders() {
     };
 
     useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         fetchOrders();
     }, []);
 
     const handleStatusChange = async (id, status) => {
+        // Optimistic UI updates could be added here
         await api.updateOrderStatus(id, status);
-        fetchOrders();
+        fetchOrders(true);
     };
 
     if (loading) {

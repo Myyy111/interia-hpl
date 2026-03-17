@@ -39,7 +39,6 @@ export default function Navbar({ contactData }) {
 
     const isHeaderSolid = isScrolled || mobileMenuOpen;
     const navTextColor = isHeaderSolid ? 'text-slate-700 hover:text-indigo-600' : 'text-slate-200 hover:text-white';
-    const logoTextColor = isHeaderSolid ? 'text-slate-900' : 'text-white';
 
     return (
         <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isHeaderSolid ? 'bg-white shadow-md py-4' : 'bg-transparent py-6'}`}>

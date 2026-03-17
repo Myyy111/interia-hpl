@@ -5,8 +5,8 @@ export default function AdminProducts() {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    const fetchProducts = () => {
-        setLoading(true);
+    const fetchProducts = (showLoader = false) => {
+        if (showLoader) setLoading(true);
         api.getProducts().then((data) => {
             setProducts(data);
             setLoading(false);
@@ -14,12 +14,13 @@ export default function AdminProducts() {
     };
 
     useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         fetchProducts();
     }, []);
 
     const handlePriceChange = async (id, newPrice) => {
         await api.updateProduct(id, { basePrice: Number(newPrice) });
-        fetchProducts();
+        fetchProducts(true);
     };
 
     if (loading) return <div>Loading...</div>;

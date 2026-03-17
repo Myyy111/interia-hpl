@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Eye, X, Image as ImageIcon } from 'lucide-react';
 import { api } from '../lib/api';
 import RoomPreview2D from '../components/RoomPreview2D';
+import { MATERIAL_COLORS, WALL_POS } from '../lib/constants';
 
 export default function AdminOrders() {
     const [orders, setOrders] = useState([]);
@@ -185,9 +186,26 @@ export default function AdminOrders() {
                                                 <span className="font-medium">{selectedOrder.config?.design?.model || '-'}</span>
                                             </li>
                                             <li className="flex justify-between border-b border-slate-100 pb-1">
-                                                <span className="text-slate-500">Jumlah Aksesori:</span>
+                                                <span className="text-slate-500">Material Utama:</span>
+                                                <span className="font-medium text-teal-700">
+                                                    {MATERIAL_COLORS[selectedOrder.config?.design?.materialId]?.name || 'Plywood / HPL'}
+                                                </span>
+                                            </li>
+                                            <li className="flex justify-between border-b border-slate-100 pb-1">
+                                                <span className="text-slate-500">Aksesori Tambahan:</span>
                                                 <span className="font-medium">{selectedOrder.config?.design?.accessories?.length || 0} item</span>
                                             </li>
+                                            {selectedOrder.config?.design?.accessories?.length > 0 && (
+                                                <li className="pt-1">
+                                                    <div className="flex flex-wrap gap-1">
+                                                        {selectedOrder.config.design.accessories.map((accId, i) => (
+                                                            <span key={i} className="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded border border-slate-200">
+                                                                {accId}
+                                                            </span>
+                                                        ))}
+                                                    </div>
+                                                </li>
+                                            )}
                                         </ul>
                                     </div>
                                     
@@ -200,7 +218,7 @@ export default function AdminOrders() {
                                             </li>
                                             {selectedOrder.config?.fixtures?.map((fix, idx) => (
                                                 <li key={idx} className="flex justify-between border-b border-slate-100 pb-1 text-xs text-slate-500">
-                                                    <span>- {fix.type} ({fix.position})</span>
+                                                    <span>- {fix.type === 'door' ? 'Pintu' : 'Jendela'} (Dinding {WALL_POS[fix.position] || fix.position})</span>
                                                     <span>{fix.width}x{fix.height}cm</span>
                                                 </li>
                                             ))}

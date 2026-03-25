@@ -92,6 +92,7 @@ export default function WelcomeScreen({ onStart }) {
                 <p className="mt-5 text-slate-500 text-sm">
                     ✓ Gratis &nbsp;&nbsp; ✓ Tanpa daftar &nbsp;&nbsp; ✓ Estimasi instan
                 </p>
+                <p className="text-[10px] text-slate-800/10 mt-8">v1.1</p>
             </div>
         </div>
     );

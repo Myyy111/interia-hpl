@@ -51,7 +51,6 @@ export default function Navbar({ contactData }) {
                         <span className={`font-['Playfair_Display'] text-[28px] font-bold leading-[0.85] transition-colors duration-300 ${isHeaderSolid ? 'text-[#b08d57]' : 'text-white'}`}>Afandi</span>
                         <div className="flex items-center gap-1.5 mt-2">
                              <span className={`font-['Cinzel'] text-[10px] tracking-[0.34em] font-bold pl-0.5 transition-colors duration-300 ${isHeaderSolid ? 'text-[#4a423e]' : 'text-slate-300'}`}>INTERIOR</span>
-                             <span className="text-[8px] bg-teal-500/20 text-teal-500 px-1 py-0.5 rounded-sm font-bold">1.1</span>
                         </div>
                     </div>
                 </Link>

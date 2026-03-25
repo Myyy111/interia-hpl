@@ -49,7 +49,10 @@ export default function Navbar({ contactData }) {
                     <img src={isHeaderSolid ? "/brand/logo-icon-dark.png" : "/brand/logo-icon-light.png"} alt="Afandi Interior Logo" className="w-[72px] h-[72px] object-contain drop-shadow-md transition-all duration-300" />
                     <div className="flex flex-col items-start ml-0 mt-1">
                         <span className={`font-['Playfair_Display'] text-[28px] font-bold leading-[0.85] transition-colors duration-300 ${isHeaderSolid ? 'text-[#b08d57]' : 'text-white'}`}>Afandi</span>
-                        <span className={`font-['Cinzel'] text-[10px] mt-2 tracking-[0.34em] font-bold pl-0.5 transition-colors duration-300 ${isHeaderSolid ? 'text-[#4a423e]' : 'text-slate-300'}`}>INTERIOR</span>
+                        <div className="flex items-center gap-1.5 mt-2">
+                             <span className={`font-['Cinzel'] text-[10px] tracking-[0.34em] font-bold pl-0.5 transition-colors duration-300 ${isHeaderSolid ? 'text-[#4a423e]' : 'text-slate-300'}`}>INTERIOR</span>
+                             <span className="text-[8px] bg-teal-500/20 text-teal-500 px-1 py-0.5 rounded-sm font-bold">1.1</span>
+                        </div>
                     </div>
                 </Link>
 

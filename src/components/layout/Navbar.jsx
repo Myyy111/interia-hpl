@@ -73,7 +73,14 @@ export default function Navbar({ contactData }) {
                 <div className="hidden md:flex items-center">
                     <Link
                         to="/configurator"
-                        className={`flex items-center gap-2 px-6 py-2.5 rounded-full font-semibold text-sm transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 ${isHeaderSolid ? 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-indigo-500/30' : 'bg-white text-slate-900 hover:bg-slate-50'}`}
+                        className={`
+                            flex items-center gap-2 px-6 py-2.5 rounded-full font-bold text-sm transition-all shadow-lg 
+                            active:scale-95 active:shadow-inner
+                            ${isHeaderSolid 
+                                ? 'bg-[#b08d57] text-white hover:bg-[#8e7246] shadow-[#b08d57]/30' 
+                                : 'bg-white text-slate-900 hover:bg-[#f8f5f0] hover:text-[#8e7246] shadow-white/20'
+                            }
+                        `}
                     >
                         Mulai Desain <ArrowRight size={16} />
                     </Link>
@@ -81,7 +88,7 @@ export default function Navbar({ contactData }) {
 
                 {/* Mobile menu toggle */}
                 <button
-                    className="md:hidden p-2 rounded-lg"
+                    className={`md:hidden p-2 rounded-lg transition-colors ${isHeaderSolid ? 'hover:bg-slate-100' : 'hover:bg-white/10'}`}
                     onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 >
                     {mobileMenuOpen ? (
@@ -100,14 +107,14 @@ export default function Navbar({ contactData }) {
                             key={link.name}
                             href={link.href}
                             onClick={(e) => handleNavClick(e, link.href)}
-                            className="text-slate-700 font-medium text-lg py-2 border-b border-slate-50"
+                            className="text-slate-700 font-medium text-lg py-2 border-b border-slate-50 hover:text-[#b08d57] transition-colors"
                         >
                             {link.name}
                         </a>
                     ))}
                     <Link
                         to="/configurator"
-                        className="flex items-center justify-center gap-2 w-full py-4 mt-4 bg-indigo-600 text-white rounded-xl font-bold shadow-md shadow-indigo-600/20"
+                        className="flex items-center justify-center gap-2 w-full py-4 mt-4 bg-[#b08d57] text-white rounded-xl font-bold shadow-md shadow-[#b08d57]/20 active:scale-[0.98] transition-all"
                     >
                         Mulai Desain Sekarang <ArrowRight size={20} />
                     </Link>

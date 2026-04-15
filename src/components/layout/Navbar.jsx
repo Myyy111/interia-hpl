@@ -62,9 +62,10 @@ export default function Navbar({ contactData }) {
                             key={link.name}
                             href={link.href}
                             onClick={(e) => handleNavClick(e, link.href)}
-                            className={`text-sm font-medium transition-colors ${navTextColor}`}
+                            className={`relative text-sm font-medium transition-colors group ${navTextColor}`}
                         >
                             {link.name}
+                            <span className={`absolute -bottom-1 left-0 w-0 h-0.5 rounded-full transition-all duration-300 group-hover:w-full ${isHeaderSolid ? 'bg-[#b08d57]' : 'bg-white'}`}></span>
                         </a>
                     ))}
                 </nav>

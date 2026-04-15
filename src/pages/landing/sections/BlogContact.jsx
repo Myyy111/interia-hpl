@@ -28,7 +28,7 @@ export function Blog({ cmsData, contactData }) {
     return (
         <section className="py-24 bg-white relative">
             <div className="max-w-7xl mx-auto px-6 lg:px-8">
-                <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+                <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6 reveal">
                     <div className="space-y-4">
                         <h2 className="text-4xl font-extrabold text-slate-900">Inspirasi & Edukasi</h2>
                         <p className="text-slate-500 font-light text-lg">Tips merawat dan ide desain dari arsitek kami.</p>
@@ -44,7 +44,7 @@ export function Blog({ cmsData, contactData }) {
                 {/* Mobile Slider / Desktop Grid */}
                 <div className="flex md:grid md:grid-cols-3 gap-8 overflow-x-auto md:overflow-visible pb-8 md:pb-0 snap-x snap-mandatory hide-scrollbar">
                     {articles.map((a, i) => (
-                        <article key={i} className="bg-slate-50 rounded-2xl overflow-hidden border border-slate-100 group shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 shrink-0 w-[85vw] md:w-auto snap-center">
+                        <article key={i} className={`bg-slate-50 rounded-2xl overflow-hidden border border-slate-100 group shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 shrink-0 w-[85vw] md:w-auto snap-center reveal reveal-delay-${(i+1)*100}`}>
                             <div className="h-48 overflow-hidden relative">
                                 <div className="absolute top-4 left-4 bg-white/90 backdrop-blur text-xs font-bold text-slate-900 px-3 py-1.5 rounded-full z-10 shadow-sm">
                                     {a.date}
@@ -87,21 +87,21 @@ export function Contact({ cmsData }) {
             <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10 flex flex-col md:flex-row gap-16 items-center">
 
                 <div className="flex-1 space-y-8">
-                    <div className="text-sm font-bold text-teal-400 uppercase tracking-widest relative inline-block">
+                    <div className="text-sm font-bold text-teal-400 uppercase tracking-widest relative inline-block reveal">
                         Siap untuk memulai?
                         <div className="absolute -bottom-2 left-0 w-1/2 h-1 bg-teal-400 rounded-full"></div>
                     </div>
 
-                    <h2 className="text-4xl md:text-5xl font-extrabold text-white leading-tight">
+                    <h2 className="text-4xl md:text-5xl font-extrabold text-white leading-tight reveal">
                         Kunjungi <span className="text-indigo-400">Workshop</span><br />atau hubungi kami.
                     </h2>
 
-                    <p className="text-lg leading-relaxed font-light text-slate-400 max-w-md">
+                    <p className="text-lg leading-relaxed font-light text-slate-400 max-w-md reveal">
                         Tim desain dan spesialis perakitan kami siap menjawab setiap pertanyaan Anda mengenai pembuatan furnitur.
                     </p>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
-                        <div className="flex items-start gap-4">
+                        <div className="flex items-start gap-4 reveal-left">
                             <div className="w-12 h-12 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center shrink-0">
                                 <Phone className="text-teal-400" />
                             </div>
@@ -110,7 +110,7 @@ export function Contact({ cmsData }) {
                                 <p className="text-slate-400">{cmsData.phone}</p>
                             </div>
                         </div>
-                        <div className="flex items-start gap-4">
+                        <div className="flex items-start gap-4 reveal-right">
                             <div className="w-12 h-12 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center shrink-0">
                                 <Mail className="text-teal-400" />
                             </div>

@@ -124,6 +124,39 @@ export const api = {
         const data = await getWebsiteData();
         return data.products;
     },
+    updateProduct: async (id, productData) => {
+        const currentData = await getWebsiteData();
+        const newProducts = currentData.products.map(p => 
+            p.id === id ? { ...p, ...productData } : p
+        );
+        const newData = { ...currentData, products: newProducts };
+        
+        const { error } = await supabase
+            .from('website_data')
+            .update({ content: newData })
+            .eq('id', 'primary_data');
+        
+        if (error) throw error;
+        return newProducts;
+    },
+    addProduct: async (productData) => {
+        const currentData = await getWebsiteData();
+        const newProduct = { 
+            id: Date.now().toString(), 
+            active: true,
+            ...productData 
+        };
+        const newProducts = [...currentData.products, newProduct];
+        const newData = { ...currentData, products: newProducts };
+        
+        const { error } = await supabase
+            .from('website_data')
+            .update({ content: newData })
+            .eq('id', 'primary_data');
+        
+        if (error) throw error;
+        return newProducts;
+    },
     getMaterials: async () => {
         const data = await getWebsiteData();
         return data.materials;

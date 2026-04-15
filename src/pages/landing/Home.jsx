@@ -10,9 +10,11 @@ import { Products, Technology } from './sections/ProductsTech';
 import { HowItWorks, Portfolio } from './sections/ProcessPortfolio';
 import { Team, Testimonials, FAQ } from './sections/MoreInfo';
 import { Blog, Contact } from './sections/BlogContact';
+import { useScrollReveal } from '../../hooks/useScrollReveal';
 
 export default function Home() {
     const [settings, setSettings] = useState(null);
+    useScrollReveal();
 
     // Gulir ke atas saat halaman dimuat
     useEffect(() => {

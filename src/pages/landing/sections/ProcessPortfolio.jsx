@@ -38,7 +38,7 @@ export function HowItWorks({ cmsData }) {
     return (
         <section className="py-24 bg-white relative">
             <div className="max-w-7xl mx-auto px-6 lg:px-8">
-                <div className="text-center max-w-2xl mx-auto mb-20 space-y-4">
+                <div className="text-center max-w-2xl mx-auto mb-20 space-y-4 reveal">
                     <div className="text-sm font-bold text-indigo-600 uppercase tracking-widest">Alur Kerja Mudah</div>
                     <h2 className="text-4xl font-extrabold text-slate-900 leading-tight">Cara Kerja Pemesanan</h2>
                 </div>
@@ -48,7 +48,7 @@ export function HowItWorks({ cmsData }) {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
                         {finalSteps.map((step, idx) => (
-                            <div key={idx} className="relative group p-6 text-center transform hover:-translate-y-2 transition-transform duration-300">
+                            <div key={idx} className={`relative group p-6 text-center transform hover:-translate-y-2 transition-transform duration-300 reveal reveal-delay-${(idx+1)*100}`}>
                                 <div className="mx-auto w-20 h-20 rounded-2xl flex items-center justify-center shadow-lg relative z-10 mb-8 border border-white" style={{ backgroundColor: 'var(--tw-colors-slate-50)' }}>
                                     <div className={`absolute inset-1 rounded-xl ${step.color} flex items-center justify-center shadow-inner group-hover:shadow-[0_0_20px_var(--color-current)]`}>
                                         {step.icon}
@@ -85,7 +85,7 @@ export function Portfolio({ cmsData }) {
     return (
         <section id="portfolio" className="py-24 bg-slate-50">
             <div className="max-w-7xl mx-auto px-6 lg:px-8">
-                <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+                <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6 reveal">
                     <div className="space-y-4">
                         <h2 className="text-4xl font-extrabold text-slate-900">Mahakarya Kami</h2>
                         <p className="text-slate-500 text-lg font-light">Eksplorasi estetika dan material dari klien sebelumnya.</p>
@@ -109,7 +109,7 @@ export function Portfolio({ cmsData }) {
                                 relative rounded-3xl overflow-hidden group shadow-md transition-all duration-500 
                                 shrink-0 w-[85vw] md:w-auto snap-center
                                 ${w.span} ${w.span.includes('col-span-2') ? 'md:col-span-2' : ''} 
-                                h-[450px] md:h-auto
+                                h-[450px] md:h-auto reveal reveal-delay-${(i+1)*100}
                             `}
                         >
                             <img src={w.img} alt={w.title} className="w-full h-full object-cover transform md:group-hover:scale-105 transition-transform duration-700" />

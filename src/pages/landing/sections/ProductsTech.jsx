@@ -31,7 +31,7 @@ export function Products({ cmsData }) {
     return (
         <section id="produk" className="py-24 bg-white">
             <div className="max-w-7xl mx-auto px-6 lg:px-8">
-                <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+                <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6 reveal">
                     <div className="max-w-xl">
                         <div className="text-sm font-bold text-teal-600 uppercase tracking-widest mb-4">Katalog Produk</div>
                         <h2 className="text-4xl font-extrabold text-slate-900 leading-tight">Furniture yang dirancang <br />untuk ruangan nyata Anda.</h2>
@@ -46,7 +46,7 @@ export function Products({ cmsData }) {
                     {products.map((p, i) => (
                         <div 
                             key={i} 
-                            className="group overflow-hidden rounded-3xl relative h-[450px] shrink-0 w-[85vw] md:w-auto snap-center cursor-pointer shadow-md hover:shadow-2xl transition-all duration-500"
+                            className={`group overflow-hidden rounded-3xl relative h-[450px] shrink-0 w-[85vw] md:w-auto snap-center cursor-pointer shadow-md hover:shadow-2xl transition-all duration-500 reveal reveal-delay-${(i+1)*100}`}
                         >
                             <img src={p.img} alt={p.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 md:group-hover:scale-105" />
                             <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/40 to-transparent"></div>
@@ -122,7 +122,7 @@ export function Technology({ cmsData }) {
                     </div>
                 </div>
 
-                <div className="flex-1 space-y-8 order-1 md:order-2">
+                <div className="flex-1 space-y-8 order-1 md:order-2 reveal-right">
                     <div className="inline-flex items-center gap-2 text-teal-400 font-black tracking-[0.2em] uppercase text-xs bg-teal-900/40 px-5 py-2.5 rounded-full border border-teal-500/30 shadow-lg shadow-teal-900/20">
                         <Laptop size={16} /> Teknologi Afandi Interior
                     </div>

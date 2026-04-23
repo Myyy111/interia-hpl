@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Eye, X, Image as ImageIcon, ShoppingBag, Clock, CheckCircle2, AlertCircle, Phone, MapPin, Package, Tool } from 'lucide-react';
+import { Eye, X, Image as ImageIcon, ShoppingBag, Clock, CheckCircle2, AlertCircle, Phone, MapPin, Package, Tool, User } from 'lucide-react';
 import { api, supabase } from '../lib/api';
 import RoomPreview2D from '../components/RoomPreview2D';
 import { MATERIAL_COLORS, WALL_POS } from '../lib/constants';

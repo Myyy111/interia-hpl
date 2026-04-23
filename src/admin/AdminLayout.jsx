@@ -82,16 +82,16 @@ const AdminLayout = () => {
     }
 
     const navItemClass = ({ isActive }) => `
-        flex items-center justify-between px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200
+        group flex items-center justify-between px-4 py-3 rounded-2xl text-[13px] font-bold transition-all duration-300
         ${isActive 
-            ? 'bg-slate-900 text-white shadow-lg shadow-slate-200 translate-x-1' 
-            : 'text-slate-500 hover:bg-slate-100 hover:text-slate-900'}
+            ? 'bg-slate-900 text-white shadow-xl shadow-slate-200 translate-x-1' 
+            : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'}
     `;
 
     const subNavItemClass = ({ isActive }) => `
-        flex items-center space-x-3 px-4 py-2 rounded-lg text-xs font-bold transition-all
+        group flex items-center space-x-3 px-4 py-2.5 rounded-xl text-[11px] font-bold transition-all duration-300
         ${isActive 
-            ? 'text-slate-900 bg-slate-100' 
+            ? 'text-slate-900 bg-slate-100 translate-x-1' 
             : 'text-slate-400 hover:text-slate-700 hover:bg-slate-50'}
     `;
 
@@ -165,21 +165,21 @@ const AdminLayout = () => {
                             </button>
                             
                             {showSettingsDropdown && (
-                                <div className="mt-2 space-y-1 pl-4">
+                                <div className="mt-2 space-y-1 pl-4 border-l-2 border-slate-50 ml-6 animate-fade-in">
                                     <NavLink to="/admin/settings" end className={subNavItemClass}>
-                                        <div className="w-1.5 h-1.5 rounded-full bg-slate-300 group-[.active]:bg-slate-900"></div>
+                                        <div className="w-1 h-1 rounded-full bg-slate-300 group-[.active]:bg-slate-900 group-hover:bg-slate-900 transition-colors"></div>
                                         <span>Hero & Landing</span>
                                     </NavLink>
                                     <NavLink to="/admin/settings/catalog" className={subNavItemClass}>
-                                        <div className="w-1.5 h-1.5 rounded-full bg-slate-300"></div>
+                                        <div className="w-1 h-1 rounded-full bg-slate-300 group-[.active]:bg-slate-900 group-hover:bg-slate-900 transition-colors"></div>
                                         <span>Portofolio Grid</span>
                                     </NavLink>
                                     <NavLink to="/admin/settings/community" className={subNavItemClass}>
-                                        <div className="w-1.5 h-1.5 rounded-full bg-slate-300"></div>
+                                        <div className="w-1 h-1 rounded-full bg-slate-300 group-[.active]:bg-slate-900 group-hover:bg-slate-900 transition-colors"></div>
                                         <span>Tim & Testimoni</span>
                                     </NavLink>
                                     <NavLink to="/admin/settings/blog" className={subNavItemClass}>
-                                        <div className="w-1.5 h-1.5 rounded-full bg-slate-300"></div>
+                                        <div className="w-1 h-1 rounded-full bg-slate-300 group-[.active]:bg-slate-900 group-hover:bg-slate-900 transition-colors"></div>
                                         <span>Manajemen Blog</span>
                                     </NavLink>
                                 </div>
@@ -188,21 +188,21 @@ const AdminLayout = () => {
                     </nav>
 
                     {/* User Profile / Logout */}
-                    <div className="p-6 border-t border-slate-50 bg-slate-50/30">
+                    <div className="p-6 border-t border-slate-100 bg-slate-50/20">
                         <div className="flex items-center gap-4 px-2 mb-6">
-                            <div className="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center text-slate-600 border border-white">
+                            <div className="w-10 h-10 rounded-2xl bg-white shadow-sm flex items-center justify-center text-slate-400 border border-slate-100">
                                 <User size={20} />
                             </div>
                             <div className="flex-1 min-w-0">
-                                <p className="text-sm font-bold text-slate-900 truncate">Administrator</p>
-                                <p className="text-xs text-slate-400 truncate">Super Admin</p>
+                                <p className="text-[11px] font-black text-slate-900 uppercase tracking-widest truncate">Administrator</p>
+                                <p className="text-[10px] font-bold text-slate-400 truncate">Super Admin</p>
                             </div>
                         </div>
                         <button 
                             onClick={handleLogout}
-                            className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-sm font-bold text-rose-500 bg-white border border-rose-100 hover:bg-rose-500 hover:text-white transition-all shadow-sm active:scale-95"
+                            className="w-full flex items-center justify-center gap-2 px-4 py-3.5 rounded-2xl text-[11px] font-black uppercase tracking-widest text-rose-500 bg-white border border-rose-100 hover:bg-rose-500 hover:text-white transition-all shadow-sm shadow-rose-100 active:scale-95"
                         >
-                            <LogOut size={18} />
+                            <LogOut size={16} />
                             Keluar Sistem
                         </button>
                     </div>

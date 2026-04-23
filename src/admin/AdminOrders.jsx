@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Eye, X, Image as ImageIcon, ShoppingBag, Clock, CheckCircle2, AlertCircle, Phone, MapPin, Package, Tool, User } from 'lucide-react';
+import { Eye, X, Image as ImageIcon, ShoppingBag, Clock, CheckCircle2, AlertCircle, Phone, MapPin, Package, Tool, User as UserIcon } from 'lucide-react';
 import { api, supabase } from '../lib/api';
 import RoomPreview2D from '../components/RoomPreview2D';
 import { MATERIAL_COLORS, WALL_POS } from '../lib/constants';
@@ -199,7 +199,7 @@ export default function AdminOrders() {
                                 <div className="space-y-10">
                                     <section>
                                         <div className="flex items-center gap-3 mb-6">
-                                            <div className="w-8 h-8 rounded-lg bg-teal-50 text-teal-600 flex items-center justify-center border border-teal-100"><User size={16} /></div>
+                                            <div className="w-8 h-8 rounded-lg bg-teal-50 text-teal-600 flex items-center justify-center border border-teal-100"><UserIcon size={16} /></div>
                                             <h4 className="text-sm font-black text-slate-900 uppercase tracking-widest">Informasi Pelanggan</h4>
                                         </div>
                                         <div className="grid grid-cols-2 gap-6 bg-slate-50/50 p-6 rounded-2xl border border-slate-100">

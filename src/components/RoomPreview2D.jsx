@@ -71,7 +71,8 @@ const FixtureElements = ({ fixtures, room }) => {
 };
 
 export default function RoomPreview2D({ config }) {
-    const { room, fixtures, productSelection, design } = config;
+    if (!config) return <div className="p-10 text-slate-300 text-xs font-bold uppercase tracking-widest text-center">Data desain tidak tersedia</div>;
+    const { room = {}, fixtures = [], productSelection = {}, design = {} } = config;
 
     const matColor = MATERIAL_COLORS[design?.materialId] || { fill: '#e2e8f0', stroke: '#94a3b8', label: 'Default' };
 

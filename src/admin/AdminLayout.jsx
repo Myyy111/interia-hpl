@@ -16,17 +16,52 @@ import {
     Users
 } from 'lucide-react';
 import AdminLogin from './AdminLogin';
+import { supabase } from '../lib/api';
 
 const AdminLayout = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(() => localStorage.getItem('admin_auth') === 'true');
     const [isLoading] = useState(false);
     const [showSettingsDropdown, setShowSettingsDropdown] = useState(true); // Default open for easier navigation
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [pendingCount, setPendingCount] = useState(0);
     const navigate = useNavigate();
 
     useEffect(() => {
         setIsMobileMenuOpen(false);
     }, [navigate]);
+
+    const fetchPendingCount = async () => {
+        try {
+            const { count, error } = await supabase
+                .from('orders')
+                .select('*', { count: 'exact', head: true })
+                .neq('status', 'Selesai')
+                .neq('status', 'Draft');
+            
+            if (!error) setPendingCount(count || 0);
+        } catch (err) {
+            console.error('Error fetching count:', err);
+        }
+    };
+
+    useEffect(() => {
+        if (!isAuthenticated) return;
+        
+        fetchPendingCount();
+
+        const channel = supabase
+            .channel('sidebar-orders')
+            .on(
+                'postgres_changes', 
+                { event: '*', table: 'orders', schema: 'public' }, 
+                () => fetchPendingCount()
+            )
+            .subscribe();
+
+        return () => {
+            supabase.removeChannel(channel);
+        };
+    }, [isAuthenticated]);
 
     const handleLogout = () => {
         localStorage.removeItem('admin_auth');
@@ -101,7 +136,11 @@ const AdminLayout = () => {
                                     <ShoppingCart size={18} />
                                     <span>Pesanan Masuk</span>
                                 </div>
-                                <span className="bg-rose-500 text-white text-[10px] px-2 py-0.5 rounded-full">3</span>
+                                {pendingCount > 0 && (
+                                    <span className="bg-rose-500 text-white text-[10px] px-2 py-0.5 rounded-full animate-pulse-subtle">
+                                        {pendingCount}
+                                    </span>
+                                )}
                             </NavLink>
                             <NavLink to="/admin/products" className={navItemClass}>
                                 <div className="flex items-center space-x-3">

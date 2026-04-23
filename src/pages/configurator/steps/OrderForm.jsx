@@ -121,7 +121,7 @@ export default function OrderForm({ onSubmit, isSubmitting, config, metadata, es
                         Pilih Metode Pembayaran
                     </label>
                     <div className="grid grid-cols-3 gap-3">
-                        {['Transfer BCA', 'Transfer Mandiri', 'Tunai / Cash'].map(method => (
+                        {['Transfer BCA', 'Transfer Mandiri', 'QRIS'].map(method => (
                             <button
                                 key={method}
                                 type="button"

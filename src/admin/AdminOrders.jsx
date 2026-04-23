@@ -618,12 +618,16 @@ Apakah Kakak ada waktu luang untuk kami jadwalkan *Survey Lokasi* dalam waktu de
                                             </div>
                                             <div>
                                                 <p className="text-[10px] font-black text-slate-900 uppercase tracking-widest mb-4 flex items-center gap-2"><ShoppingCart size={12} /> Panduan Pembayaran:</p>
-                                                <div className="space-y-2">
-                                                    <div className="flex items-center gap-3">
-                                                        <div className="px-2 py-0.5 bg-slate-900 text-white text-[8px] font-black rounded uppercase">BCA</div>
+                                                <div className="p-6 bg-slate-50 border border-slate-100 rounded-3xl space-y-4">
+                                                    <div className="flex items-center gap-4">
+                                                        <div className="w-10 h-6 bg-slate-800 rounded flex items-center justify-center text-[10px] text-white font-black">BCA</div>
                                                         <p className="text-xs font-black text-slate-900 tracking-widest">890 1234 567</p>
                                                     </div>
-                                                    <p className="text-[9px] text-slate-400 font-bold uppercase tracking-widest ml-12">A/N Ahmad Helmi Afandi</p>
+                                                    <div className="flex items-center gap-4 pt-2 border-t border-slate-200/50">
+                                                        <div className="w-10 h-6 bg-rose-600 rounded flex items-center justify-center text-[10px] text-white font-black uppercase">QRIS</div>
+                                                        <p className="text-[10px] font-black text-slate-900 uppercase tracking-widest">Scan QR di Toko / Chat Admin</p>
+                                                    </div>
+                                                    <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest ml-14">A/N Ahmad Helmi Afandi</p>
                                                 </div>
                                             </div>
                                         </div>

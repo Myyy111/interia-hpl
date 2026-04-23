@@ -50,22 +50,22 @@ export function Blog({ cmsData, contactData }) {
                 </div>
 
                 {/* Mobile Slider / Desktop Grid */}
-                <div className="flex md:grid md:grid-cols-3 gap-8 overflow-x-auto md:overflow-visible pb-8 md:pb-0 snap-x snap-mandatory hide-scrollbar">
+                <div className="flex md:grid md:grid-cols-3 gap-6 md:gap-8 overflow-x-auto md:overflow-visible pb-12 md:pb-0 snap-x snap-mandatory hide-scrollbar -mx-6 px-6 md:mx-0 md:px-0">
                     {articles.map((a, i) => (
-                        <article key={i} className={`bg-white rounded-2xl overflow-hidden border border-slate-100 group shadow-[0_10px_40px_-15px_rgba(0,0,0,0.1)] hover:shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] transition-all duration-500 transform hover:-translate-y-2 shrink-0 w-[85vw] md:w-auto snap-center reveal reveal-delay-${(i+1)*100}`}>
+                        <article key={i} className={`bg-white rounded-[2rem] overflow-hidden border border-slate-100 group shadow-[0_10px_40px_-15px_rgba(0,0,0,0.1)] hover:shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] transition-all duration-500 transform hover:-translate-y-2 shrink-0 w-[80vw] sm:w-[60vw] md:w-auto snap-center reveal reveal-delay-${(i+1)*100}`}>
                             <div className="h-56 overflow-hidden relative">
-                                <div className="absolute top-4 left-4 bg-white/95 backdrop-blur text-[10px] font-black text-slate-900 px-3 py-1.5 rounded-full z-10 shadow-sm border border-slate-100 uppercase tracking-widest">
+                                <div className="absolute top-5 left-5 bg-white/95 backdrop-blur text-[9px] font-black text-slate-900 px-3 py-1.5 rounded-full z-10 shadow-sm border border-slate-100 uppercase tracking-widest">
                                     {a.date}
                                 </div>
                                 <img src={a.img} alt={a.title} className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-1000" />
-                                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/20 to-transparent"></div>
+                                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/30 to-transparent"></div>
                             </div>
                             <div className="p-8">
-                                <h3 className="font-extrabold text-xl text-slate-900 mb-3 group-hover:text-teal-600 transition-colors leading-tight line-clamp-2">{a.title}</h3>
+                                <h3 className="font-extrabold text-lg md:text-xl text-slate-900 mb-3 group-hover:text-teal-600 transition-colors leading-tight line-clamp-2">{a.title}</h3>
                                 <p className="text-slate-500 text-sm leading-relaxed mb-8 font-light line-clamp-3">{a.desc}</p>
                                 <button 
                                     onClick={() => setSelectedArticle(a)}
-                                    className="text-xs font-black text-teal-600 uppercase tracking-[0.2em] cursor-pointer inline-flex items-center gap-3 group-hover:gap-5 transition-all border-none bg-transparent"
+                                    className="text-[10px] font-black text-teal-600 uppercase tracking-[0.2em] cursor-pointer inline-flex items-center gap-3 group-hover:gap-5 transition-all border-none bg-transparent"
                                 >
                                     Baca Selengkapnya
                                     <ArrowRight size={14} className="transform group-hover:translate-x-1 transition-transform" />

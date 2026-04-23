@@ -109,24 +109,24 @@ export function Portfolio({ cmsData }) {
                 </div>
 
                 {/* Magazine Grid */}
-                <div className="flex md:grid md:grid-cols-3 md:auto-rows-[280px] gap-8 overflow-x-auto md:overflow-visible pb-8 md:pb-0 snap-x snap-mandatory hide-scrollbar">
+                <div className="flex md:grid md:grid-cols-3 md:auto-rows-[280px] gap-6 md:gap-8 overflow-x-auto md:overflow-visible pb-12 md:pb-0 snap-x snap-mandatory hide-scrollbar -mx-6 px-6 md:mx-0 md:px-0">
                     {works.map((w, i) => (
                         <div 
                             key={i} 
                             onClick={() => setSelectedItem(w)}
                             className={`
-                                relative rounded-[1.5rem] overflow-hidden group shadow-xl transition-all duration-700 
-                                shrink-0 w-[85vw] md:w-auto snap-center cursor-pointer magazine-card
+                                relative rounded-[2rem] overflow-hidden group shadow-lg transition-all duration-700 
+                                shrink-0 w-[80vw] sm:w-[60vw] md:w-auto snap-center cursor-pointer magazine-card
                                 ${w.span} ${w.span.includes('col-span-2') ? 'md:col-span-2' : ''} 
-                                h-[450px] md:h-auto reveal reveal-delay-${(i+1)*100}
-                                border border-white/50
+                                h-[420px] md:h-auto reveal reveal-delay-${(i+1)*100}
+                                border border-white/40
                             `}
                         >
                             <img src={w.img} alt={w.title} className="w-full h-full object-cover transform scale-100 group-hover:scale-105 transition-transform duration-1000" />
                             
-                            <div className="absolute inset-0 z-10 flex flex-col justify-end p-6 md:p-8">
+                            <div className="absolute inset-0 z-10 flex flex-col justify-end p-6 md:p-8 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent">
                                 <div className="space-y-2 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
-                                    <span className="text-[10px] font-bold text-teal-300 uppercase tracking-widest bg-slate-900/40 backdrop-blur-md px-3 py-1 rounded-full border border-white/10">{w.category}</span>
+                                    <span className="text-[9px] font-bold text-teal-300 uppercase tracking-widest bg-white/10 backdrop-blur-md px-3 py-1 rounded-full border border-white/20 inline-block">{w.category}</span>
                                     <h3 className="text-xl md:text-2xl font-extrabold text-white leading-tight">
                                         {w.title}
                                     </h3>
@@ -134,8 +134,8 @@ export function Portfolio({ cmsData }) {
                                 </div>
                             </div>
 
-                            {/* Hover Overlay Icon */}
-                            <div className="absolute top-6 right-6 z-20 w-10 h-10 rounded-full glass flex items-center justify-center text-slate-900 opacity-0 group-hover:opacity-100 transition-all duration-500 transform scale-50 group-hover:scale-100">
+                            {/* Hover Overlay Icon (Hidden on Mobile, shown on hover/desktop) */}
+                            <div className="absolute top-6 right-6 z-20 w-10 h-10 rounded-full glass hidden md:flex items-center justify-center text-slate-900 opacity-0 group-hover:opacity-100 transition-all duration-500 transform scale-50 group-hover:scale-100">
                                 <Maximize2 size={20} />
                             </div>
                         </div>

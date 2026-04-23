@@ -243,7 +243,7 @@ Apakah Kakak ada waktu luang untuk kami jadwalkan *Survey Lokasi* dalam waktu de
                     <div className="absolute inset-0 bg-slate-950/40 backdrop-blur-md" onClick={() => setSelectedOrder(null)}></div>
                     <div className="bg-white w-full max-w-5xl rounded-[3rem] overflow-hidden shadow-2xl relative z-10 flex flex-col max-h-[90vh] animate-modal-in border border-white/20">
                         {/* Modal Header */}
-                        <div className="p-8 border-b border-slate-50 bg-white sticky top-0 z-20">
+                        <div className="p-8 border-b border-slate-50 bg-white sticky top-0 z-20 no-print">
                             <div className="flex items-center justify-between mb-8">
                                 <div className="flex items-center gap-5">
                                     <div className="w-12 h-12 rounded-2xl bg-slate-900 text-white flex items-center justify-center shadow-xl shadow-slate-200">
@@ -772,7 +772,7 @@ Apakah Kakak ada waktu luang untuk kami jadwalkan *Survey Lokasi* dalam waktu de
                         </div>
                         
                         {/* Modal Footer */}
-                        <div className="p-8 border-t border-slate-50 bg-slate-50/50 flex justify-end gap-4 sticky bottom-0 z-20">
+                        <div className="p-8 border-t border-slate-50 bg-slate-50/50 flex justify-end gap-4 sticky bottom-0 z-20 no-print">
                             {selectedOrder.customer?.phone && (
                                 <a 
                                     href={`https://wa.me/${String(selectedOrder.customer.phone || '').replace(/[^0-9]/g, '')}`} 

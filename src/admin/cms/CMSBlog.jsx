@@ -2,11 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { api } from '../../lib/api';
 import { BookOpen, Plus, FileText } from 'lucide-react';
 import { CMSHeader, SectionHeader, Input, Textarea, ImageField, Card } from './CMSComponents';
+import { useToast } from '../../components/ui/Toast';
+import { ConfirmModal } from '../../components/ui/Modal';
 
 const CMSBlog = () => {
+    const { showToast } = useToast();
     const [settings, setSettings] = useState(null);
     const [isSaving, setIsSaving] = useState(false);
-    const [message, setMessage] = useState('');
+    const [deleteConfig, setDeleteConfig] = useState({ isOpen: false, index: null });
 
     useEffect(() => {
         api.getSettings().then(setSettings);
@@ -16,11 +19,9 @@ const CMSBlog = () => {
         setIsSaving(true);
         try {
             await api.updateSettings(settings);
-            setMessage('Berhasil disimpan!');
-            setTimeout(() => setMessage(''), 3000);
+            showToast('Artikel blog berhasil diperbarui!');
         } catch (error) { 
-            console.error(error);
-            setMessage('Gagal simpan'); 
+            showToast('Gagal menyimpan artikel', 'error');
         }
         setIsSaving(false);
     };
@@ -39,9 +40,14 @@ const CMSBlog = () => {
     };
 
     const removeItem = (index) => {
-        if (window.confirm('Hapus artikel ini?')) {
-            setSettings({...settings, articles: settings.articles.filter((_, i) => i !== index)});
-        }
+        setDeleteConfig({ isOpen: true, index });
+    };
+
+    const confirmDelete = () => {
+        const { index } = deleteConfig;
+        setSettings({...settings, articles: settings.articles.filter((_, i) => i !== index)});
+        showToast('Artikel berhasil dihapus');
+        setDeleteConfig({ isOpen: false, index: null });
     };
 
     const handleImageChange = async (index, file) => {
@@ -114,6 +120,14 @@ const CMSBlog = () => {
                     ))}
                 </div>
             </div>
+
+            <ConfirmModal 
+                isOpen={deleteConfig.isOpen}
+                onClose={() => setDeleteConfig({ ...deleteConfig, isOpen: false })}
+                onConfirm={confirmDelete}
+                title="Hapus Artikel"
+                message="Apakah Anda yakin ingin menghapus artikel ini? Tindakan ini tidak dapat dibatalkan."
+            />
         </div>
     );
 };

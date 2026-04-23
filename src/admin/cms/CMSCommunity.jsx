@@ -2,11 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { api } from '../../lib/api';
 import { Users, Star, Plus } from 'lucide-react';
 import { CMSHeader, SectionHeader, Input, Textarea, ImageField, Card } from './CMSComponents';
+import { useToast } from '../../components/ui/Toast';
+import { ConfirmModal } from '../../components/ui/Modal';
 
 const CMSCommunity = () => {
+    const { showToast } = useToast();
     const [settings, setSettings] = useState(null);
     const [isSaving, setIsSaving] = useState(false);
-    const [message, setMessage] = useState('');
+    const [deleteConfig, setDeleteConfig] = useState({ isOpen: false, section: '', index: null });
 
     useEffect(() => {
         api.getSettings().then(setSettings);
@@ -16,11 +19,9 @@ const CMSCommunity = () => {
         setIsSaving(true);
         try {
             await api.updateSettings(settings);
-            setMessage('Berhasil disimpan!');
-            setTimeout(() => setMessage(''), 3000);
+            showToast('Perubahan tim & testimoni disimpan!');
         } catch (error) { 
-            console.error(error);
-            setMessage('Gagal simpan'); 
+            showToast('Gagal menyimpan perubahan', 'error');
         }
         setIsSaving(false);
     };
@@ -32,9 +33,14 @@ const CMSCommunity = () => {
     };
 
     const removeItem = (section, index) => {
-        if (window.confirm('Hapus item ini?')) {
-            setSettings({...settings, [section]: settings[section].filter((_, i) => i !== index)});
-        }
+        setDeleteConfig({ isOpen: true, section, index });
+    };
+
+    const confirmDelete = () => {
+        const { section, index } = deleteConfig;
+        setSettings({...settings, [section]: settings[section].filter((_, i) => i !== index)});
+        showToast('Item berhasil dihapus');
+        setDeleteConfig({ isOpen: false, section: '', index: null });
     };
 
     return (
@@ -126,6 +132,14 @@ const CMSCommunity = () => {
                     </div>
                 </section>
             </div>
+
+            <ConfirmModal 
+                isOpen={deleteConfig.isOpen}
+                onClose={() => setDeleteConfig({ ...deleteConfig, isOpen: false })}
+                onConfirm={confirmDelete}
+                title="Hapus Konten"
+                message="Apakah Anda yakin ingin menghapus item ini? Tindakan ini tidak dapat dibatalkan."
+            />
         </div>
     );
 };

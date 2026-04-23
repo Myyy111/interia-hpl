@@ -96,7 +96,7 @@ const AdminLayout = () => {
     `;
 
     return (
-        <div className="min-h-screen bg-[#f8fafc] flex font-sans text-slate-900">
+        <div className="h-screen bg-[#f8fafc] flex font-sans text-slate-900 overflow-hidden">
             {/* Mobile Menu Toggle */}
             <button 
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -107,7 +107,7 @@ const AdminLayout = () => {
 
             {/* Sidebar */}
             <aside className={`
-                fixed inset-y-0 left-0 z-50 w-72 bg-white border-r border-slate-200/60 transition-all duration-300 ease-in-out lg:relative lg:translate-x-0
+                fixed inset-y-0 left-0 z-50 w-72 bg-white border-r border-slate-200/60 transition-all duration-300 ease-in-out lg:sticky lg:top-0 lg:h-screen lg:translate-x-0 shrink-0
                 ${isMobileMenuOpen ? 'translate-x-0 shadow-2xl' : '-translate-x-full'}
             `}>
                 <div className="flex flex-col h-full">
@@ -222,7 +222,7 @@ const AdminLayout = () => {
             </aside>
 
             {/* Main Content */}
-            <main className="flex-1 flex flex-col min-h-screen overflow-hidden">
+            <main className="flex-1 flex flex-col h-full overflow-hidden">
                 {/* Header */}
                 <header className="h-20 bg-white/80 backdrop-blur-md border-b border-slate-200/60 flex items-center px-8 lg:px-12 justify-between sticky top-0 z-40 shrink-0">
                     <div className="flex items-center gap-4">

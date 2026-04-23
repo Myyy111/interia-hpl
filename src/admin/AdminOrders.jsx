@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Eye, X, Image as ImageIcon, ShoppingBag, Clock, CheckCircle2, AlertCircle, Phone, MapPin, Package, Wrench, User, FileText, ShoppingCart } from 'lucide-react';
+import { Eye, X, Image as ImageIcon, ShoppingBag, Clock, CheckCircle2, AlertCircle, Phone, MapPin, Package, Wrench, User, FileText, ShoppingCart, Mail, Copy, MessageSquare } from 'lucide-react';
 import { api, supabase } from '../lib/api';
 import RoomPreview2D from '../components/RoomPreview2D';
 import { MATERIAL_COLORS, WALL_POS } from '../lib/constants';
@@ -9,7 +9,30 @@ export default function AdminOrders() {
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
     const [selectedOrder, setSelectedOrder] = useState(null);
-    const [activeTab, setActiveTab] = useState('summary'); // summary, rab, invoice
+    const [activeTab, setActiveTab] = useState('summary');
+
+    const copyToClipboard = (text, label) => {
+        navigator.clipboard.writeText(text);
+        alert(`${label} berhasil disalin ke clipboard!`);
+    };
+
+    const handleSendEmail = (order) => {
+        const subject = encodeURIComponent(`Dokumen Pesanan Afandi Interior - #${String(order.id).split('-')[0].toUpperCase()}`);
+        const body = encodeURIComponent(`Halo ${order.customer?.name},\n\nTerima kasih telah melakukan pemesanan di Afandi Interior.\nBerikut adalah rincian pesanan Anda:\n\nProduk: ${order.config?.productSelection?.name}\nTotal: Rp ${order.totalPrice?.toLocaleString('id-ID')}\n\nSilakan cek lampiran atau buka link berikut untuk detailnya.\n\nSalam,\nAfandi Interior`);
+        window.location.href = `mailto:${order.customer?.email}?subject=${subject}&body=${body}`;
+    };
+
+    const getChatTemplate = (order) => {
+        return `Halo Kak ${order.customer?.name}, Kami dari *Afandi Interior* ingin mengonfirmasi pesanan furnitur Kakak (#${String(order.id).split('-')[0].toUpperCase()}).
+
+Berikut Ringkasan Pesanan:
+- Produk: ${order.config?.productSelection?.name}
+- Model: ${order.config?.productSelection?.shape}
+- Estimasi Total: *Rp ${order.totalPrice?.toLocaleString('id-ID')}*
+- Metode Bayar: ${order.customer?.paymentMethod || 'Transfer BCA'}
+
+Apakah Kakak ada waktu luang untuk kami jadwalkan *Survey Lokasi* dalam waktu dekat? Terima kasih. 🙏`;
+    };
 
     const fetchOrders = (showLoader = false) => {
         if (showLoader) setLoading(true);
@@ -189,10 +212,22 @@ export default function AdminOrders() {
                                 </div>
                                 <div className="flex items-center gap-2">
                                     <button 
+                                        onClick={() => handleSendEmail(selectedOrder)}
+                                        className="hidden md:flex items-center gap-2 px-4 py-2 text-[10px] font-black uppercase tracking-widest text-teal-600 hover:bg-teal-50 rounded-xl transition-all border border-teal-100"
+                                    >
+                                        <Mail size={14} /> Kirim ke Email
+                                    </button>
+                                    <button 
+                                        onClick={() => copyToClipboard(getChatTemplate(selectedOrder), 'Template Chat')}
+                                        className="hidden md:flex items-center gap-2 px-4 py-2 text-[10px] font-black uppercase tracking-widest text-indigo-600 hover:bg-indigo-50 rounded-xl transition-all border border-indigo-100"
+                                    >
+                                        <MessageSquare size={14} /> Salin Chat
+                                    </button>
+                                    <button 
                                         onClick={() => window.print()}
                                         className="hidden md:flex items-center gap-2 px-4 py-2 text-[10px] font-black uppercase tracking-widest text-slate-600 hover:bg-slate-50 rounded-xl transition-all border border-slate-100"
                                     >
-                                        <FileText size={14} /> Cetak Dokumen
+                                        <FileText size={14} /> Cetak
                                     </button>
                                     <button 
                                         onClick={() => setSelectedOrder(null)}
@@ -227,7 +262,8 @@ export default function AdminOrders() {
                         </div>
                         
                         <div className="p-10 overflow-y-auto flex-1 custom-scrollbar bg-slate-50/30">
-                            {activeTab === 'summary' && (
+                            <div id="printable-area">
+                                {activeTab === 'summary' && (
                                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 animate-fade-in">
                                     {/* Left Side: Customer & Design Info */}
                                     <div className="space-y-10">
@@ -244,6 +280,14 @@ export default function AdminOrders() {
                                                 <div>
                                                     <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">WhatsApp</p>
                                                     <p className="text-sm font-bold text-slate-900">{selectedOrder.customer?.phone || '-'}</p>
+                                                </div>
+                                                <div className="col-span-2">
+                                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Email</p>
+                                                    <p className="text-sm font-bold text-slate-900">{selectedOrder.customer?.email || 'Tidak dicantumkan'}</p>
+                                                </div>
+                                                <div className="col-span-2">
+                                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Metode Pembayaran</p>
+                                                    <p className="text-sm font-bold text-teal-700 bg-teal-50 px-3 py-1 rounded-lg w-fit">{selectedOrder.customer?.paymentMethod || 'Transfer BCA'}</p>
                                                 </div>
                                                 <div className="col-span-2">
                                                     <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Alamat Pemasangan</p>
@@ -353,200 +397,268 @@ export default function AdminOrders() {
                             )}
 
                             {activeTab === 'rab' && (
-                                <div className="max-w-4xl mx-auto bg-white p-12 md:p-16 rounded-[3rem] shadow-xl border border-slate-100 animate-fade-in print:shadow-none print:border-none">
+                                <div className="max-w-4xl mx-auto bg-white p-12 md:p-16 rounded-[3rem] shadow-xl border border-slate-100 animate-fade-in print:shadow-none print:border-none relative overflow-hidden">
+                                    {/* Subtle Watermark */}
+                                    <div className="absolute -right-20 top-20 rotate-45 opacity-[0.03] select-none pointer-events-none">
+                                        <h1 className="text-[12rem] font-black tracking-tighter">AFANDI</h1>
+                                    </div>
+
                                     {/* Document Header */}
-                                    <div className="flex justify-between items-start mb-16 pb-12 border-b-2 border-slate-50">
+                                    <div className="flex justify-between items-start mb-20 pb-12 border-b-2 border-slate-100 relative z-10">
                                         <div>
-                                            <img src="/brand/logo-icon-dark.png" alt="Logo" className="w-16 h-16 mb-4" />
-                                            <h2 className="text-3xl font-black text-slate-900 uppercase tracking-tighter">Penawaran Harga (RAB)</h2>
-                                            <p className="text-slate-400 font-bold text-[10px] uppercase tracking-widest">Afandi Interior & Furnitur Custom</p>
+                                            <div className="w-20 h-20 bg-slate-900 rounded-3xl flex items-center justify-center mb-6 shadow-2xl shadow-slate-200">
+                                                <Package size={40} className="text-white" />
+                                            </div>
+                                            <h2 className="text-4xl font-black text-slate-900 uppercase tracking-tighter mb-1">Penawaran Harga</h2>
+                                            <p className="text-slate-400 font-bold text-xs uppercase tracking-[0.3em]">Official Quotation</p>
                                         </div>
                                         <div className="text-right">
-                                            <p className="text-slate-400 font-black text-[10px] uppercase tracking-widest mb-1">No. Dokumen</p>
-                                            <p className="text-xl font-black text-slate-900">RAB-{String(selectedOrder.id || '').split('-')[0].toUpperCase()}</p>
-                                            <p className="text-xs font-bold text-slate-500 mt-2 italic">Diterbitkan pada: {new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
+                                            <div className="inline-block px-4 py-1.5 bg-slate-900 text-white text-[10px] font-black rounded-lg uppercase tracking-widest mb-4">
+                                                ID: RAB-{String(selectedOrder.id || '').split('-')[0].toUpperCase()}
+                                            </div>
+                                            <p className="text-xs font-bold text-slate-500 italic">Diterbitkan: {new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
+                                            <p className="text-xs font-bold text-slate-400 mt-1 uppercase tracking-widest">Berlaku s/d: {new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
                                         </div>
                                     </div>
 
                                     {/* Client & Project Info */}
-                                    <div className="grid grid-cols-2 gap-16 mb-16">
-                                        <div>
-                                            <h5 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-4">Informasi Klien</h5>
-                                            <p className="text-xl font-black text-slate-900 mb-1">{selectedOrder.customer?.name}</p>
-                                            <p className="text-sm font-bold text-slate-500 mb-2">{selectedOrder.customer?.phone}</p>
-                                            <p className="text-sm font-medium text-slate-400 max-w-xs leading-relaxed">{selectedOrder.customer?.address}</p>
+                                    <div className="grid grid-cols-2 gap-20 mb-20 relative z-10">
+                                        <div className="p-8 bg-slate-50 rounded-[2.5rem] border border-slate-100">
+                                            <h5 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-6 flex items-center gap-2">
+                                                <User size={12} /> Data Pelanggan
+                                            </h5>
+                                            <p className="text-2xl font-black text-slate-900 mb-1">{selectedOrder.customer?.name}</p>
+                                            <p className="text-sm font-bold text-slate-600 mb-3">{selectedOrder.customer?.phone}</p>
+                                            <div className="w-10 h-1 bg-slate-200 mb-3 rounded-full"></div>
+                                            <p className="text-xs font-medium text-slate-500 leading-relaxed italic">"{selectedOrder.customer?.address}"</p>
                                         </div>
-                                        <div className="text-right">
+                                        <div className="text-right flex flex-col justify-center">
                                             <h5 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-4">Ringkasan Proyek</h5>
-                                            <p className="text-xl font-black text-slate-900 mb-1">{selectedOrder.config?.productSelection?.name}</p>
-                                            <p className="text-sm font-bold text-teal-600 mb-2">Bentuk: {selectedOrder.config?.productSelection?.shape}</p>
-                                            <p className="text-sm font-medium text-slate-400">Total Ukuran: {selectedOrder.config?.room?.length} x {selectedOrder.config?.room?.width} cm</p>
+                                            <p className="text-2xl font-black text-slate-900 mb-1">{selectedOrder.config?.productSelection?.name}</p>
+                                            <p className="text-sm font-bold text-teal-600 mb-2">Konfigurasi: {selectedOrder.config?.productSelection?.shape}</p>
+                                            <div className="flex items-center justify-end gap-3 mt-4">
+                                                <div className="px-4 py-2 bg-slate-100 rounded-xl text-[10px] font-black text-slate-600 uppercase">Dimensi: {selectedOrder.config?.room?.length}x{selectedOrder.config?.room?.width}cm</div>
+                                                <div className="px-4 py-2 bg-slate-100 rounded-xl text-[10px] font-black text-slate-600 uppercase">Tinggi: {selectedOrder.config?.room?.height}cm</div>
+                                            </div>
                                         </div>
                                     </div>
 
                                     {/* Itemized Table */}
-                                    <div className="mb-16">
+                                    <div className="mb-20 relative z-10">
                                         <table className="w-full">
                                             <thead>
-                                                <tr className="border-b-2 border-slate-900">
-                                                    <th className="py-4 text-left text-[10px] font-black uppercase tracking-widest text-slate-900">Deskripsi Pekerjaan</th>
-                                                    <th className="py-4 text-center text-[10px] font-black uppercase tracking-widest text-slate-900">Spesifikasi</th>
-                                                    <th className="py-4 text-right text-[10px] font-black uppercase tracking-widest text-slate-900">Estimasi Biaya</th>
+                                                <tr className="border-b-4 border-slate-900">
+                                                    <th className="py-6 text-left text-[11px] font-black uppercase tracking-widest text-slate-900">Deskripsi Produksi</th>
+                                                    <th className="py-6 text-center text-[11px] font-black uppercase tracking-widest text-slate-900">Spesifikasi Material</th>
+                                                    <th className="py-6 text-right text-[11px] font-black uppercase tracking-widest text-slate-900">Nilai Investasi</th>
                                                 </tr>
                                             </thead>
                                             <tbody className="divide-y divide-slate-100">
-                                                <tr className="group">
-                                                    <td className="py-8">
-                                                        <p className="font-black text-slate-900 mb-1">Produksi Unit Utama</p>
-                                                        <p className="text-xs text-slate-400 font-medium leading-relaxed max-w-sm">Pabrikasi furnitur menggunakan material Plywood/Blockboard 18mm dengan finishing HPL luar dalam.</p>
+                                                <tr>
+                                                    <td className="py-10">
+                                                        <p className="text-lg font-black text-slate-900 mb-2">Pabrikasi Furnitur Utama</p>
+                                                        <ul className="text-xs text-slate-500 space-y-1.5 font-medium">
+                                                            <li className="flex items-center gap-2"><div className="w-1 h-1 bg-slate-400 rounded-full" /> Plywood/Blockboard High Grade 18mm</li>
+                                                            <li className="flex items-center gap-2"><div className="w-1 h-1 bg-slate-400 rounded-full" /> Finishing HPL (High Pressure Laminate)</li>
+                                                            <li className="flex items-center gap-2"><div className="w-1 h-1 bg-slate-400 rounded-full" /> Engsel Slow-Motion & Rel Double Track</li>
+                                                        </ul>
                                                     </td>
-                                                    <td className="py-8 text-center text-sm font-bold text-slate-600">
-                                                        {MATERIAL_COLORS[selectedOrder.config?.design?.materialId]?.name || 'Standard HPL'}
+                                                    <td className="py-10 text-center">
+                                                        <span className="px-4 py-2 bg-indigo-50 text-indigo-700 text-[10px] font-black rounded-xl uppercase tracking-widest border border-indigo-100">
+                                                            {MATERIAL_COLORS[selectedOrder.config?.design?.materialId]?.name || 'Premium HPL'}
+                                                        </span>
                                                     </td>
-                                                    <td className="py-8 text-right font-black text-slate-900">
-                                                        Rp {(selectedOrder.totalPrice || 0).toLocaleString('id-ID')}
+                                                    <td className="py-10 text-right">
+                                                        <p className="text-xl font-black text-slate-900">Rp {(selectedOrder.totalPrice || 0).toLocaleString('id-ID')}</p>
+                                                        <p className="text-[10px] font-bold text-slate-400 mt-1">Nett / Include Installation</p>
                                                     </td>
                                                 </tr>
                                                 {selectedOrder.config?.design?.accessories?.length > 0 && (
                                                     <tr>
-                                                        <td className="py-8">
-                                                            <p className="font-black text-slate-900 mb-1">Aksesoris Tambahan</p>
-                                                            <p className="text-xs text-slate-400 font-medium">{selectedOrder.config.design.accessories.join(', ')}</p>
+                                                        <td className="py-10">
+                                                            <p className="font-black text-slate-900 mb-2">Hardware & Aksesoris</p>
+                                                            <div className="flex flex-wrap gap-2">
+                                                                {selectedOrder.config.design.accessories.map((acc, i) => (
+                                                                    <span key={i} className="text-[9px] font-black bg-slate-50 text-slate-500 px-3 py-1 rounded-md uppercase tracking-widest border border-slate-100">
+                                                                        {acc}
+                                                                    </span>
+                                                                ))}
+                                                            </div>
                                                         </td>
-                                                        <td className="py-8 text-center text-sm font-bold text-slate-600">Custom Kit</td>
-                                                        <td className="py-8 text-right font-black text-slate-900 italic text-xs">Termasuk Harga</td>
+                                                        <td className="py-10 text-center text-xs font-bold text-slate-400 italic">Custom Selection</td>
+                                                        <td className="py-10 text-right text-[10px] font-black text-teal-600 uppercase tracking-widest">Sudah Termasuk</td>
                                                     </tr>
                                                 )}
                                                 <tr>
-                                                    <td className="py-8">
-                                                        <p className="font-black text-slate-900 mb-1">Pengiriman & Pemasangan</p>
-                                                        <p className="text-xs text-slate-400 font-medium">Pengiriman armada workshop dan instalasi di lokasi pelanggan.</p>
+                                                    <td className="py-10">
+                                                        <p className="font-black text-slate-900 mb-2">Transportasi & Pemasangan</p>
+                                                        <p className="text-xs text-slate-400 font-medium">Pengiriman armada workshop dan instalasi profesional di lokasi.</p>
                                                     </td>
-                                                    <td className="py-8 text-center text-sm font-bold text-slate-600">On-site</td>
-                                                    <td className="py-8 text-right font-black text-slate-900 italic text-xs">Free Promo</td>
+                                                    <td className="py-10 text-center text-xs font-bold text-slate-400 uppercase">Jabodetabek Area</td>
+                                                    <td className="py-10 text-right">
+                                                        <span className="text-[10px] font-black text-rose-600 uppercase tracking-widest line-through opacity-30 mr-2">Rp 750.000</span>
+                                                        <span className="text-[10px] font-black text-teal-600 uppercase tracking-widest">Gratis</span>
+                                                    </td>
                                                 </tr>
                                             </tbody>
                                             <tfoot>
-                                                <tr className="border-t-4 border-slate-900">
-                                                    <td colSpan="2" className="py-8 text-right">
-                                                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Total Penawaran</p>
+                                                <tr className="border-t-[6px] border-slate-900">
+                                                    <td colSpan="2" className="py-10 text-right">
+                                                        <p className="text-xs font-black text-slate-400 uppercase tracking-[0.3em]">Total Investasi Proyek</p>
                                                     </td>
-                                                    <td className="py-8 text-right">
-                                                        <p className="text-3xl font-black text-slate-900">Rp {(selectedOrder.totalPrice || 0).toLocaleString('id-ID')}</p>
+                                                    <td className="py-10 text-right">
+                                                        <p className="text-4xl font-black text-slate-900 tracking-tighter">Rp {(selectedOrder.totalPrice || 0).toLocaleString('id-ID')}</p>
                                                     </td>
                                                 </tr>
                                             </tfoot>
                                         </table>
                                     </div>
 
-                                    {/* Footer / Terms */}
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-12 pt-12 border-t border-slate-100">
-                                        <div className="space-y-4">
-                                            <h6 className="text-[10px] font-black text-slate-900 uppercase tracking-widest">Syarat & Ketentuan:</h6>
-                                            <ul className="text-[10px] text-slate-400 space-y-2 font-medium">
-                                                <li>• Harga berlaku selama 14 hari sejak diterbitkan.</li>
-                                                <li>• Pembayaran DP minimal 50% untuk mulai produksi.</li>
-                                                <li>• Waktu pengerjaan 7-14 hari kerja setelah approval desain.</li>
-                                                <li>• Perubahan desain setelah produksi akan dikenakan biaya tambahan.</li>
+                                    {/* Terms & Authorization */}
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-20 pt-16 border-t border-slate-100 relative z-10">
+                                        <div className="space-y-6">
+                                            <h6 className="text-[11px] font-black text-slate-900 uppercase tracking-widest flex items-center gap-2">
+                                                <div className="w-1.5 h-1.5 bg-slate-900 rounded-full" /> Syarat & Ketentuan:
+                                            </h6>
+                                            <ul className="text-[10px] text-slate-500 space-y-3 font-medium leading-relaxed">
+                                                <li className="flex gap-3"><span>01.</span> <span>Penawaran ini bersifat final berdasarkan data dimensi yang diberikan secara online.</span></li>
+                                                <li className="flex gap-3"><span>02.</span> <span>Pembayaran Down Payment (DP) 50% wajib dilakukan sebagai tanda approval produksi.</span></li>
+                                                <li className="flex gap-3"><span>03.</span> <span>Waktu produksi estimasi 10-14 hari kerja sejak DP diterima.</span></li>
+                                                <li className="flex gap-3"><span>04.</span> <span>Garansi material dan hardware selama 1 tahun untuk penggunaan normal.</span></li>
                                             </ul>
                                         </div>
-                                        <div className="text-center pt-8">
-                                            <div className="inline-block border-b-2 border-slate-900 w-48 mb-2"></div>
-                                            <p className="text-[10px] font-black text-slate-900 uppercase tracking-widest">Tim Afandi Interior</p>
+                                        <div className="flex flex-col items-center justify-center text-center">
+                                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-16">Hormat Kami,</p>
+                                            <div className="relative mb-4">
+                                                {/* Simulated Stamp/Signature */}
+                                                <div className="absolute inset-0 flex items-center justify-center -rotate-12 opacity-10 pointer-events-none">
+                                                    <div className="border-4 border-rose-600 rounded-full px-4 py-2 text-rose-600 font-black text-xl uppercase tracking-tighter">AFANDI INTERIOR</div>
+                                                </div>
+                                                <div className="w-48 h-0.5 bg-slate-900"></div>
+                                            </div>
+                                            <p className="text-xs font-black text-slate-900 uppercase tracking-widest">Manajemen Afandi Interior</p>
+                                            <p className="text-[9px] font-bold text-slate-400 mt-1">Furnitur Custom & Interior Design</p>
                                         </div>
                                     </div>
                                 </div>
                             )}
 
                             {activeTab === 'invoice' && (
-                                <div className="max-w-4xl mx-auto bg-white p-12 md:p-16 rounded-[3rem] shadow-xl border-t-[12px] border-slate-900 animate-fade-in print:shadow-none print:border-none">
-                                    {/* Invoice Header */}
-                                    <div className="flex justify-between items-start mb-16">
-                                        <div>
-                                            <h1 className="text-5xl font-black text-slate-900 uppercase tracking-tighter mb-2">Nota Tagihan</h1>
-                                            <p className="text-slate-400 font-bold text-[10px] uppercase tracking-[0.3em]">INVOICE / RECEIPT</p>
-                                        </div>
-                                        <div className="bg-slate-100 px-8 py-6 rounded-[2rem] text-right">
-                                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Status Pembayaran</p>
-                                            <span className="px-3 py-1 bg-amber-100 text-amber-700 text-[10px] font-black rounded-full uppercase tracking-widest border border-amber-200">Menunggu DP</span>
+                                <div className="max-w-4xl mx-auto bg-white p-12 md:p-16 rounded-[3rem] shadow-2xl border-t-[16px] border-slate-900 animate-fade-in print:shadow-none print:border-none relative">
+                                    {/* Invoice Status Tag */}
+                                    <div className="absolute top-10 right-10 rotate-12">
+                                        <div className="px-6 py-2 border-4 border-amber-500/30 rounded-2xl">
+                                            <span className="text-xl font-black text-amber-600 opacity-40 uppercase tracking-tighter">AWATING DP</span>
                                         </div>
                                     </div>
 
-                                    {/* Invoice Info */}
-                                    <div className="grid grid-cols-3 gap-8 mb-16 py-8 border-y border-slate-100">
+                                    {/* Invoice Header */}
+                                    <div className="flex justify-between items-end mb-20">
+                                        <div className="space-y-6">
+                                            <div className="w-16 h-16 bg-slate-900 rounded-2xl flex items-center justify-center text-white shadow-xl">
+                                                <ShoppingCart size={32} />
+                                            </div>
+                                            <div>
+                                                <h1 className="text-6xl font-black text-slate-900 uppercase tracking-tighter mb-2">Invoice</h1>
+                                                <p className="text-slate-400 font-bold text-xs uppercase tracking-[0.4em]">Tagihan Resmi Penjualan</p>
+                                            </div>
+                                        </div>
+                                        <div className="text-right pb-2">
+                                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Diterbitkan Oleh</p>
+                                            <p className="text-sm font-black text-slate-900">AFANDI INTERIOR CUSTOM</p>
+                                            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Workshop Solo, Indonesia</p>
+                                        </div>
+                                    </div>
+
+                                    {/* Invoice Details Grid */}
+                                    <div className="grid grid-cols-3 gap-12 mb-20 p-10 bg-slate-50 rounded-[2.5rem] border border-slate-100">
                                         <div>
-                                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Ditujukan Kepada</p>
-                                            <p className="text-sm font-black text-slate-900">{selectedOrder.customer?.name}</p>
+                                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-2"><User size={12} /> Billed To:</p>
+                                            <p className="text-lg font-black text-slate-900">{selectedOrder.customer?.name}</p>
                                             <p className="text-xs font-bold text-slate-500 mt-1">{selectedOrder.customer?.phone}</p>
+                                            <p className="text-[10px] font-medium text-slate-400 mt-2 leading-relaxed italic truncate">{selectedOrder.customer?.address}</p>
                                         </div>
                                         <div>
-                                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">No. Invoice</p>
-                                            <p className="text-sm font-black text-slate-900">INV/{new Date().getFullYear()}/{String(selectedOrder.id || '').split('-')[0].toUpperCase()}</p>
+                                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">Invoice Details:</p>
+                                            <p className="text-xs font-black text-slate-900 uppercase tracking-widest mb-1">#INV/{new Date().getFullYear()}/{String(selectedOrder.id || '').split('-')[0].toUpperCase()}</p>
+                                            <p className="text-xs font-bold text-slate-500 italic">Issued: {new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
                                         </div>
                                         <div className="text-right">
-                                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Tanggal</p>
-                                            <p className="text-sm font-black text-slate-900">{new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
+                                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">Payment Status:</p>
+                                            <span className="inline-block px-4 py-1.5 bg-amber-100 text-amber-700 text-[10px] font-black rounded-lg uppercase tracking-widest border border-amber-200 shadow-sm">PENDING</span>
                                         </div>
                                     </div>
 
-                                    {/* Invoice Items */}
-                                    <div className="space-y-4 mb-16">
-                                        <div className="grid grid-cols-4 gap-4 px-4 py-2 text-[10px] font-black text-slate-400 uppercase tracking-widest">
-                                            <div className="col-span-2">Item Pekerjaan</div>
-                                            <div className="text-center">Kuantitas</div>
-                                            <div className="text-right">Harga Total</div>
+                                    {/* Items Table */}
+                                    <div className="space-y-6 mb-20">
+                                        <div className="grid grid-cols-12 gap-4 px-6 py-3 text-[10px] font-black text-slate-400 uppercase tracking-widest border-b border-slate-100">
+                                            <div className="col-span-7">Deskripsi Item & Layanan</div>
+                                            <div className="col-span-2 text-center">Qty</div>
+                                            <div className="col-span-3 text-right">Subtotal</div>
                                         </div>
-                                        <div className="grid grid-cols-4 gap-4 p-6 bg-slate-50 rounded-2xl items-center">
-                                            <div className="col-span-2">
-                                                <p className="text-sm font-black text-slate-900">Pesanan Furnitur Custom</p>
-                                                <p className="text-[10px] text-slate-500 font-bold mt-1 uppercase tracking-widest">{selectedOrder.config?.productSelection?.name} ({selectedOrder.config?.productSelection?.shape})</p>
+                                        <div className="grid grid-cols-12 gap-4 p-8 bg-white border border-slate-100 rounded-[2rem] items-center shadow-sm">
+                                            <div className="col-span-7">
+                                                <p className="text-lg font-black text-slate-900 mb-1">Pemesanan Furnitur Custom</p>
+                                                <p className="text-[10px] text-teal-600 font-black uppercase tracking-widest">Model: {selectedOrder.config?.productSelection?.name}</p>
+                                                <p className="text-[9px] text-slate-400 font-bold mt-2 uppercase tracking-widest">Material: {MATERIAL_COLORS[selectedOrder.config?.design?.materialId]?.name || 'Premium Plywood'}</p>
                                             </div>
-                                            <div className="text-center text-sm font-black text-slate-900">1 Unit</div>
-                                            <div className="text-right text-sm font-black text-slate-900">Rp {(selectedOrder.totalPrice || 0).toLocaleString('id-ID')}</div>
+                                            <div className="col-span-2 text-center text-sm font-black text-slate-900">01</div>
+                                            <div className="col-span-3 text-right text-xl font-black text-slate-900">Rp {(selectedOrder.totalPrice || 0).toLocaleString('id-ID')}</div>
                                         </div>
                                     </div>
 
-                                    {/* Totals & Payments */}
-                                    <div className="flex flex-col md:flex-row gap-12 items-start justify-between border-t border-slate-100 pt-12">
-                                        <div className="space-y-6">
+                                    {/* Totals & QR Section */}
+                                    <div className="flex flex-col md:flex-row gap-16 items-start justify-between border-t-2 border-slate-50 pt-16">
+                                        <div className="flex gap-8 items-center p-8 bg-slate-50 rounded-[2rem] border border-slate-100">
+                                            {/* Simulated QR Code */}
+                                            <div className="w-24 h-24 bg-white p-2 border border-slate-200 rounded-xl grid grid-cols-4 grid-rows-4 gap-1 opacity-60">
+                                                {[...Array(16)].map((_, i) => (
+                                                    <div key={i} className={`rounded-sm ${Math.random() > 0.5 ? 'bg-slate-900' : 'bg-transparent'}`} />
+                                                ))}
+                                            </div>
                                             <div>
-                                                <p className="text-[10px] font-black text-slate-900 uppercase tracking-widest mb-4">Informasi Pembayaran:</p>
-                                                <div className="p-6 bg-slate-50 border border-slate-100 rounded-3xl space-y-3">
-                                                    <div className="flex items-center gap-4">
-                                                        <div className="w-10 h-6 bg-slate-800 rounded flex items-center justify-center text-[10px] text-white font-black">BCA</div>
-                                                        <p className="text-xs font-black text-slate-900">890 1234 567</p>
+                                                <p className="text-[10px] font-black text-slate-900 uppercase tracking-widest mb-4 flex items-center gap-2"><ShoppingCart size={12} /> Panduan Pembayaran:</p>
+                                                <div className="space-y-2">
+                                                    <div className="flex items-center gap-3">
+                                                        <div className="px-2 py-0.5 bg-slate-900 text-white text-[8px] font-black rounded uppercase">BCA</div>
+                                                        <p className="text-xs font-black text-slate-900 tracking-widest">890 1234 567</p>
                                                     </div>
-                                                    <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">A/N Ahmad Helmi Afandi</p>
+                                                    <p className="text-[9px] text-slate-400 font-bold uppercase tracking-widest ml-12">A/N Ahmad Helmi Afandi</p>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="w-full md:w-80 space-y-4">
-                                            <div className="flex justify-between items-center text-sm font-bold text-slate-500">
-                                                <span>Subtotal</span>
-                                                <span>Rp {(selectedOrder.totalPrice || 0).toLocaleString('id-ID')}</span>
+                                        <div className="w-full md:w-96 space-y-5">
+                                            <div className="flex justify-between items-center text-xs font-bold text-slate-400 uppercase tracking-widest">
+                                                <span>Subtotal Pekerjaan</span>
+                                                <span className="text-slate-600">Rp {(selectedOrder.totalPrice || 0).toLocaleString('id-ID')}</span>
                                             </div>
-                                            <div className="flex justify-between items-center text-sm font-bold text-slate-500">
-                                                <span>PPN (0%)</span>
-                                                <span>Rp 0</span>
+                                            <div className="flex justify-between items-center text-xs font-bold text-slate-400 uppercase tracking-widest">
+                                                <span>Pajak (PPN 0%)</span>
+                                                <span className="text-slate-600">Rp 0</span>
                                             </div>
-                                            <div className="flex justify-between items-center py-6 border-t-2 border-slate-100">
-                                                <span className="text-[10px] font-black text-slate-900 uppercase tracking-widest">Total Bayar</span>
-                                                <span className="text-3xl font-black text-slate-900">Rp {(selectedOrder.totalPrice || 0).toLocaleString('id-ID')}</span>
+                                            <div className="w-full h-px bg-slate-100 my-2"></div>
+                                            <div className="flex justify-between items-center">
+                                                <span className="text-xs font-black text-slate-900 uppercase tracking-[0.2em]">Total Billing</span>
+                                                <span className="text-4xl font-black text-slate-900 tracking-tighter">Rp {(selectedOrder.totalPrice || 0).toLocaleString('id-ID')}</span>
                                             </div>
-                                            <div className="p-4 bg-teal-50 border border-teal-100 rounded-2xl flex justify-between items-center">
-                                                <span className="text-[9px] font-black text-teal-600 uppercase tracking-widest">Down Payment (50%)</span>
-                                                <span className="text-sm font-black text-teal-700">Rp {((selectedOrder.totalPrice || 0) * 0.5).toLocaleString('id-ID')}</span>
+                                            <div className="mt-8 p-6 bg-slate-900 rounded-[2rem] text-white flex justify-between items-center shadow-xl shadow-slate-200">
+                                                <div className="space-y-1">
+                                                    <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest">Down Payment (50%)</p>
+                                                    <p className="text-sm font-black tracking-widest">Minimum Deposit</p>
+                                                </div>
+                                                <p className="text-xl font-black">Rp {((selectedOrder.totalPrice || 0) * 0.5).toLocaleString('id-ID')}</p>
                                             </div>
                                         </div>
                                     </div>
 
                                     {/* Invoice Footer */}
-                                    <div className="mt-20 text-center">
-                                        <div className="inline-block p-4 bg-slate-900 rounded-2xl text-white text-[10px] font-black uppercase tracking-[0.4em] mb-4">TERIMA KASIH</div>
-                                        <p className="text-xs text-slate-400 font-medium italic">Nota ini sah tanpa tanda tangan karena dihasilkan oleh sistem Afandi Interior CMS</p>
+                                    <div className="mt-24 pt-12 border-t border-slate-50 flex flex-col items-center">
+                                        <div className="px-6 py-2 bg-slate-50 text-slate-400 text-[9px] font-black rounded-full uppercase tracking-[0.4em] mb-4">Official Electronic Invoice</div>
+                                        <p className="text-[10px] text-slate-300 font-medium italic text-center max-w-md">Terima kasih telah mempercayakan interior Anda kepada Afandi Interior. Dokumen ini sah sebagai bukti penagihan resmi.</p>
                                     </div>
                                 </div>
                             )}
+                            </div>
                         </div>
                         
                         {/* Modal Footer */}

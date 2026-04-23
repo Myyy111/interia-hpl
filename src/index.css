@@ -223,3 +223,13 @@ body {
 .reveal-delay-300 { transition-delay: 300ms; }
 .reveal-delay-400 { transition-delay: 400ms; }
 .reveal-delay-500 { transition-delay: 500ms; }
+/* -- PRINT STYLES -- */
+@media print {
+  body * { visibility: hidden; }
+  #printable-area, #printable-area * { visibility: visible; }
+  #printable-area { position: absolute; left: 0; top: 0; width: 100%; margin: 0; padding: 0; background: white !important; }
+  .custom-scrollbar { overflow: visible !important; }
+  aside, nav, .sticky, button, .no-print { display: none !important; }
+  .fixed, .absolute, .bg-slate-950\/40 { position: static !important; overflow: visible !important; display: block !important; background: white !important; box-shadow: none !important; border: none !important; }
+  .text-slate-900, .text-slate-800 { color: #000 !important; }
+}

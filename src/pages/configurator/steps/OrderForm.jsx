@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Send, MessageCircle, Download, User, Phone, MapPin, FileText, ExternalLink } from 'lucide-react';
+import { Send, MessageCircle, Download, User, Phone, MapPin, FileText, ExternalLink, ShoppingCart } from 'lucide-react';
 import { trackEvent, ANALYTICS_EVENTS } from '../../../lib/analytics';
 
 // WhatsApp sales number — update this to the real number
@@ -20,8 +20,12 @@ function buildWhatsAppMessage({ config, metadata, estimatedPrice, customerData }
         `👤 *Data Pelanggan:*`,
         `• Nama: ${customerData.name}`,
         `• WhatsApp: ${customerData.phone}`,
+        `• Email: ${customerData.email || '-'}`,
         `• Alamat: ${customerData.address}`,
         customerData.notes ? `• Catatan: ${customerData.notes}` : null,
+        ``,
+        `💳 *Metode Pembayaran:*`,
+        `• Pilihan: ${customerData.paymentMethod || 'Belum dipilih'}`,
         ``,
         `📦 *Konfigurasi Pesanan:*`,
         `• Produk: ${product?.name || '-'}`,
@@ -53,7 +57,7 @@ function buildWhatsAppMessage({ config, metadata, estimatedPrice, customerData }
 }
 
 export default function OrderForm({ onSubmit, isSubmitting, config, metadata, estimatedPrice }) {
-    const [formData, setFormData] = useState({ name: '', phone: '', address: '', notes: '' });
+    const [formData, setFormData] = useState({ name: '', phone: '', email: '', address: '', notes: '', paymentMethod: 'Transfer BCA' });
     const [errors, setErrors] = useState({});
 
     const handleChange = (e) => {
@@ -68,6 +72,7 @@ export default function OrderForm({ onSubmit, isSubmitting, config, metadata, es
         if (!formData.name.trim()) newErrors.name = 'Nama lengkap wajib diisi';
         if (!formData.phone.trim()) newErrors.phone = 'Nomor WhatsApp wajib diisi';
         else if (!/^[\d\s+()-]{8,16}$/.test(formData.phone.replace(/\s/g, ''))) newErrors.phone = 'Format nomor tidak valid';
+        if (formData.email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) newErrors.email = 'Format email tidak valid';
         if (!formData.address.trim()) newErrors.address = 'Alamat wajib diisi';
         return newErrors;
     };
@@ -103,8 +108,37 @@ export default function OrderForm({ onSubmit, isSubmitting, config, metadata, es
             {/* Form Fields */}
             <div className="space-y-4">
                 <InputField label="Nama Lengkap" name="name" value={formData.name} onChange={handleChange} errors={errors} placeholder="Contoh: Budi Santoso" icon={User} required />
-                <InputField label="Nomor WhatsApp Aktif" name="phone" value={formData.phone} onChange={handleChange} errors={errors} type="tel" placeholder="081234567890" icon={Phone} required />
-                <InputField label="Alamat Lengkap" name="address" value={formData.address} onChange={handleChange} errors={errors} placeholder="Jl. Contoh No. 123, Kota, Provinsi..." icon={MapPin} required multiline />
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <InputField label="WhatsApp" name="phone" value={formData.phone} onChange={handleChange} errors={errors} type="tel" placeholder="081234567890" icon={Phone} required />
+                    <InputField label="Alamat Email (Opsional)" name="email" value={formData.email} onChange={handleChange} errors={errors} type="email" placeholder="budi@example.com" icon={MessageCircle} />
+                </div>
+                <InputField label="Alamat Pemasangan" name="address" value={formData.address} onChange={handleChange} errors={errors} placeholder="Jl. Contoh No. 123, Kota, Provinsi..." icon={MapPin} required multiline />
+                
+                {/* Payment Method Selection */}
+                <div>
+                    <label className="block text-sm font-semibold text-slate-700 mb-2 flex items-center gap-1.5">
+                        <ShoppingCart size={14} className="text-slate-400" />
+                        Pilih Metode Pembayaran
+                    </label>
+                    <div className="grid grid-cols-3 gap-3">
+                        {['Transfer BCA', 'Transfer Mandiri', 'Tunai / Cash'].map(method => (
+                            <button
+                                key={method}
+                                type="button"
+                                onClick={() => setFormData(prev => ({ ...prev, paymentMethod: method }))}
+                                className={`
+                                    py-3 px-2 rounded-xl text-[10px] font-black uppercase tracking-widest border-2 transition-all
+                                    ${formData.paymentMethod === method 
+                                        ? 'border-teal-600 bg-teal-50 text-teal-700 shadow-sm shadow-teal-100' 
+                                        : 'border-slate-100 bg-slate-50 text-slate-400 hover:border-slate-200'}
+                                `}
+                            >
+                                {method}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+
                 <InputField label="Catatan Tambahan" name="notes" value={formData.notes} onChange={handleChange} errors={errors} placeholder="Request khusus, warna preferensi, atau pertanyaan..." icon={FileText} multiline />
             </div>
 

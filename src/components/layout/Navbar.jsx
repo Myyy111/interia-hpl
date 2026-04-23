@@ -38,101 +38,97 @@ export default function Navbar({ contactData }) {
     };
 
     const isHeaderSolid = isScrolled || mobileMenuOpen;
-    const navTextColor = isHeaderSolid ? 'text-slate-900 hover:text-teal-600' : 'text-white/90 hover:text-white';
+    const navTextColor = isHeaderSolid ? 'text-slate-700 hover:text-indigo-600' : 'text-slate-200 hover:text-white';
 
     return (
-        <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isHeaderSolid ? 'glass py-3 shadow-lg' : 'bg-transparent py-8'}`}>
+        <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isHeaderSolid ? 'bg-white shadow-md py-4' : 'bg-transparent py-6'}`}>
             <div className="max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between">
 
                 {/* Logo */}
-                <Link to="/" className="flex items-center gap-4 group" onClick={() => setMobileMenuOpen(false)}>
-                    <div className="relative">
-                        <img src={isHeaderSolid ? "/brand/logo-icon-dark.png" : "/brand/logo-icon-light.png"} alt="Afandi Interior Logo" className="w-[60px] h-[60px] object-contain drop-shadow-md transition-all duration-500 group-hover:scale-110" />
-                        {!isHeaderSolid && <div className="absolute inset-0 bg-teal-500/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>}
-                    </div>
-                    <div className="flex flex-col items-start">
-                        <span className={`font-['Playfair_Display'] text-[24px] font-black leading-none tracking-tight transition-colors duration-500 ${isHeaderSolid ? 'text-slate-900' : 'text-white'}`}>Afandi</span>
-                        <span className={`font-['Cinzel'] text-[9px] tracking-[0.4em] font-bold mt-1 transition-colors duration-500 ${isHeaderSolid ? 'text-teal-600' : 'text-teal-400'}`}>INTERIOR</span>
+                <Link to="/" className="flex items-center gap-3 group" onClick={() => setMobileMenuOpen(false)}>
+                    <img src={isHeaderSolid ? "/brand/logo-icon-dark.png" : "/brand/logo-icon-light.png"} alt="Afandi Interior Logo" className="w-[72px] h-[72px] object-contain drop-shadow-md transition-all duration-300" />
+                    <div className="flex flex-col items-start ml-0 mt-1">
+                        <span className={`font-['Playfair_Display'] text-[28px] font-bold leading-[0.85] transition-colors duration-300 ${isHeaderSolid ? 'text-[#b08d57]' : 'text-white'}`}>Afandi</span>
+                        <div className="flex items-center gap-1.5 mt-2">
+                             <span className={`font-['Cinzel'] text-[10px] tracking-[0.34em] font-bold pl-0.5 transition-colors duration-300 ${isHeaderSolid ? 'text-[#4a423e]' : 'text-slate-300'}`}>INTERIOR</span>
+                        </div>
                     </div>
                 </Link>
 
                 {/* Desktop Nav */}
-                <nav className="hidden lg:flex items-center gap-10">
+                <nav className="hidden md:flex items-center gap-8">
                     {navLinks.map(link => (
                         <a
                             key={link.name}
                             href={link.href}
                             onClick={(e) => handleNavClick(e, link.href)}
-                            className={`relative text-[13px] font-black uppercase tracking-[0.2em] transition-all group ${navTextColor}`}
+                            className={`relative text-sm font-medium transition-colors group ${navTextColor}`}
                         >
                             {link.name}
-                            <span className={`absolute -bottom-2 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100 ${isHeaderSolid ? 'bg-teal-600' : 'bg-white'}`}></span>
+                            <span className={`absolute -bottom-1 left-0 w-0 h-0.5 rounded-full transition-all duration-300 group-hover:w-full ${isHeaderSolid ? 'bg-[#b08d57]' : 'bg-white'}`}></span>
                         </a>
                     ))}
                 </nav>
 
                 {/* Desktop CTA */}
-                <div className="hidden lg:flex items-center">
+                <div className="hidden md:flex items-center">
                     <Link
                         to="/configurator"
                         className={`
-                            group flex items-center gap-3 px-8 py-3.5 rounded-full font-black text-xs uppercase tracking-[0.2em] transition-all shadow-2xl 
-                            active:scale-95
+                            flex items-center gap-2 px-6 py-2.5 rounded-full font-bold text-sm transition-all shadow-lg 
+                            active:scale-95 active:shadow-inner
                             ${isHeaderSolid 
-                                ? 'bg-slate-900 text-white hover:bg-teal-600' 
-                                : 'bg-white text-slate-900 hover:bg-teal-100 hover:text-teal-900 shadow-white/10'
+                                ? 'bg-[#b08d57] text-white hover:bg-[#8e7246] shadow-[#b08d57]/30' 
+                                : 'bg-white text-slate-900 hover:bg-[#f8f5f0] hover:text-[#8e7246] shadow-white/20'
                             }
                         `}
                     >
-                        Mulai Desain <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                        Mulai Desain <ArrowRight size={16} />
                     </Link>
                 </div>
 
                 {/* Mobile menu toggle */}
                 <button
-                    className={`lg:hidden p-3 rounded-2xl transition-all ${isHeaderSolid ? 'bg-slate-100 text-slate-900' : 'bg-white/10 text-white backdrop-blur-md'}`}
+                    className={`md:hidden p-2 rounded-lg transition-colors ${isHeaderSolid ? 'hover:bg-slate-100' : 'hover:bg-white/10'}`}
                     onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 >
-                    {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                    {mobileMenuOpen ? (
+                        <X size={28} className={isHeaderSolid ? 'text-slate-900' : 'text-white'} />
+                    ) : (
+                        <Menu size={28} className={isHeaderSolid ? 'text-slate-900' : 'text-white'} />
+                    )}
                 </button>
             </div>
 
             {/* Mobile Nav */}
             {mobileMenuOpen && (
-                <div className="lg:hidden absolute top-full left-4 right-4 mt-4 bg-white/95 backdrop-blur-2xl shadow-[0_40px_100px_rgba(0,0,0,0.2)] rounded-[2.5rem] border border-slate-100 flex flex-col p-8 space-y-6 animate-modal-in overflow-hidden">
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-teal-500/10 rounded-full blur-3xl -mr-16 -mt-16"></div>
-                    
-                    {navLinks.map((link, i) => (
+                <div className="md:hidden absolute top-full left-0 right-0 bg-white shadow-xl border-t border-slate-100 flex flex-col p-6 space-y-4 animate-fade-in">
+                    {navLinks.map(link => (
                         <a
                             key={link.name}
                             href={link.href}
                             onClick={(e) => handleNavClick(e, link.href)}
-                            className={`text-slate-900 font-black text-2xl tracking-tight transition-all hover:text-teal-600 flex items-center justify-between group animate-fade-in-up`}
-                            style={{ animationDelay: `${i * 100}ms` }}
+                            className="text-slate-700 font-medium text-lg py-2 border-b border-slate-50 hover:text-[#b08d57] transition-colors"
                         >
                             {link.name}
-                            <ArrowRight size={20} className="opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all" />
                         </a>
                     ))}
-                    
-                    <div className="pt-6 space-y-4 animate-fade-in-up" style={{ animationDelay: '500ms' }}>
-                        <Link
-                            to="/configurator"
-                            className="flex items-center justify-center gap-3 w-full py-5 bg-teal-600 text-white rounded-[1.5rem] font-black text-sm uppercase tracking-widest shadow-xl shadow-teal-500/20 active:scale-95 transition-all"
+                    <Link
+                        to="/configurator"
+                        className="flex items-center justify-center gap-2 w-full py-4 mt-4 bg-[#b08d57] text-white rounded-xl font-bold shadow-md shadow-[#b08d57]/20 active:scale-[0.98] transition-all"
+                    >
+                        Mulai Desain Sekarang <ArrowRight size={20} />
+                    </Link>
+                    {contactData?.phone && (
+                        <a 
+                            href={`https://wa.me/${contactData.phone.replace(/[^0-9]/g, '')}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center justify-center gap-2 w-full py-4 border-2 border-slate-200 text-slate-700 rounded-xl font-bold"
                         >
-                            Mulai Desain Kustom <ArrowRight size={18} />
-                        </Link>
-                        {contactData?.phone && (
-                            <a 
-                                href={`https://wa.me/${contactData.phone.replace(/[^0-9]/g, '')}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="flex items-center justify-center gap-3 w-full py-5 bg-slate-50 text-slate-900 rounded-[1.5rem] font-black text-sm uppercase tracking-widest border border-slate-100 active:scale-95 transition-all"
-                            >
-                                Konsultasi WhatsApp
-                            </a>
-                        )}
-                    </div>
+                            Hubungi WhatsApp
+                        </a>
+                    )}
                 </div>
             )}
         </header>

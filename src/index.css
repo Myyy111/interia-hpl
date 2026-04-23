@@ -42,20 +42,14 @@
   --color-slate-950: #0c0a09;
 }
 
-@layer base {
-  h1, h2, h3, .font-display {
-    font-family: 'Playfair Display', serif;
-  }
-}
-
 html {
   scroll-behavior: smooth;
 }
 
 body {
   font-family: 'Inter', sans-serif;
-  background-color: #fdfaf6;
-  color: #1c1917;
+  background-color: #ffffff;
+  color: #1e293b;
   -webkit-font-smoothing: antialiased;
 }
 

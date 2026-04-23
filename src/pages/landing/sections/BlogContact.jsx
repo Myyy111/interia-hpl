@@ -38,112 +38,109 @@ export function Blog({ cmsData, contactData }) {
             <div className="max-w-7xl mx-auto px-6 lg:px-8">
                 <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6 reveal">
                     <div className="space-y-4">
-                        <div className="text-sm font-bold text-teal-600 uppercase tracking-[0.3em]">Insights & Trends</div>
-                        <h2 className="text-5xl font-black text-slate-900 leading-tight">Inspirasi & Edukasi</h2>
-                        <p className="text-slate-500 font-light text-lg italic">"Membangun rumah bukan sekadar menyusun bata, tapi merangkai kenyamanan."</p>
+                        <h2 className="text-4xl font-extrabold text-slate-900">Inspirasi & Edukasi</h2>
+                        <p className="text-slate-500 font-light text-lg">Tips merawat dan ide desain dari arsitek kami.</p>
                     </div>
                     <button 
                         onClick={() => document.getElementById('kontak')?.scrollIntoView({ behavior: 'smooth' })}
-                        className="flex items-center gap-3 font-black text-teal-600 hover:text-slate-900 transition-colors uppercase tracking-[0.2em] text-xs"
+                        className="flex items-center gap-2 font-bold text-teal-600 hover:text-indigo-600 transition-colors uppercase tracking-widest text-sm"
                     >
-                        Lihat Blog Lainnya <ArrowRight size={18} />
+                        Lihat Blog Lainnya <ArrowRight size={16} />
                     </button>
                 </div>
 
-                {/* Magazine Slider / Grid */}
-                <div className="flex md:grid md:grid-cols-3 gap-10 overflow-x-auto md:overflow-visible pb-8 md:pb-0 snap-x snap-mandatory hide-scrollbar">
+                {/* Mobile Slider / Desktop Grid */}
+                <div className="flex md:grid md:grid-cols-3 gap-8 overflow-x-auto md:overflow-visible pb-8 md:pb-0 snap-x snap-mandatory hide-scrollbar">
                     {articles.map((a, i) => (
-                        <article key={i} className={`group relative bg-white rounded-[2rem] overflow-hidden border border-slate-100 shadow-2xl transition-all duration-500 transform hover:-translate-y-4 shrink-0 w-[85vw] md:w-auto snap-center reveal reveal-delay-${(i+1)*100}`}>
-                            <div className="h-64 overflow-hidden relative">
-                                <div className="absolute top-6 left-6 glass px-4 py-2 rounded-full z-10 shadow-xl">
-                                    <span className="text-[10px] font-black text-slate-900 uppercase tracking-widest">{a.date}</span>
+                        <article key={i} className={`bg-slate-50 rounded-2xl overflow-hidden border border-slate-100 group shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 shrink-0 w-[85vw] md:w-auto snap-center reveal reveal-delay-${(i+1)*100}`}>
+                            <div className="h-48 overflow-hidden relative">
+                                <div className="absolute top-4 left-4 bg-white/90 backdrop-blur text-xs font-bold text-slate-900 px-3 py-1.5 rounded-full z-10 shadow-sm">
+                                    {a.date}
                                 </div>
-                                <img src={a.img} alt={a.title} className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-1000" />
-                                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 to-transparent"></div>
+                                <img src={a.img} alt={a.title} className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" />
                             </div>
-                            <div className="p-10 space-y-4">
-                                <h3 className="font-black text-2xl text-slate-950 mb-3 group-hover:text-teal-600 transition-colors tracking-tight leading-tight line-clamp-2">{a.title}</h3>
-                                <p className="text-slate-500 text-sm leading-relaxed mb-8 font-light line-clamp-3">{a.desc}</p>
+                            <div className="p-6">
+                                <h3 className="font-bold text-xl text-slate-900 mb-3 group-hover:text-teal-600 transition-colors uppercase tracking-tight leading-tight line-clamp-2">{a.title}</h3>
+                                <p className="text-slate-500 text-sm leading-relaxed mb-6 font-light line-clamp-3">{a.desc}</p>
                                 <button 
                                     onClick={() => setSelectedArticle(a)}
-                                    className="text-[11px] font-black text-teal-600 uppercase tracking-[0.3em] cursor-pointer inline-flex items-center gap-3 group-hover:gap-5 transition-all border-none bg-transparent"
+                                    className="text-sm font-bold text-teal-600 uppercase tracking-[0.2em] cursor-pointer inline-flex items-center gap-2 group-hover:gap-3 transition-all border-none bg-transparent"
                                 >
                                     Baca Selengkapnya
-                                    <div className="w-8 h-8 rounded-full border border-teal-200 flex items-center justify-center group-hover:bg-teal-600 group-hover:text-white transition-all">
-                                        <ArrowRight size={14} />
-                                    </div>
+                                    <ArrowRight size={16} />
                                 </button>
                             </div>
                         </article>
                     ))}
                 </div>
+
+                {/* Mobile Slider Dots */}
+                <div className="flex md:hidden justify-center gap-2.5 mt-6">
+                    {articles.map((_, i) => (
+                        <div key={i} className="w-1.5 h-1.5 rounded-full bg-slate-200"></div>
+                    ))}
+                </div>
             </div>
 
-            {/* Premium Article Modal */}
+            {/* Blog Detail Modal */}
             {selectedArticle && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8">
-                    <div className="absolute inset-0 bg-slate-950/90 backdrop-blur-md transition-opacity duration-500" onClick={() => setSelectedArticle(null)}></div>
-                    
-                    <div className="bg-[#fdfaf6] w-full max-w-5xl rounded-[3rem] overflow-hidden shadow-2xl relative z-10 flex flex-col max-h-[95vh] animate-modal-in border border-white/20">
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8 animate-fade-in">
+                    <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-sm" onClick={() => setSelectedArticle(null)}></div>
+                    <div className="bg-white w-full max-w-4xl rounded-3xl overflow-hidden shadow-2xl relative z-10 flex flex-col max-h-[95vh]">
                         <button 
                             onClick={() => setSelectedArticle(null)}
-                            className="absolute top-8 right-8 w-14 h-14 bg-white/10 hover:bg-white/20 backdrop-blur-xl rounded-full flex items-center justify-center text-white lg:text-slate-900 lg:bg-slate-100 lg:hover:bg-slate-200 transition-all z-20"
+                            className="absolute top-6 right-6 w-10 h-10 bg-slate-100 hover:bg-slate-200 rounded-full flex items-center justify-center text-slate-900 transition-all z-20"
                         >
-                            <X size={32} />
+                            <X size={24} />
                         </button>
                         
                         <div className="overflow-y-auto">
-                            <div className="h-[400px] md:h-[500px] overflow-hidden relative">
+                            <div className="h-64 md:h-[400px] overflow-hidden">
                                 <img src={selectedArticle.img} alt={selectedArticle.title} className="w-full h-full object-cover" />
-                                <div className="absolute inset-0 bg-gradient-to-t from-[#fdfaf6] to-transparent"></div>
-                                <div className="absolute bottom-12 left-12 right-12">
-                                    <div className="flex items-center gap-6 text-[10px] font-black text-teal-600 uppercase tracking-[0.4em] mb-4">
-                                        <span className="bg-white/90 backdrop-blur px-4 py-2 rounded-full shadow-xl">{selectedArticle.date}</span>
-                                        <span className="bg-slate-900 text-white px-4 py-2 rounded-full shadow-xl">Editorial</span>
-                                    </div>
-                                    <h3 className="text-4xl md:text-6xl font-black text-slate-950 leading-[1.1] tracking-tighter">{selectedArticle.title}</h3>
-                                </div>
                             </div>
                             
-                            <div className="p-12 md:p-20 pt-0">
-                                <div className="max-w-3xl mx-auto">
-                                    <div className="flex flex-wrap items-center gap-8 text-xs text-slate-400 mb-12 font-bold uppercase tracking-widest border-b border-slate-100 pb-8">
-                                        <div className="flex items-center gap-2">
-                                            <Clock size={16} className="text-teal-500" />
-                                            5 Mins Read
-                                        </div>
-                                        <div className="flex items-center gap-2">
-                                            <Mail size={16} className="text-teal-500" />
-                                            Material Insights
-                                        </div>
+                            <div className="p-8 md:p-12">
+                                <div className="flex flex-wrap items-center gap-6 text-sm text-slate-500 mb-6 font-medium">
+                                    <div className="flex items-center gap-2 bg-slate-50 px-3 py-1 rounded-full">
+                                        <Calendar size={14} className="text-teal-500" />
+                                        {selectedArticle.date}
                                     </div>
-                                    
-                                    <div className="prose prose-xl prose-slate max-w-none">
-                                        {selectedArticle.content.split('\n').map((paragraph, idx) => (
-                                            <p key={idx} className="text-slate-700 text-xl leading-[1.8] mb-8 font-light">
-                                                {paragraph}
-                                            </p>
-                                        ))}
+                                    <div className="flex items-center gap-2 bg-slate-50 px-3 py-1 rounded-full">
+                                        <Clock size={14} className="text-teal-500" />
+                                        5 Menit Baca
                                     </div>
+                                    <div className="flex items-center gap-2 bg-slate-50 px-3 py-1 rounded-full">
+                                        <Mail size={14} className="text-teal-500" />
+                                        Edukasi Material
+                                    </div>
+                                </div>
+                                
+                                <h3 className="text-3xl md:text-5xl font-black text-slate-900 mb-8 leading-tight">{selectedArticle.title}</h3>
+                                
+                                <div className="prose prose-slate max-w-none">
+                                    {selectedArticle.content.split('\n').map((paragraph, idx) => (
+                                        <p key={idx} className="text-slate-600 text-lg leading-relaxed mb-6 whitespace-pre-wrap">
+                                            {paragraph}
+                                        </p>
+                                    ))}
+                                </div>
 
-                                    <div className="mt-20 p-12 rounded-[2.5rem] bg-slate-950 text-white flex flex-col md:flex-row justify-between items-center gap-10 relative overflow-hidden">
-                                        <div className="absolute top-0 right-0 w-64 h-64 bg-teal-500/10 rounded-full blur-3xl -mr-32 -mt-32"></div>
-                                        <div className="relative z-10 flex items-center gap-6">
-                                            <img src="/brand/logo-icon-light.png" alt="Afandi Logo" className="w-16 h-16" />
-                                            <div>
-                                                <p className="text-2xl font-black text-white">Butuh bantuan desain?</p>
-                                                <p className="text-slate-400 font-medium">Konsultasi gratis dengan desainer kami.</p>
-                                            </div>
+                                <div className="mt-12 pt-12 border-t border-slate-100 flex flex-col md:flex-row justify-between items-center gap-8">
+                                    <div className="flex items-center gap-4">
+                                        <img src="/brand/logo-icon-dark.png" alt="Afandi Logo" className="w-12 h-12" />
+                                        <div>
+                                            <p className="font-bold text-slate-900">Afandi Interior Editorial</p>
+                                            <p className="text-sm text-slate-500">Spesialis Desain & Produksi Furnitur</p>
                                         </div>
-                                        <a 
-                                            href={`https://wa.me/${contactData?.phone?.replace(/[^0-9]/g, '') || ''}?text=Halo Afandi Interior, saya baru saja membaca artikel: ${selectedArticle.title}. Saya ingin konsultasi lebih lanjut.`}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="relative z-10 px-10 py-5 bg-teal-600 hover:bg-teal-500 text-white rounded-2xl font-black transition-all shadow-2xl active:scale-95"
-                                        >
-                                            Tanya via WhatsApp
-                                        </a>
                                     </div>
+                                    <a 
+                                        href={`https://wa.me/${contactData?.phone?.replace(/[^0-9]/g, '') || ''}?text=Halo Afandi Interior, saya baru saja membaca artikel: ${selectedArticle.title}. Saya ingin konsultasi lebih lanjut.`}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="px-8 py-4 bg-teal-500 hover:bg-teal-600 text-slate-900 rounded-2xl font-bold transition-all shadow-lg shadow-teal-500/20"
+                                    >
+                                        Konsultasi via WhatsApp
+                                    </a>
                                 </div>
                             </div>
                         </div>

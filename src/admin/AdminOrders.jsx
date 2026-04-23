@@ -89,6 +89,13 @@ Apakah Kakak ada waktu luang untuk kami jadwalkan *Survey Lokasi* dalam waktu de
         }
     };
 
+    const handleQuickAction = async (order, nextStatus) => {
+        const success = await handleStatusChange(order.id, nextStatus);
+        if (success) {
+            sendStatusNotification(order, nextStatus);
+        }
+    };
+
     const getNotificationMessage = (order, status) => {
         const id = String(order.id).split('-')[0].toUpperCase();
         switch (status) {
@@ -255,6 +262,44 @@ Apakah Kakak ada waktu luang untuk kami jadwalkan *Survey Lokasi* dalam waktu de
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-3">
+                                    {/* Workflow Quick Actions */}
+                                    <div className="flex items-center gap-2">
+                                        {selectedOrder.status === 'PENDING' && (
+                                            <button 
+                                                onClick={() => handleQuickAction(selectedOrder, 'SUDAH DP')}
+                                                className="px-4 py-2 bg-blue-600 text-white text-[10px] font-black rounded-xl uppercase tracking-widest hover:bg-blue-700 transition-all shadow-lg shadow-blue-100 flex items-center gap-2"
+                                            >
+                                                <CheckCircle2 size={14} /> Konfirmasi DP
+                                            </button>
+                                        )}
+                                        {selectedOrder.status === 'SUDAH DP' && (
+                                            <button 
+                                                onClick={() => handleQuickAction(selectedOrder, 'DIPROSES')}
+                                                className="px-4 py-2 bg-indigo-600 text-white text-[10px] font-black rounded-xl uppercase tracking-widest hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-100 flex items-center gap-2"
+                                            >
+                                                <Wrench size={14} /> Mulai Produksi
+                                            </button>
+                                        )}
+                                        {selectedOrder.status === 'DIPROSES' && (
+                                            <button 
+                                                onClick={() => handleQuickAction(selectedOrder, 'LUNAS')}
+                                                className="px-4 py-2 bg-teal-600 text-white text-[10px] font-black rounded-xl uppercase tracking-widest hover:bg-teal-700 transition-all shadow-lg shadow-teal-100 flex items-center gap-2"
+                                            >
+                                                <ShoppingCart size={14} /> Konfirmasi Lunas
+                                            </button>
+                                        )}
+                                        {selectedOrder.status === 'LUNAS' && (
+                                            <button 
+                                                onClick={() => handleQuickAction(selectedOrder, 'SELESAI')}
+                                                className="px-4 py-2 bg-emerald-600 text-white text-[10px] font-black rounded-xl uppercase tracking-widest hover:bg-emerald-700 transition-all shadow-lg shadow-emerald-100 flex items-center gap-2"
+                                            >
+                                                <CheckCircle2 size={14} /> Selesaikan Proyek
+                                            </button>
+                                        )}
+                                    </div>
+
+                                    <div className="w-px h-8 bg-slate-100 mx-1"></div>
+
                                     <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl">
                                         {['PENDING', 'SUDAH DP', 'DIPROSES', 'LUNAS', 'SELESAI'].map(st => (
                                             <button
@@ -266,30 +311,27 @@ Apakah Kakak ada waktu luang untuk kami jadwalkan *Survey Lokasi* dalam waktu de
                                             </button>
                                         ))}
                                     </div>
+                                    
                                     <div className="w-px h-8 bg-slate-100 mx-1"></div>
+                                    
                                     <button 
                                         onClick={() => handleSendEmail(selectedOrder)}
                                         className="hidden md:flex items-center gap-2 px-4 py-2 text-[10px] font-black uppercase tracking-widest text-teal-600 hover:bg-teal-50 rounded-xl transition-all border border-teal-100"
+                                        title="Kirim Dokumen ke Email"
                                     >
                                         <Mail size={14} />
                                     </button>
-                                    {selectedOrder.status !== 'PENDING' && (
-                                        <button 
-                                            onClick={() => sendStatusNotification(selectedOrder, selectedOrder.status)}
-                                            className="hidden md:flex items-center gap-2 px-4 py-2 text-[10px] font-black uppercase tracking-widest bg-slate-900 text-white hover:bg-slate-800 rounded-xl transition-all shadow-lg shadow-slate-200"
-                                        >
-                                            <Send size={12} /> Kabari Update
-                                        </button>
-                                    )}
                                     <button 
                                         onClick={() => copyToClipboard(getChatTemplate(selectedOrder), 'Template Chat')}
                                         className="hidden md:flex items-center gap-2 px-4 py-2 text-[10px] font-black uppercase tracking-widest text-indigo-600 hover:bg-indigo-50 rounded-xl transition-all border border-indigo-100"
+                                        title="Salin Template Chat Konfirmasi"
                                     >
                                         <MessageSquare size={14} />
                                     </button>
                                     <button 
                                         onClick={() => window.print()}
                                         className="hidden md:flex items-center gap-2 px-4 py-2 text-[10px] font-black uppercase tracking-widest text-slate-600 hover:bg-slate-50 rounded-xl transition-all border border-slate-100"
+                                        title="Cetak RAB / Invoice"
                                     >
                                         <FileText size={14} />
                                     </button>

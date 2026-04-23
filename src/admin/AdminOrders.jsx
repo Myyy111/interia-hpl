@@ -76,9 +76,30 @@ Apakah Kakak ada waktu luang untuk kami jadwalkan *Survey Lokasi* dalam waktu de
         try {
             await api.updateOrderStatus(id, status);
             fetchOrders(false);
+            
+            // If selecting from modal, update local state
+            if (selectedOrder && selectedOrder.id === id) {
+                setSelectedOrder(prev => ({ ...prev, status }));
+            }
+            
+            return true;
         } catch (err) {
             console.error('Update status error:', err);
+            return false;
         }
+    };
+
+    const sendCompletionNotification = (order) => {
+        // WhatsApp
+        const waMsg = encodeURIComponent(`Halo Kak ${order.customer?.name}, kabar gembira! Pesanan furnitur Kakak (#${String(order.id).split('-')[0].toUpperCase()}) telah SELESAI diproses dan siap untuk tahap pengiriman/pemasangan. Terima kasih telah mempercayakan Afandi Interior! 🙏`);
+        window.open(`https://wa.me/${String(order.customer?.phone || '').replace(/[^0-9]/g, '')}?text=${waMsg}`, '_blank');
+
+        // Email (Optional Delay)
+        setTimeout(() => {
+            const subject = encodeURIComponent(`Pesanan Selesai - Afandi Interior #${String(order.id).split('-')[0].toUpperCase()}`);
+            const body = encodeURIComponent(`Halo ${order.customer?.name},\n\nTerima kasih telah melakukan pemesanan di Afandi Interior.\n\nKami menginformasikan bahwa pesanan Anda telah SELESAI dan siap untuk dikirim/dipasang sesuai jadwal.\n\nSalam,\nAfandi Interior`);
+            window.location.href = `mailto:${order.customer?.email}?subject=${subject}&body=${body}`;
+        }, 1000);
     };
 
     const getStatusStyle = (status) => {
@@ -210,24 +231,44 @@ Apakah Kakak ada waktu luang untuk kami jadwalkan *Survey Lokasi* dalam waktu de
                                         </p>
                                     </div>
                                 </div>
-                                <div className="flex items-center gap-2">
+                                <div className="flex items-center gap-3">
+                                    <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl">
+                                        {['PENDING', 'PRODUKSI', 'SELESAI'].map(st => (
+                                            <button
+                                                key={st}
+                                                onClick={() => handleStatusChange(selectedOrder.id, st)}
+                                                className={`px-3 py-1.5 rounded-lg text-[9px] font-black transition-all ${selectedOrder.status === st ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-400 hover:text-slate-600'}`}
+                                            >
+                                                {st}
+                                            </button>
+                                        ))}
+                                    </div>
+                                    <div className="w-px h-8 bg-slate-100 mx-1"></div>
                                     <button 
                                         onClick={() => handleSendEmail(selectedOrder)}
                                         className="hidden md:flex items-center gap-2 px-4 py-2 text-[10px] font-black uppercase tracking-widest text-teal-600 hover:bg-teal-50 rounded-xl transition-all border border-teal-100"
                                     >
-                                        <Mail size={14} /> Kirim ke Email
+                                        <Mail size={14} />
                                     </button>
+                                    {selectedOrder.status === 'SELESAI' && (
+                                        <button 
+                                            onClick={() => sendCompletionNotification(selectedOrder)}
+                                            className="hidden md:flex items-center gap-2 px-4 py-2 text-[10px] font-black uppercase tracking-widest bg-emerald-600 text-white hover:bg-emerald-700 rounded-xl transition-all shadow-lg shadow-emerald-100"
+                                        >
+                                            <CheckCircle2 size={14} /> Kabari Pelanggan
+                                        </button>
+                                    )}
                                     <button 
                                         onClick={() => copyToClipboard(getChatTemplate(selectedOrder), 'Template Chat')}
                                         className="hidden md:flex items-center gap-2 px-4 py-2 text-[10px] font-black uppercase tracking-widest text-indigo-600 hover:bg-indigo-50 rounded-xl transition-all border border-indigo-100"
                                     >
-                                        <MessageSquare size={14} /> Salin Chat
+                                        <MessageSquare size={14} />
                                     </button>
                                     <button 
                                         onClick={() => window.print()}
                                         className="hidden md:flex items-center gap-2 px-4 py-2 text-[10px] font-black uppercase tracking-widest text-slate-600 hover:bg-slate-50 rounded-xl transition-all border border-slate-100"
                                     >
-                                        <FileText size={14} /> Cetak
+                                        <FileText size={14} />
                                     </button>
                                     <button 
                                         onClick={() => setSelectedOrder(null)}

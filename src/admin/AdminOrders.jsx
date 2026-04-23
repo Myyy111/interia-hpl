@@ -89,24 +89,47 @@ Apakah Kakak ada waktu luang untuk kami jadwalkan *Survey Lokasi* dalam waktu de
         }
     };
 
-    const sendCompletionNotification = (order) => {
+    const getNotificationMessage = (order, status) => {
+        const id = String(order.id).split('-')[0].toUpperCase();
+        switch (status) {
+            case 'SUDAH DP':
+                return `Halo Kak ${order.customer?.name}, DP untuk pesanan #${id} telah kami terima. Terima kasih! Pesanan Anda kini masuk ke antrean produksi. 🙏`;
+            case 'DIPROSES':
+                return `Halo Kak ${order.customer?.name}, pesanan #${id} sedang dalam tahap PROSES PRODUKSI di workshop kami. Kami akan kabari jika sudah siap kirim. 🔨`;
+            case 'LUNAS':
+                return `Halo Kak ${order.customer?.name}, pembayaran LUNAS untuk pesanan #${id} telah kami terima. Terima kasih banyak! Pesanan segera kami jadwalkan untuk pengiriman/pemasangan. ✅`;
+            case 'SELESAI':
+                return `Halo Kak ${order.customer?.name}, pesanan #${id} telah SELESAI dipasang dengan baik. Terima kasih telah memilih Afandi Interior. Semoga puas dengan hasilnya! ⭐⭐⭐⭐⭐`;
+            default:
+                return '';
+        }
+    };
+
+    const sendStatusNotification = (order, status) => {
+        const msg = getNotificationMessage(order, status);
+        if (!msg) return;
+
         // WhatsApp
-        const waMsg = encodeURIComponent(`Halo Kak ${order.customer?.name}, kabar gembira! Pesanan furnitur Kakak (#${String(order.id).split('-')[0].toUpperCase()}) telah SELESAI diproses dan siap untuk tahap pengiriman/pemasangan. Terima kasih telah mempercayakan Afandi Interior! 🙏`);
+        const waMsg = encodeURIComponent(msg);
         window.open(`https://wa.me/${String(order.customer?.phone || '').replace(/[^0-9]/g, '')}?text=${waMsg}`, '_blank');
 
-        // Email (Optional Delay)
-        setTimeout(() => {
-            const subject = encodeURIComponent(`Pesanan Selesai - Afandi Interior #${String(order.id).split('-')[0].toUpperCase()}`);
-            const body = encodeURIComponent(`Halo ${order.customer?.name},\n\nTerima kasih telah melakukan pemesanan di Afandi Interior.\n\nKami menginformasikan bahwa pesanan Anda telah SELESAI dan siap untuk dikirim/dipasang sesuai jadwal.\n\nSalam,\nAfandi Interior`);
-            window.location.href = `mailto:${order.customer?.email}?subject=${subject}&body=${body}`;
-        }, 1000);
+        // Email
+        if (order.customer?.email) {
+            setTimeout(() => {
+                const subject = encodeURIComponent(`Update Pesanan Afandi Interior - ${status} #${String(order.id).split('-')[0].toUpperCase()}`);
+                const body = encodeURIComponent(msg.replace(/\*/g, ''));
+                window.location.href = `mailto:${order.customer?.email}?subject=${subject}&body=${body}`;
+            }, 1000);
+        }
     };
 
     const getStatusStyle = (status) => {
-        switch (status?.toLowerCase()) {
-            case 'pending': return 'bg-amber-50 text-amber-600 border-amber-100';
-            case 'produksi': return 'bg-indigo-50 text-indigo-600 border-indigo-100';
-            case 'selesai': return 'bg-emerald-50 text-emerald-600 border-emerald-100';
+        switch (status?.toUpperCase()) {
+            case 'PENDING': return 'bg-amber-50 text-amber-600 border-amber-100';
+            case 'SUDAH DP': return 'bg-blue-50 text-blue-600 border-blue-100';
+            case 'DIPROSES': return 'bg-indigo-50 text-indigo-600 border-indigo-100';
+            case 'LUNAS': return 'bg-teal-50 text-teal-600 border-teal-100';
+            case 'SELESAI': return 'bg-emerald-50 text-emerald-600 border-emerald-100';
             default: return 'bg-slate-50 text-slate-600 border-slate-100';
         }
     };
@@ -233,11 +256,11 @@ Apakah Kakak ada waktu luang untuk kami jadwalkan *Survey Lokasi* dalam waktu de
                                 </div>
                                 <div className="flex items-center gap-3">
                                     <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl">
-                                        {['PENDING', 'PRODUKSI', 'SELESAI'].map(st => (
+                                        {['PENDING', 'SUDAH DP', 'DIPROSES', 'LUNAS', 'SELESAI'].map(st => (
                                             <button
                                                 key={st}
                                                 onClick={() => handleStatusChange(selectedOrder.id, st)}
-                                                className={`px-3 py-1.5 rounded-lg text-[9px] font-black transition-all ${selectedOrder.status === st ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-400 hover:text-slate-600'}`}
+                                                className={`px-3 py-1.5 rounded-lg text-[8px] font-black transition-all ${selectedOrder.status === st ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-400 hover:text-slate-600'}`}
                                             >
                                                 {st}
                                             </button>
@@ -250,12 +273,12 @@ Apakah Kakak ada waktu luang untuk kami jadwalkan *Survey Lokasi* dalam waktu de
                                     >
                                         <Mail size={14} />
                                     </button>
-                                    {selectedOrder.status === 'SELESAI' && (
+                                    {selectedOrder.status !== 'PENDING' && (
                                         <button 
-                                            onClick={() => sendCompletionNotification(selectedOrder)}
-                                            className="hidden md:flex items-center gap-2 px-4 py-2 text-[10px] font-black uppercase tracking-widest bg-emerald-600 text-white hover:bg-emerald-700 rounded-xl transition-all shadow-lg shadow-emerald-100"
+                                            onClick={() => sendStatusNotification(selectedOrder, selectedOrder.status)}
+                                            className="hidden md:flex items-center gap-2 px-4 py-2 text-[10px] font-black uppercase tracking-widest bg-slate-900 text-white hover:bg-slate-800 rounded-xl transition-all shadow-lg shadow-slate-200"
                                         >
-                                            <CheckCircle2 size={14} /> Kabari Pelanggan
+                                            <Send size={12} /> Kabari Update
                                         </button>
                                     )}
                                     <button 

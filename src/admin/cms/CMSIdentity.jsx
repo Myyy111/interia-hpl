@@ -4,9 +4,9 @@ import { Globe, Search, Image as ImageIcon } from 'lucide-react';
 import { CMSHeader, SectionHeader, Input, Textarea, ImageField } from './CMSComponents';
 
 const CMSIdentity = () => {
+    const { showToast } = useToast();
     const [settings, setSettings] = useState(null);
     const [isSaving, setIsSaving] = useState(false);
-    const [message, setMessage] = useState('');
 
     useEffect(() => {
         api.getSettings().then(setSettings);
@@ -16,11 +16,9 @@ const CMSIdentity = () => {
         setIsSaving(true);
         try {
             await api.updateSettings(settings);
-            setMessage('Berhasil disimpan!');
-            setTimeout(() => setMessage(''), 3000);
+            showToast('Identitas situs berhasil diperbarui!');
         } catch (error) { 
-            console.error(error);
-            setMessage('Gagal simpan'); 
+            showToast('Gagal menyimpan identitas', 'error');
         }
         setIsSaving(false);
     };

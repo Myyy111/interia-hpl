@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { api } from '../../lib/api';
 import { Layout, MessageSquare, MapPin, Copyright } from 'lucide-react';
 import { CMSHeader, SectionHeader, Input, Textarea } from './CMSComponents';
+import { useToast } from '../../components/ui/Toast';
 
 const CMSHeaderFooter = () => {
+    const { showToast } = useToast();
     const [settings, setSettings] = useState(null);
     const [isSaving, setIsSaving] = useState(false);
-    const [message, setMessage] = useState('');
 
     useEffect(() => {
         api.getSettings().then(setSettings);
@@ -16,11 +17,9 @@ const CMSHeaderFooter = () => {
         setIsSaving(true);
         try {
             await api.updateSettings(settings);
-            setMessage('Berhasil disimpan!');
-            setTimeout(() => setMessage(''), 3000);
+            showToast('Header & Footer berhasil disimpan!');
         } catch (error) { 
-            console.error(error);
-            setMessage('Gagal simpan'); 
+            showToast('Gagal menyimpan perubahan', 'error');
         }
         setIsSaving(false);
     };

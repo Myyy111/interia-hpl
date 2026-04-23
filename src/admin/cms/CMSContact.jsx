@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { api } from '../../lib/api';
 import { Phone, Share2 } from 'lucide-react';
 import { CMSHeader, SectionHeader, Input } from './CMSComponents';
+import { useToast } from '../../components/ui/Toast';
 
 const CMSContact = () => {
+    const { showToast } = useToast();
     const [settings, setSettings] = useState(null);
     const [isSaving, setIsSaving] = useState(false);
-    const [message, setMessage] = useState('');
 
     useEffect(() => {
         api.getSettings().then(setSettings);
@@ -16,11 +17,9 @@ const CMSContact = () => {
         setIsSaving(true);
         try {
             await api.updateSettings(settings);
-            setMessage('Berhasil disimpan!');
-            setTimeout(() => setMessage(''), 3000);
+            showToast('Kontak & Sosmed berhasil diperbarui!');
         } catch (error) { 
-            console.error(error);
-            setMessage('Gagal simpan'); 
+            showToast('Gagal menyimpan kontak', 'error');
         }
         setIsSaving(false);
     };

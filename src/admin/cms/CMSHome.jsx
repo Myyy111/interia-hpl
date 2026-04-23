@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { api } from '../../lib/api';
 import { LayoutTemplate, Info } from 'lucide-react';
 import { CMSHeader, SectionHeader, Input, Textarea, ImageField } from './CMSComponents';
+import { useToast } from '../../components/ui/Toast';
 
 const CMSHome = () => {
+    const { showToast } = useToast();
     const [settings, setSettings] = useState(null);
     const [isSaving, setIsSaving] = useState(false);
-    const [message, setMessage] = useState('');
 
     useEffect(() => {
         api.getSettings().then(setSettings);
@@ -16,11 +17,9 @@ const CMSHome = () => {
         setIsSaving(true);
         try {
             await api.updateSettings(settings);
-            setMessage('Berhasil disimpan!');
-            setTimeout(() => setMessage(''), 3000);
+            showToast('Halaman Utama berhasil diperbarui!');
         } catch (error) { 
-            console.error(error);
-            setMessage('Gagal simpan'); 
+            showToast('Gagal menyimpan perubahan', 'error');
         }
         setIsSaving(false);
     };
@@ -62,8 +61,7 @@ const CMSHome = () => {
                                 const url = await api.uploadImage(file);
                                 setSettings({...settings, about: {...settings.about, img: url}});
                             } catch (error) {
-                                console.error('Upload error:', error);
-                                alert('Gagal upload gambar.');
+                                showToast('Gagal upload gambar', 'error');
                             }
                         }} />
                     </div>

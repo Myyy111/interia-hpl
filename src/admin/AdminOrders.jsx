@@ -9,6 +9,7 @@ export default function AdminOrders() {
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
     const [selectedOrder, setSelectedOrder] = useState(null);
+    const [settings, setSettings] = useState(null);
     const [activeTab, setActiveTab] = useState('summary');
 
     const copyToClipboard = (text, label) => {
@@ -53,6 +54,7 @@ Apakah Kakak ada waktu luang untuk kami jadwalkan *Survey Lokasi* dalam waktu de
 
     useEffect(() => {
         fetchOrders();
+        api.getSettings().then(setSettings);
 
         // Realtime Subscription
         const channel = supabase
@@ -627,10 +629,12 @@ Apakah Kakak ada waktu luang untuk kami jadwalkan *Survey Lokasi* dalam waktu de
                                                 <div className="w-1.5 h-1.5 bg-slate-900 rounded-full" /> Syarat & Ketentuan:
                                             </h6>
                                             <ul className="text-[10px] text-slate-500 space-y-3 font-medium leading-relaxed">
-                                                <li className="flex gap-3"><span>01.</span> <span>Penawaran ini bersifat final berdasarkan data dimensi yang diberikan secara online.</span></li>
-                                                <li className="flex gap-3"><span>02.</span> <span>Pembayaran Down Payment (DP) 50% wajib dilakukan sebagai tanda approval produksi.</span></li>
-                                                <li className="flex gap-3"><span>03.</span> <span>Waktu produksi estimasi 10-14 hari kerja sejak DP diterima.</span></li>
-                                                <li className="flex gap-3"><span>04.</span> <span>Garansi material dan hardware selama 1 tahun untuk penggunaan normal.</span></li>
+                                                {(settings?.templates?.rabTerms || "Penawaran ini bersifat final berdasarkan data dimensi yang diberikan secara online.\nPembayaran Down Payment (DP) 50% wajib dilakukan sebagai tanda approval produksi.\nWaktu produksi estimasi 10-14 hari kerja sejak DP diterima.\nGaransi material dan hardware selama 1 tahun untuk penggunaan normal.").split('\n').map((term, i) => (
+                                                    <li key={i} className="flex gap-3">
+                                                        <span>{String(i + 1).padStart(2, '0')}.</span> 
+                                                        <span>{term}</span>
+                                                    </li>
+                                                ))}
                                             </ul>
                                         </div>
                                         <div className="flex flex-col items-center justify-center text-center">
@@ -726,14 +730,14 @@ Apakah Kakak ada waktu luang untuk kami jadwalkan *Survey Lokasi* dalam waktu de
                                                 <p className="text-[10px] font-black text-slate-900 uppercase tracking-widest mb-4 flex items-center gap-2"><ShoppingCart size={12} /> Panduan Pembayaran:</p>
                                                 <div className="p-6 bg-slate-50 border border-slate-100 rounded-3xl space-y-4">
                                                     <div className="flex items-center gap-4">
-                                                        <div className="w-10 h-6 bg-slate-800 rounded flex items-center justify-center text-[10px] text-white font-black">BCA</div>
-                                                        <p className="text-xs font-black text-slate-900 tracking-widest">890 1234 567</p>
+                                                        <div className="w-10 h-6 bg-slate-800 rounded flex items-center justify-center text-[10px] text-white font-black">{settings?.payment?.bankName || 'BCA'}</div>
+                                                        <p className="text-xs font-black text-slate-900 tracking-widest">{settings?.payment?.bankAccount || '890 1234 567'}</p>
                                                     </div>
                                                     <div className="flex items-center gap-4 pt-2 border-t border-slate-200/50">
                                                         <div className="w-10 h-6 bg-rose-600 rounded flex items-center justify-center text-[10px] text-white font-black uppercase">QRIS</div>
                                                         <p className="text-[10px] font-black text-slate-900 uppercase tracking-widest">Scan QR di Toko / Chat Admin</p>
                                                     </div>
-                                                    <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest ml-14">A/N Ahmad Helmi Afandi</p>
+                                                    <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest ml-14">A/N {settings?.payment?.bankHolder || 'Ahmad Helmi Afandi'}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -764,7 +768,12 @@ Apakah Kakak ada waktu luang untuk kami jadwalkan *Survey Lokasi* dalam waktu de
                                     {/* Invoice Footer */}
                                     <div className="mt-24 pt-12 border-t border-slate-50 flex flex-col items-center">
                                         <div className="px-6 py-2 bg-slate-50 text-slate-400 text-[9px] font-black rounded-full uppercase tracking-[0.4em] mb-4">Official Electronic Invoice</div>
-                                        <p className="text-[10px] text-slate-300 font-medium italic text-center max-w-md">Terima kasih telah mempercayakan interior Anda kepada Afandi Interior. Dokumen ini sah sebagai bukti penagihan resmi.</p>
+                                        <div className="text-center space-y-2 mb-4">
+                                            {(settings?.templates?.invoiceTerms || "Barang yang sudah dibeli tidak dapat ditukar.\nGaransi produk selama 12 bulan pengerjaan.\nBukti pembayaran ini sah sebagai nota resmi.").split('\n').map((term, i) => (
+                                                <p key={i} className="text-[10px] text-slate-400 font-black uppercase tracking-widest leading-relaxed">{term}</p>
+                                            ))}
+                                        </div>
+                                        <p className="text-[10px] text-slate-300 font-medium italic text-center max-w-md">Terima kasih telah mempercayakan interior Anda kepada Afandi Interior.</p>
                                     </div>
                                 </div>
                             )}

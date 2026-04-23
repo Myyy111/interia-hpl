@@ -109,7 +109,7 @@ const AdminLayout = () => {
 
             {/* Sidebar */}
             <aside className={`
-                fixed inset-y-0 left-0 z-50 w-72 bg-white border-r border-slate-200/60 transition-all duration-300 ease-in-out lg:sticky lg:top-0 lg:h-screen lg:translate-x-0 shrink-0
+                fixed inset-y-0 left-0 z-50 w-72 bg-white border-r border-slate-200/60 transition-all duration-300 ease-in-out lg:sticky lg:top-0 lg:h-screen lg:translate-x-0 shrink-0 overflow-x-hidden
                 ${isMobileMenuOpen ? 'translate-x-0 shadow-2xl' : '-translate-x-full'}
             `}>
                 <div className="flex flex-col h-full">
@@ -137,7 +137,7 @@ const AdminLayout = () => {
                     </div>
 
                     {/* Navigation */}
-                    <nav className="flex-1 space-y-6 overflow-y-auto custom-scrollbar pb-10">
+                    <nav className="flex-1 space-y-6 overflow-y-auto overflow-x-hidden custom-scrollbar pb-10">
                         <div className="space-y-1">
                             <p className="px-7 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-3">NAVIGASI UTAMA</p>
                             <NavLink to="/admin" end className={navItemClass}>

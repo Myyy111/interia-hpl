@@ -1,17 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, ShoppingCart, Package, Settings, LogOut, ChevronDown } from 'lucide-react';
+import { 
+    LayoutDashboard, 
+    ShoppingCart, 
+    Package, 
+    Settings, 
+    LogOut, 
+    ChevronDown, 
+    Menu, 
+    X, 
+    Globe, 
+    User,
+    Image as ImageIcon,
+    FileText,
+    Users
+} from 'lucide-react';
 import AdminLogin from './AdminLogin';
 
 const AdminLayout = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(() => localStorage.getItem('admin_auth') === 'true');
     const [isLoading] = useState(false);
-    const [showSettingsDropdown, setShowSettingsDropdown] = useState(false);
+    const [showSettingsDropdown, setShowSettingsDropdown] = useState(true); // Default open for easier navigation
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
-        // eslint-disable-next-line react-hooks/set-state-in-effect
         setIsMobileMenuOpen(false);
     }, [navigate]);
 
@@ -22,106 +35,175 @@ const AdminLayout = () => {
     };
 
     if (isLoading) {
-        return <div className="min-h-screen bg-slate-950 flex items-center justify-center">
-            <div className="w-8 h-8 border-4 border-teal-500 border-t-transparent rounded-full animate-spin"></div>
-        </div>;
+        return (
+            <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+                <div className="w-10 h-10 border-4 border-slate-200 border-t-slate-900 rounded-full animate-spin"></div>
+            </div>
+        );
     }
 
     if (!isAuthenticated) {
         return <AdminLogin onLogin={setIsAuthenticated} />;
     }
 
+    const navItemClass = ({ isActive }) => `
+        flex items-center justify-between px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200
+        ${isActive 
+            ? 'bg-slate-900 text-white shadow-lg shadow-slate-200 translate-x-1' 
+            : 'text-slate-500 hover:bg-slate-100 hover:text-slate-900'}
+    `;
+
+    const subNavItemClass = ({ isActive }) => `
+        flex items-center space-x-3 px-4 py-2 rounded-lg text-xs font-bold transition-all
+        ${isActive 
+            ? 'text-slate-900 bg-slate-100' 
+            : 'text-slate-400 hover:text-slate-700 hover:bg-slate-50'}
+    `;
+
     return (
-        <div className="min-h-screen bg-slate-50 flex relative overflow-hidden">
-            {/* Mobile Overlay */}
-            {isMobileMenuOpen && (
-                <div 
-                    className="fixed inset-0 bg-slate-900/50 z-40 lg:hidden backdrop-blur-sm"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                />
-            )}
+        <div className="min-h-screen bg-[#f8fafc] flex font-sans text-slate-900">
+            {/* Mobile Menu Toggle */}
+            <button 
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="lg:hidden fixed bottom-6 right-6 z-[60] w-14 h-14 bg-slate-900 text-white rounded-full shadow-2xl flex items-center justify-center active:scale-95 transition-transform"
+            >
+                {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
 
             {/* Sidebar */}
             <aside className={`
-                fixed inset-y-0 left-0 z-50 w-64 bg-slate-900 border-r border-slate-800 transform transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0
-                ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}
+                fixed inset-y-0 left-0 z-50 w-72 bg-white border-r border-slate-200/60 transition-all duration-300 ease-in-out lg:relative lg:translate-x-0
+                ${isMobileMenuOpen ? 'translate-x-0 shadow-2xl' : '-translate-x-full'}
             `}>
-                <div className="h-16 flex items-center px-6 border-b border-slate-800">
-                    <span className="text-xl font-bold bg-gradient-to-r from-teal-400 to-indigo-400 bg-clip-text text-transparent">Workshop CMS</span>
-                </div>
-                <nav className="p-4 space-y-2 overflow-y-auto h-[calc(100vh-64px)]">
-                    <NavLink to="/admin" end className={({ isActive }) => `flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${isActive ? 'bg-teal-500/10 text-teal-400' : 'text-slate-400 hover:text-white hover:bg-slate-800'}`}>
-                        <LayoutDashboard size={20} />
-                        <span>Dashboard</span>
-                    </NavLink>
-                    <NavLink to="/admin/orders" className={({ isActive }) => `flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${isActive ? 'bg-teal-500/10 text-teal-400' : 'text-slate-400 hover:text-white hover:bg-slate-800'}`}>
-                        <ShoppingCart size={20} />
-                        <span>Pesanan</span>
-                    </NavLink>
-                    <NavLink to="/admin/products" className={({ isActive }) => `flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${isActive ? 'bg-teal-500/10 text-teal-400' : 'text-slate-400 hover:text-white hover:bg-slate-800'}`}>
-                        <Package size={20} />
-                        <span>Produk & Harga</span>
-                    </NavLink>
-
-                    {/* Dropdown Pengaturan Web */}
-                    <div className="pt-2">
-                        <button 
-                            onClick={() => setShowSettingsDropdown(!showSettingsDropdown)}
-                            className={`w-full flex items-center justify-between px-4 py-3 rounded-lg text-sm font-medium transition-colors ${showSettingsDropdown ? 'text-white' : 'text-slate-400 hover:text-white hover:bg-slate-800'}`}
-                        >
-                            <div className="flex items-center space-x-3">
-                                <Settings size={20} />
-                                <span>Pengaturan Web</span>
+                <div className="flex flex-col h-full">
+                    {/* Brand */}
+                    <div className="h-20 flex items-center px-8 border-b border-slate-50">
+                        <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 bg-slate-900 rounded-lg flex items-center justify-center">
+                                <Settings className="text-white" size={18} />
                             </div>
-                            <ChevronDown size={16} className={`transform transition-transform ${showSettingsDropdown ? 'rotate-180' : ''}`} />
-                        </button>
-                        
-                        {showSettingsDropdown && (
-                            <div className="mt-2 ml-4 pl-4 border-l border-slate-800 space-y-1">
-                                <NavLink to="/admin/settings" end className={({ isActive }) => `block px-4 py-2 rounded-lg text-xs font-medium transition-colors ${isActive ? 'text-teal-400 bg-teal-500/5' : 'text-slate-500 hover:text-slate-300'}`}>
-                                    Umum & Hero
-                                </NavLink>
-                                <NavLink to="/admin/settings/catalog" className={({ isActive }) => `block px-4 py-2 rounded-lg text-xs font-medium transition-colors ${isActive ? 'text-teal-400 bg-teal-500/5' : 'text-slate-500 hover:text-slate-300'}`}>
-                                    Katalog & Portofolio
-                                </NavLink>
-                                <NavLink to="/admin/settings/community" className={({ isActive }) => `block px-4 py-2 rounded-lg text-xs font-medium transition-colors ${isActive ? 'text-teal-400 bg-teal-500/5' : 'text-slate-500 hover:text-slate-300'}`}>
-                                    Tim & Testimoni
-                                </NavLink>
-                                <NavLink to="/admin/settings/blog" className={({ isActive }) => `block px-4 py-2 rounded-lg text-xs font-medium transition-colors ${isActive ? 'text-teal-400 bg-teal-500/5' : 'text-slate-500 hover:text-slate-300'}`}>
-                                    Manajemen Blog
-                                </NavLink>
-                            </div>
-                        )}
+                            <span className="text-lg font-black tracking-tight text-slate-900">AFANDI<span className="text-slate-400 font-light ml-1 text-base uppercase tracking-widest">CMS</span></span>
+                        </div>
                     </div>
-                </nav>
+
+                    {/* Navigation */}
+                    <nav className="flex-1 p-6 space-y-8 overflow-y-auto custom-scrollbar">
+                        <div className="space-y-1">
+                            <p className="px-4 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-4">Main Menu</p>
+                            <NavLink to="/admin" end className={navItemClass}>
+                                <div className="flex items-center space-x-3">
+                                    <LayoutDashboard size={18} />
+                                    <span>Ringkasan</span>
+                                </div>
+                            </NavLink>
+                            <NavLink to="/admin/orders" className={navItemClass}>
+                                <div className="flex items-center space-x-3">
+                                    <ShoppingCart size={18} />
+                                    <span>Pesanan Masuk</span>
+                                </div>
+                                <span className="bg-rose-500 text-white text-[10px] px-2 py-0.5 rounded-full">3</span>
+                            </NavLink>
+                            <NavLink to="/admin/products" className={navItemClass}>
+                                <div className="flex items-center space-x-3">
+                                    <Package size={18} />
+                                    <span>Master Produk</span>
+                                </div>
+                            </NavLink>
+                        </div>
+
+                        <div className="space-y-1">
+                            <p className="px-4 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-4">Website Content</p>
+                            
+                            <button 
+                                onClick={() => setShowSettingsDropdown(!showSettingsDropdown)}
+                                className="w-full flex items-center justify-between px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-500 hover:bg-slate-100 hover:text-slate-900 transition-all"
+                            >
+                                <div className="flex items-center space-x-3">
+                                    <Globe size={18} />
+                                    <span>Edit Konten Web</span>
+                                </div>
+                                <ChevronDown size={14} className={`transform transition-transform ${showSettingsDropdown ? 'rotate-180' : ''}`} />
+                            </button>
+                            
+                            {showSettingsDropdown && (
+                                <div className="mt-2 space-y-1 pl-4">
+                                    <NavLink to="/admin/settings" end className={subNavItemClass}>
+                                        <div className="w-1.5 h-1.5 rounded-full bg-slate-300 group-[.active]:bg-slate-900"></div>
+                                        <span>Hero & Landing</span>
+                                    </NavLink>
+                                    <NavLink to="/admin/settings/catalog" className={subNavItemClass}>
+                                        <div className="w-1.5 h-1.5 rounded-full bg-slate-300"></div>
+                                        <span>Portofolio Grid</span>
+                                    </NavLink>
+                                    <NavLink to="/admin/settings/community" className={subNavItemClass}>
+                                        <div className="w-1.5 h-1.5 rounded-full bg-slate-300"></div>
+                                        <span>Tim & Testimoni</span>
+                                    </NavLink>
+                                    <NavLink to="/admin/settings/blog" className={subNavItemClass}>
+                                        <div className="w-1.5 h-1.5 rounded-full bg-slate-300"></div>
+                                        <span>Manajemen Blog</span>
+                                    </NavLink>
+                                </div>
+                            )}
+                        </div>
+                    </nav>
+
+                    {/* User Profile / Logout */}
+                    <div className="p-6 border-t border-slate-50 bg-slate-50/30">
+                        <div className="flex items-center gap-4 px-2 mb-6">
+                            <div className="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center text-slate-600 border border-white">
+                                <User size={20} />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                                <p className="text-sm font-bold text-slate-900 truncate">Administrator</p>
+                                <p className="text-xs text-slate-400 truncate">Super Admin</p>
+                            </div>
+                        </div>
+                        <button 
+                            onClick={handleLogout}
+                            className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-sm font-bold text-rose-500 bg-white border border-rose-100 hover:bg-rose-500 hover:text-white transition-all shadow-sm active:scale-95"
+                        >
+                            <LogOut size={18} />
+                            Keluar Sistem
+                        </button>
+                    </div>
+                </div>
             </aside>
 
             {/* Main Content */}
-            <main className="flex-1 flex flex-col min-h-screen overflow-hidden w-full">
-                <header className="h-16 bg-white border-b border-slate-200 flex items-center px-4 md:px-8 shadow-sm justify-between shrink-0">
+            <main className="flex-1 flex flex-col min-h-screen overflow-hidden">
+                {/* Header */}
+                <header className="h-20 bg-white/80 backdrop-blur-md border-b border-slate-200/60 flex items-center px-8 lg:px-12 justify-between sticky top-0 z-40 shrink-0">
                     <div className="flex items-center gap-4">
-                        <button 
-                            onClick={() => setIsMobileMenuOpen(true)}
-                            className="lg:hidden p-2 text-slate-600 hover:bg-slate-100 rounded-lg"
-                        >
-                            <LayoutDashboard size={24} />
-                        </button>
-                        <h1 className="text-lg font-bold text-slate-800 truncate">Admin Panel</h1>
+                        <div className="hidden lg:flex items-center gap-2 text-xs font-bold text-slate-400 uppercase tracking-widest">
+                            <span>Pages</span>
+                            <span className="text-slate-300">/</span>
+                            <span className="text-slate-900">Dashboard</span>
+                        </div>
+                        <h2 className="lg:hidden text-lg font-black tracking-tight">DASHBOARD</h2>
                     </div>
                     
-                    <div className="flex items-center gap-3 md:gap-6">
-                        <NavLink to="/" className="hidden sm:block text-sm text-slate-500 hover:text-teal-600 font-medium transition-colors">Lihat Web &rarr;</NavLink>
-                        <button 
-                            onClick={handleLogout}
-                            className="flex items-center gap-2 text-xs md:text-sm text-rose-500 hover:text-rose-600 font-bold px-3 py-2 rounded-lg hover:bg-rose-50 transition-all border border-transparent hover:border-rose-100"
+                    <div className="flex items-center gap-4">
+                        <NavLink 
+                            to="/" 
+                            className="flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-slate-900 px-4 py-2 rounded-lg transition-all"
                         >
-                            <LogOut size={16} /> <span className="hidden xs:inline">Keluar</span>
-                        </button>
+                            <Globe size={16} />
+                            <span className="hidden sm:inline">Pratinjau Web</span>
+                        </NavLink>
+                        <div className="w-px h-6 bg-slate-200 hidden sm:block"></div>
+                        <div className="flex items-center gap-3 bg-slate-50 px-3 py-1.5 rounded-full border border-slate-100">
+                            <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
+                            <span className="text-[10px] font-black text-slate-600 uppercase">Server Online</span>
+                        </div>
                     </div>
                 </header>
 
-                <div className="flex-1 overflow-auto p-4 md:p-8 bg-slate-50">
-                    <Outlet />
+                {/* Content Area */}
+                <div className="flex-1 overflow-y-auto p-6 md:p-10 lg:p-12 scroll-smooth">
+                    <div className="max-w-6xl mx-auto animate-fade-in-up">
+                        <Outlet />
+                    </div>
                 </div>
             </main>
         </div>

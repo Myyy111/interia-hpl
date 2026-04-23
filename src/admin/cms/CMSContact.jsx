@@ -1,0 +1,61 @@
+import React, { useEffect, useState } from 'react';
+import { api } from '../../lib/api';
+import { Phone, Share2 } from 'lucide-react';
+import { CMSHeader, SectionHeader, Input } from './CMSComponents';
+
+const CMSContact = () => {
+    const [settings, setSettings] = useState(null);
+    const [isSaving, setIsSaving] = useState(false);
+    const [message, setMessage] = useState('');
+
+    useEffect(() => {
+        api.getSettings().then(setSettings);
+    }, []);
+
+    const handleSave = async () => {
+        setIsSaving(true);
+        try {
+            await api.updateSettings(settings);
+            setMessage('Berhasil disimpan!');
+            setTimeout(() => setMessage(''), 3000);
+        } catch (error) { 
+            console.error(error);
+            setMessage('Gagal simpan'); 
+        }
+        setIsSaving(false);
+    };
+
+    if (!settings) return null;
+
+    return (
+        <div className="animate-fade-in">
+            <CMSHeader 
+                title="Kontak & Sosial Media" 
+                desc="Kelola nomor WhatsApp, Email, dan link sosial media." 
+                onSave={handleSave} 
+                isSaving={isSaving} 
+                message={message} 
+            />
+            
+            <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm space-y-10">
+                <section>
+                    <SectionHeader icon={<Phone className="text-rose-500" />} title="Kontak Utama" />
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <Input label="WhatsApp" value={settings.contact?.phone || ''} onChange={v => setSettings({...settings, contact: {...settings.contact, phone: v}})} />
+                        <Input label="Email Official" value={settings.contact?.email || ''} onChange={v => setSettings({...settings, contact: {...settings.contact, email: v}})} />
+                    </div>
+                </section>
+
+                <section>
+                    <SectionHeader icon={<Share2 className="text-indigo-500" />} title="Sosial Media" />
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <Input label="Instagram (URL)" value={settings.contact?.instagram || ''} onChange={v => setSettings({...settings, contact: {...settings.contact, instagram: v}})} />
+                        <Input label="Facebook (URL)" value={settings.contact?.facebook || ''} onChange={v => setSettings({...settings, contact: {...settings.contact, facebook: v}})} />
+                    </div>
+                </section>
+            </div>
+        </div>
+    );
+};
+
+export default CMSContact;

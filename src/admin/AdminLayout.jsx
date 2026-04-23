@@ -168,7 +168,11 @@ const AdminLayout = () => {
                                 <div className="mt-2 space-y-1 pl-4 border-l-2 border-slate-50 ml-6 animate-fade-in">
                                     <NavLink to="/admin/settings" end className={subNavItemClass}>
                                         <div className="w-1 h-1 rounded-full bg-slate-300 group-[.active]:bg-slate-900 group-hover:bg-slate-900 transition-colors"></div>
-                                        <span>Hero & Landing</span>
+                                        <span>Halaman Utama</span>
+                                    </NavLink>
+                                    <NavLink to="/admin/settings/identity" className={subNavItemClass}>
+                                        <div className="w-1 h-1 rounded-full bg-slate-300 group-[.active]:bg-slate-900 group-hover:bg-slate-900 transition-colors"></div>
+                                        <span>Identitas & SEO</span>
                                     </NavLink>
                                     <NavLink to="/admin/settings/catalog" className={subNavItemClass}>
                                         <div className="w-1 h-1 rounded-full bg-slate-300 group-[.active]:bg-slate-900 group-hover:bg-slate-900 transition-colors"></div>
@@ -177,6 +181,14 @@ const AdminLayout = () => {
                                     <NavLink to="/admin/settings/community" className={subNavItemClass}>
                                         <div className="w-1 h-1 rounded-full bg-slate-300 group-[.active]:bg-slate-900 group-hover:bg-slate-900 transition-colors"></div>
                                         <span>Tim & Testimoni</span>
+                                    </NavLink>
+                                    <NavLink to="/admin/settings/contact" className={subNavItemClass}>
+                                        <div className="w-1 h-1 rounded-full bg-slate-300 group-[.active]:bg-slate-900 group-hover:bg-slate-900 transition-colors"></div>
+                                        <span>Kontak & Sosmed</span>
+                                    </NavLink>
+                                    <NavLink to="/admin/settings/templates" className={subNavItemClass}>
+                                        <div className="w-1 h-1 rounded-full bg-slate-300 group-[.active]:bg-slate-900 group-hover:bg-slate-900 transition-colors"></div>
+                                        <span>Template Dokumen</span>
                                     </NavLink>
                                     <NavLink to="/admin/settings/blog" className={subNavItemClass}>
                                         <div className="w-1 h-1 rounded-full bg-slate-300 group-[.active]:bg-slate-900 group-hover:bg-slate-900 transition-colors"></div>

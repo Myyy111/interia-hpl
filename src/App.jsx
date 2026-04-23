@@ -7,7 +7,10 @@ import AdminDashboard from './admin/AdminDashboard';
 import AdminOrders from './admin/AdminOrders';
 import AdminProducts from './admin/AdminProducts';
 import AdminSettings from './admin/AdminSettings';
-import CMSGeneral from './admin/cms/CMSGeneral';
+import CMSHome from './admin/cms/CMSHome';
+import CMSIdentity from './admin/cms/CMSIdentity';
+import CMSContact from './admin/cms/CMSContact';
+import CMSTemplates from './admin/cms/CMSTemplates';
 import CMSCatalog from './admin/cms/CMSCatalog';
 import CMSCommunity from './admin/cms/CMSCommunity';
 import CMSBlog from './admin/cms/CMSBlog';
@@ -33,7 +36,10 @@ function App() {
             <Route path="orders" element={<AdminOrders />} />
             <Route path="products" element={<AdminProducts />} />
             <Route path="settings" element={<AdminSettings />}>
-              <Route index element={<CMSGeneral />} />
+              <Route index element={<CMSHome />} />
+              <Route path="identity" element={<CMSIdentity />} />
+              <Route path="contact" element={<CMSContact />} />
+              <Route path="templates" element={<CMSTemplates />} />
               <Route path="catalog" element={<CMSCatalog />} />
               <Route path="community" element={<CMSCommunity />} />
               <Route path="blog" element={<CMSBlog />} />

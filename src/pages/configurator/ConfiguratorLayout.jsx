@@ -440,9 +440,7 @@ export default function ConfiguratorLayout() {
                 {/* ── RIGHT PREVIEW (Desktop) ── */}
                 <div className="hidden lg:flex flex-col gap-6 w-[400px] xl:w-[460px] lg:sticky lg:top-24 lg:self-start">
                     <PriceEstimator price={price} />
-                    <Suspense fallback={<PreviewLoader />}>
-                        <RoomPreview2D config={config} />
-                    </Suspense>
+                    <RoomPreview2D config={config} />
                 </div>
             </main>
 

@@ -1,33 +1,19 @@
-import React, { useState, useEffect, useCallback, Suspense, lazy } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { api } from '../../lib/api';
 import WelcomeScreen from './steps/WelcomeScreen';
 import PriceEstimator from '../../components/PriceEstimator';
 import { trackEvent, ANALYTICS_EVENTS } from '../../lib/analytics';
 import { ChevronRight, ChevronLeft, CheckCircle, Layers, Ruler, DoorOpen, Palette, ClipboardList, Camera, Send, Eye, LayoutList } from 'lucide-react';
 
-// Lazy loaded components for performance optimization
-const ProductSelectionForm = lazy(() => import('./steps/ProductSelectionForm'));
-const RoomSizeForm = lazy(() => import('./steps/RoomSizeForm'));
-const DoorsWindowsForm = lazy(() => import('./steps/DoorsWindowsForm'));
-const DesignConfigForm = lazy(() => import('./steps/DesignConfigForm'));
-const OrderReviewStep = lazy(() => import('./steps/OrderReviewStep'));
-const PhotoUploadForm = lazy(() => import('./steps/PhotoUploadForm'));
-const OrderForm = lazy(() => import('./steps/OrderForm'));
-const RoomPreview2D = lazy(() => import('../../components/RoomPreview2D'));
+import ProductSelectionForm from './steps/ProductSelectionForm';
+import RoomSizeForm from './steps/RoomSizeForm';
+import DoorsWindowsForm from './steps/DoorsWindowsForm';
+import DesignConfigForm from './steps/DesignConfigForm';
+import OrderReviewStep from './steps/OrderReviewStep';
+import PhotoUploadForm from './steps/PhotoUploadForm';
+import OrderForm from './steps/OrderForm';
+import RoomPreview2D from '../../components/RoomPreview2D';
 
-// Loading fallbacks
-const StepLoader = () => (
-    <div className="py-16 flex flex-col items-center justify-center gap-3 animate-pulse">
-        <div className="w-10 h-10 border-4 border-teal-100 border-t-teal-600 rounded-full animate-spin" />
-        <p className="text-xs font-bold text-teal-700 tracking-wider uppercase">Memuat modul...</p>
-    </div>
-);
-
-const PreviewLoader = () => (
-    <div className="flex-1 min-h-[300px] flex items-center justify-center bg-slate-50/50 border border-slate-200 rounded-2xl animate-pulse">
-        <div className="w-10 h-10 border-4 border-slate-200 border-t-slate-400 rounded-full animate-spin opacity-50" />
-    </div>
-);
 
 // New step order per requirements
 const STEPS = [
@@ -404,7 +390,6 @@ export default function ConfiguratorLayout() {
 
                             {/* Step Content */}
                             <div className="px-6 pb-0 animate-fade-in-up" key={currentStep}>
-                                <Suspense fallback={<StepLoader />}>
                                     <StepComponent
                                         config={config}
                                         updateConfig={updateConfig}
@@ -414,7 +399,6 @@ export default function ConfiguratorLayout() {
                                         isSubmitting={isSubmitting}
                                         {...stepExtraProps}
                                     />
-                                </Suspense>
                             </div>
 
                             {/* Desktop Nav */}
@@ -445,9 +429,7 @@ export default function ConfiguratorLayout() {
                     {/* Mobile Preview Panel */}
                     {mobileTab === 'preview' && (
                         <div className="lg:hidden">
-                            <Suspense fallback={<PreviewLoader />}>
                                 <RoomPreview2D config={config} />
-                            </Suspense>
                             <div className="mt-4">
                                 <PriceEstimator price={price} />
                             </div>

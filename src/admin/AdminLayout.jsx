@@ -114,22 +114,23 @@ const AdminLayout = () => {
             `}>
                 <div className="flex flex-col h-full">
                     {/* Brand */}
-                    <div className="h-24 flex items-center px-8 border-b border-slate-100 mb-4">
-                        <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-xl flex items-center justify-center overflow-hidden bg-slate-50 border border-slate-100">
+                    <div className="h-28 flex items-center px-8 border-b border-slate-100 mb-4 bg-white">
+                        <div className="flex items-center gap-4">
+                            <div className="w-14 h-14 flex items-center justify-center overflow-hidden">
                                 {settings?.site?.adminLogo ? (
-                                    <img src={settings.site.adminLogo} alt="Logo" className="w-full h-full object-contain p-1" />
+                                    <img src={settings.site.adminLogo} alt="Logo" className="w-full h-full object-contain" />
                                 ) : (
-                                    <div className="w-full h-full bg-slate-900 flex items-center justify-center">
-                                        <Settings className="text-white" size={20} />
-                                    </div>
+                                    <img src="/brand/logo-icon-dark.png" alt="Logo Default" className="w-full h-full object-contain" />
                                 )}
                             </div>
-                            <div className="flex flex-col">
-                                <span className="text-sm font-black tracking-tighter text-slate-900 leading-none">
-                                    {settings?.site?.name || 'AFANDI'}
+                            <div className="flex flex-col items-start">
+                                <span className="font-['Playfair_Display'] text-[24px] font-bold leading-none text-[#b08d57] mb-1">
+                                    {settings?.site?.name?.split(' ')[0] || 'Afandi'}
                                 </span>
-                                <span className="text-[10px] font-bold text-blue-600 uppercase tracking-widest mt-1">CMS ADMIN</span>
+                                <span className="font-['Cinzel'] text-[9px] font-black tracking-[0.3em] text-slate-500 uppercase leading-none">
+                                    {settings?.site?.name?.split(' ').slice(1).join(' ') || 'INTERIOR'}
+                                </span>
+                                <span className="text-[8px] font-bold text-slate-300 uppercase tracking-[0.4em] mt-2 border-t border-slate-100 pt-1">CMS Admin</span>
                             </div>
                         </div>
                     </div>

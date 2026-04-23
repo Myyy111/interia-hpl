@@ -16,7 +16,7 @@ import {
     Users
 } from 'lucide-react';
 import AdminLogin from './AdminLogin';
-import { supabase } from '../lib/api';
+import { supabase, api } from '../lib/api';
 
 const AdminLayout = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(() => localStorage.getItem('admin_auth') === 'true');

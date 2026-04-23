@@ -114,22 +114,24 @@ const AdminLayout = () => {
             `}>
                 <div className="flex flex-col h-full">
                     {/* Brand */}
-                    <div className="h-28 flex items-center px-8 border-b border-slate-100 mb-4 bg-white">
+                    <div className="h-32 flex items-center px-8 border-b border-slate-100 mb-4 bg-white">
                         <div className="flex items-center gap-4">
-                            <div className="w-14 h-14 flex items-center justify-center overflow-hidden">
+                            <div className="w-[72px] h-[72px] flex items-center justify-center overflow-hidden">
                                 {settings?.site?.adminLogo ? (
                                     <img src={settings.site.adminLogo} alt="Logo" className="w-full h-full object-contain" />
                                 ) : (
                                     <img src="/brand/logo-icon-dark.png" alt="Logo Default" className="w-full h-full object-contain" />
                                 )}
                             </div>
-                            <div className="flex flex-col items-start">
-                                <span className="font-['Playfair_Display'] text-[24px] font-bold leading-none text-[#b08d57] mb-1">
+                            <div className="flex flex-col items-start mt-1">
+                                <span className="font-['Playfair_Display'] text-[28px] font-bold leading-[0.85] text-[#b08d57]">
                                     {settings?.site?.name?.split(' ')[0] || 'Afandi'}
                                 </span>
-                                <span className="font-['Cinzel'] text-[9px] font-black tracking-[0.3em] text-slate-500 uppercase leading-none">
-                                    {settings?.site?.name?.split(' ').slice(1).join(' ') || 'INTERIOR'}
-                                </span>
+                                <div className="flex items-center gap-1.5 mt-2">
+                                    <span className="font-['Cinzel'] text-[10px] tracking-[0.34em] font-bold pl-0.5 text-[#4a423e] uppercase">
+                                        {settings?.site?.name?.split(' ').slice(1).join(' ') || 'INTERIOR'}
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </div>

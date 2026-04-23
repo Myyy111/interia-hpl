@@ -70,8 +70,11 @@ const CMSBlog = () => {
             <div className="space-y-8">
                 <div className="flex justify-between items-center px-2">
                     <SectionHeader icon={<BookOpen className="text-teal-500" />} title="Daftar Artikel" />
-                    <button onClick={addItem} className="flex items-center gap-2 text-sm font-bold text-teal-600 hover:text-teal-700">
-                        <Plus size={18} /> Tulis Artikel Baru
+                    <button 
+                        onClick={addItem} 
+                        className="flex items-center gap-2 px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all active:scale-95"
+                    >
+                        <Plus size={14} /> Tulis Artikel Baru
                     </button>
                 </div>
 

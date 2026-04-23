@@ -51,8 +51,11 @@ const CMSCommunity = () => {
                 <section>
                     <div className="flex justify-between items-center mb-6 px-2">
                         <SectionHeader icon={<Users className="text-indigo-500" />} title="Tim Profesional" />
-                        <button onClick={() => addItem('team', {name: '', role: '', img: ''})} className="flex items-center gap-2 text-sm font-bold text-teal-600 hover:text-teal-700">
-                            <Plus size={18} /> Tambah Anggota
+                        <button 
+                            onClick={() => addItem('team', {name: '', role: '', img: ''})} 
+                            className="flex items-center gap-2 px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all active:scale-95"
+                        >
+                            <Plus size={14} /> Tambah Anggota
                         </button>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -91,8 +94,11 @@ const CMSCommunity = () => {
                 <section>
                     <div className="flex justify-between items-center mb-6 px-2">
                         <SectionHeader icon={<Star className="text-amber-500" />} title="Ulasan Klien" />
-                        <button onClick={() => addItem('testimonials', {name: '', loc: '', text: ''})} className="flex items-center gap-2 text-sm font-bold text-teal-600 hover:text-teal-700">
-                            <Plus size={18} /> Tambah Ulasan
+                        <button 
+                            onClick={() => addItem('testimonials', {name: '', loc: '', text: ''})} 
+                            className="flex items-center gap-2 px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all active:scale-95"
+                        >
+                            <Plus size={14} /> Tambah Ulasan
                         </button>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

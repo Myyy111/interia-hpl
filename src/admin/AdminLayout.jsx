@@ -84,16 +84,16 @@ const AdminLayout = () => {
     }
 
     const navItemClass = ({ isActive }) => `
-        group flex items-center justify-between px-4 py-3 rounded-2xl text-[13px] font-bold transition-all duration-300
+        group flex items-center gap-3 px-4 py-2.5 mx-3 rounded-lg text-[13px] font-bold transition-all duration-200
         ${isActive 
-            ? 'bg-slate-900 text-white shadow-xl shadow-slate-200 translate-x-1' 
+            ? 'bg-slate-800 text-white shadow-lg' 
             : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'}
     `;
 
     const subNavItemClass = ({ isActive }) => `
-        group flex items-center space-x-3 px-4 py-2.5 rounded-xl text-[11px] font-bold transition-all duration-300
+        group flex items-center space-x-3 px-4 py-2 mx-3 rounded-lg text-[11px] font-bold transition-all duration-200
         ${isActive 
-            ? 'text-slate-900 bg-slate-100 translate-x-1' 
+            ? 'text-slate-900 bg-slate-100' 
             : 'text-slate-400 hover:text-slate-700 hover:bg-slate-50'}
     `;
 
@@ -114,100 +114,92 @@ const AdminLayout = () => {
             `}>
                 <div className="flex flex-col h-full">
                     {/* Brand */}
-                    <div className="h-20 flex items-center px-8 border-b border-slate-50">
+                    <div className="h-24 flex items-center px-8 border-b border-slate-100 mb-4">
                         <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 rounded-lg flex items-center justify-center overflow-hidden">
+                            <div className="w-10 h-10 rounded-xl flex items-center justify-center overflow-hidden bg-slate-50 border border-slate-100">
                                 {settings?.site?.adminLogo ? (
-                                    <img src={settings.site.adminLogo} alt="Logo" className="w-full h-full object-contain" />
+                                    <img src={settings.site.adminLogo} alt="Logo" className="w-full h-full object-contain p-1" />
                                 ) : (
                                     <div className="w-full h-full bg-slate-900 flex items-center justify-center">
-                                        <Settings className="text-white" size={18} />
+                                        <Settings className="text-white" size={20} />
                                     </div>
                                 )}
                             </div>
-                            <span className="text-lg font-black tracking-tight text-slate-900 uppercase">
-                                {settings?.site?.name?.split(' ')[0] || 'AFANDI'}
-                                <span className="text-slate-400 font-light ml-1 text-base uppercase tracking-widest">CMS</span>
-                            </span>
+                            <div className="flex flex-col">
+                                <span className="text-sm font-black tracking-tighter text-slate-900 leading-none">
+                                    {settings?.site?.name || 'AFANDI'}
+                                </span>
+                                <span className="text-[10px] font-bold text-blue-600 uppercase tracking-widest mt-1">CMS ADMIN</span>
+                            </div>
                         </div>
                     </div>
 
                     {/* Navigation */}
-                    <nav className="flex-1 p-6 space-y-8 overflow-y-auto custom-scrollbar">
+                    <nav className="flex-1 space-y-6 overflow-y-auto custom-scrollbar pb-10">
                         <div className="space-y-1">
-                            <p className="px-4 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-4">Main Menu</p>
+                            <p className="px-7 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-3">NAVIGASI UTAMA</p>
                             <NavLink to="/admin" end className={navItemClass}>
-                                <div className="flex items-center space-x-3">
-                                    <LayoutDashboard size={18} />
-                                    <span>Ringkasan</span>
-                                </div>
+                                <LayoutDashboard size={18} />
+                                <span>Dashboard</span>
                             </NavLink>
                             <NavLink to="/admin/orders" className={navItemClass}>
-                                <div className="flex items-center space-x-3">
-                                    <ShoppingCart size={18} />
-                                    <span>Pesanan Masuk</span>
+                                <div className="flex items-center justify-between w-full">
+                                    <div className="flex items-center gap-3">
+                                        <ShoppingCart size={18} />
+                                        <span>Pesanan</span>
+                                    </div>
+                                    {pendingCount > 0 && (
+                                        <span className="bg-rose-500 text-white text-[9px] px-1.5 py-0.5 rounded-md font-bold">
+                                            {pendingCount}
+                                        </span>
+                                    )}
                                 </div>
-                                {pendingCount > 0 && (
-                                    <span className="bg-rose-500 text-white text-[10px] px-2 py-0.5 rounded-full animate-pulse-subtle">
-                                        {pendingCount}
-                                    </span>
-                                )}
                             </NavLink>
                             <NavLink to="/admin/products" className={navItemClass}>
-                                <div className="flex items-center space-x-3">
-                                    <Package size={18} />
-                                    <span>Master Produk</span>
-                                </div>
+                                <Package size={18} />
+                                <span>Produk</span>
                             </NavLink>
                         </div>
 
                         <div className="space-y-1">
-                            <p className="px-4 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-4">Website Content</p>
+                            <p className="px-7 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-3">KONTEN WEB</p>
                             
                             <button 
                                 onClick={() => setShowSettingsDropdown(!showSettingsDropdown)}
-                                className="w-full flex items-center justify-between px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-500 hover:bg-slate-100 hover:text-slate-900 transition-all"
+                                className="w-full flex items-center justify-between px-4 py-2.5 mx-3 rounded-lg text-[13px] font-bold text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-all"
                             >
                                 <div className="flex items-center space-x-3">
                                     <Globe size={18} />
-                                    <span>Edit Konten Web</span>
+                                    <span>Pengaturan Web</span>
                                 </div>
                                 <ChevronDown size={14} className={`transform transition-transform ${showSettingsDropdown ? 'rotate-180' : ''}`} />
                             </button>
                             
                             {showSettingsDropdown && (
-                                <div className="mt-2 space-y-1 pl-4 border-l-2 border-slate-50 ml-6 animate-fade-in">
+                                <div className="mt-1 space-y-1 pl-4 animate-fade-in">
                                     <NavLink to="/admin/settings" end className={subNavItemClass}>
-                                        <div className="w-1 h-1 rounded-full bg-slate-300 group-[.active]:bg-slate-900 group-hover:bg-slate-900 transition-colors"></div>
-                                        <span>Halaman Utama</span>
+                                        <span>• Halaman Utama</span>
                                     </NavLink>
                                     <NavLink to="/admin/settings/identity" className={subNavItemClass}>
-                                        <div className="w-1 h-1 rounded-full bg-slate-300 group-[.active]:bg-slate-900 group-hover:bg-slate-900 transition-colors"></div>
-                                        <span>Identitas & SEO</span>
+                                        <span>• Identitas & SEO</span>
                                     </NavLink>
                                     <NavLink to="/admin/settings/layout" className={subNavItemClass}>
-                                        <div className="w-1 h-1 rounded-full bg-slate-300 group-[.active]:bg-slate-900 group-hover:bg-slate-900 transition-colors"></div>
-                                        <span>Header & Footer</span>
+                                        <span>• Header & Footer</span>
                                     </NavLink>
                                     <NavLink to="/admin/settings/catalog" className={subNavItemClass}>
-                                        <div className="w-1 h-1 rounded-full bg-slate-300 group-[.active]:bg-slate-900 group-hover:bg-slate-900 transition-colors"></div>
-                                        <span>Portofolio Grid</span>
+                                        <span>• Portofolio</span>
                                     </NavLink>
                                     <NavLink to="/admin/settings/community" className={subNavItemClass}>
-                                        <div className="w-1 h-1 rounded-full bg-slate-300 group-[.active]:bg-slate-900 group-hover:bg-slate-900 transition-colors"></div>
-                                        <span>Tim & Testimoni</span>
+                                        <span>• Tim & Testimoni</span>
                                     </NavLink>
                                     <NavLink to="/admin/settings/contact" className={subNavItemClass}>
-                                        <div className="w-1 h-1 rounded-full bg-slate-300 group-[.active]:bg-slate-900 group-hover:bg-slate-900 transition-colors"></div>
-                                        <span>Kontak & Sosmed</span>
+                                        <span>• Kontak & Sosmed</span>
                                     </NavLink>
                                     <NavLink to="/admin/settings/templates" className={subNavItemClass}>
-                                        <div className="w-1 h-1 rounded-full bg-slate-300 group-[.active]:bg-slate-900 group-hover:bg-slate-900 transition-colors"></div>
-                                        <span>Template Dokumen</span>
+                                        <span>• Template Dokumen</span>
                                     </NavLink>
                                     <NavLink to="/admin/settings/blog" className={subNavItemClass}>
-                                        <div className="w-1 h-1 rounded-full bg-slate-300 group-[.active]:bg-slate-900 group-hover:bg-slate-900 transition-colors"></div>
-                                        <span>Manajemen Blog</span>
+                                        <span>• Artikel Blog</span>
                                     </NavLink>
                                 </div>
                             )}

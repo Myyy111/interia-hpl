@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Eye, X, Image as ImageIcon, ShoppingBag, Clock, CheckCircle2, AlertCircle, Phone, MapPin, Package, Wrench, User, FileText, ShoppingCart, Mail, Copy, MessageSquare } from 'lucide-react';
+import { Eye, X, Image as ImageIcon, ShoppingBag, Clock, CheckCircle2, AlertCircle, Phone, MapPin, Package, Wrench, User, FileText, ShoppingCart, Mail, Copy, MessageSquare, RefreshCw, Plus, ChevronRight, Edit2, Trash2 } from 'lucide-react';
 import { api, supabase } from '../lib/api';
 import RoomPreview2D from '../components/RoomPreview2D';
 import { MATERIAL_COLORS, WALL_POS } from '../lib/constants';
@@ -154,12 +154,31 @@ Apakah Kakak ada waktu luang untuk kami jadwalkan *Survey Lokasi* dalam waktu de
 
     return (
         <div className="space-y-8 animate-fade-in">
-            <CMSHeader 
-                title="Pesanan Masuk" 
-                desc="Kelola antrean produksi dan status pengiriman pelanggan." 
-                onSave={() => fetchOrders(true)}
-                message={orders.length > 0 ? `${orders.length} Pesanan Aktif` : ''}
-            />
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+                <div>
+                    <h1 className="text-2xl font-black text-slate-900 uppercase tracking-tighter">Pesanan</h1>
+                    <div className="flex items-center gap-2 mt-1 text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">
+                        <span>Admin</span>
+                        <ChevronRight size={10} />
+                        <span className="text-slate-900">Pesanan</span>
+                    </div>
+                </div>
+                <div className="flex items-center gap-3">
+                    <button 
+                        onClick={() => fetchOrders(true)}
+                        className="flex items-center gap-2 px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-lg text-xs font-black uppercase tracking-widest transition-all active:scale-95"
+                    >
+                        <RefreshCw size={14} className={loading ? 'animate-spin' : ''} />
+                        Refresh
+                    </button>
+                    <button 
+                        className="flex items-center gap-2 px-5 py-2.5 bg-slate-800 hover:bg-slate-900 text-white rounded-lg text-xs font-black uppercase tracking-widest transition-all shadow-lg shadow-slate-200 active:scale-95"
+                    >
+                        <Plus size={14} />
+                        Tambah Baru
+                    </button>
+                </div>
+            </div>
 
             <div className="bg-white rounded-[2.5rem] border border-slate-200/60 shadow-sm overflow-hidden">
                 <div className="overflow-x-auto">
@@ -213,22 +232,25 @@ Apakah Kakak ada waktu luang untuk kami jadwalkan *Survey Lokasi* dalam waktu de
                                         </div>
                                     </td>
                                     <td className="px-8 py-6">
-                                        <div className="flex items-center justify-end gap-3">
-                                            <select
-                                                value={order.status || 'Pending'}
-                                                onChange={(e) => handleStatusChange(order.id, e.target.value)}
-                                                className="text-[10px] font-black text-slate-600 border border-slate-200 rounded-xl bg-white px-3 py-2 focus:ring-4 focus:ring-slate-900/5 focus:border-slate-900 outline-none transition-all cursor-pointer uppercase tracking-widest"
-                                            >
-                                                <option value="Pending">Pending</option>
-                                                <option value="Produksi">Produksi</option>
-                                                <option value="Selesai">Selesai</option>
-                                            </select>
+                                        <div className="flex items-center justify-end gap-2">
                                             <button 
                                                 onClick={() => setSelectedOrder(order)}
-                                                className="p-2.5 bg-slate-900 text-white hover:bg-slate-800 rounded-xl transition-all shadow-lg shadow-slate-200 active:scale-95"
-                                                title="Lihat Detail"
+                                                className="p-2 bg-emerald-500 text-white hover:bg-emerald-600 rounded-md transition-all active:scale-95 shadow-sm"
+                                                title="Lihat"
                                             >
-                                                <Eye size={16} />
+                                                <Eye size={14} />
+                                            </button>
+                                            <button 
+                                                className="p-2 bg-blue-500 text-white hover:bg-blue-600 rounded-md transition-all active:scale-95 shadow-sm"
+                                                title="Edit"
+                                            >
+                                                <Edit2 size={14} />
+                                            </button>
+                                            <button 
+                                                className="p-2 bg-rose-500 text-white hover:bg-rose-600 rounded-md transition-all active:scale-95 shadow-sm"
+                                                title="Hapus"
+                                            >
+                                                <Trash2 size={14} />
                                             </button>
                                         </div>
                                     </td>

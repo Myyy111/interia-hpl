@@ -59,14 +59,18 @@ const CMSCommunity = () => {
                         {settings.team.map((t, i) => (
                             <Card key={i} onDelete={() => removeItem('team', i)}>
                                 <div className="flex justify-center mb-4">
-                                    <ImageField img={t.img} onUpload={e => {
-                                        const reader = new FileReader();
-                                        reader.onload = () => {
+                                    <ImageField img={t.img} onUpload={async (e) => {
+                                        const file = e.target.files[0];
+                                        if (!file) return;
+                                        try {
+                                            const url = await api.uploadImage(file);
                                             const newArr = [...settings.team];
-                                            newArr[i] = {...newArr[i], img: reader.result};
+                                            newArr[i] = {...newArr[i], img: url};
                                             setSettings({...settings, team: newArr});
-                                        };
-                                        reader.readAsDataURL(e.target.files[0]);
+                                        } catch (error) {
+                                            console.error('Upload error:', error);
+                                            alert('Gagal upload gambar. Pastikan bucket "content" tersedia di Supabase.');
+                                        }
                                     }} className="w-24 h-24 rounded-full" />
                                 </div>
                                 <Input label="Nama" value={t.name} onChange={v => {

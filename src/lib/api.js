@@ -243,6 +243,23 @@ export const api = {
         
         if (error) throw error;
         return data.data;
+    },
+    uploadImage: async (file) => {
+        const fileExt = file.name.split('.').pop();
+        const fileName = `${Math.random().toString(36).substring(2)}-${Date.now()}.${fileExt}`;
+        const filePath = `uploads/${fileName}`;
+
+        const { error: uploadError, data } = await supabase.storage
+            .from('content')
+            .upload(filePath, file);
+
+        if (uploadError) throw uploadError;
+
+        const { data: { publicUrl } } = supabase.storage
+            .from('content')
+            .getPublicUrl(filePath);
+
+        return publicUrl;
     }
 };
 

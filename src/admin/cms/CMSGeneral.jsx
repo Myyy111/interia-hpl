@@ -55,10 +55,16 @@ const CMSGeneral = () => {
                             <Input label="Badge Judul" value={settings.about.badgeTitle} onChange={v => setSettings({...settings, about: {...settings.about, badgeTitle: v}})} />
                             <Input label="Badge Sub" value={settings.about.badgeSub} onChange={v => setSettings({...settings, about: {...settings.about, badgeSub: v}})} />
                         </div>
-                        <ImageField label="Foto Utama" img={settings.about.img} onUpload={e => {
-                            const reader = new FileReader();
-                            reader.onload = () => setSettings({...settings, about: {...settings.about, img: reader.result}});
-                            reader.readAsDataURL(e.target.files[0]);
+                        <ImageField label="Foto Utama" img={settings.about.img} onUpload={async (e) => {
+                            const file = e.target.files[0];
+                            if (!file) return;
+                            try {
+                                const url = await api.uploadImage(file);
+                                setSettings({...settings, about: {...settings.about, img: url}});
+                            } catch (error) {
+                                console.error('Upload error:', error);
+                                alert('Gagal upload gambar. Pastikan bucket "content" tersedia di Supabase.');
+                            }
                         }} />
                     </div>
                 </section>

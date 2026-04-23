@@ -37,14 +37,17 @@ const CMSCatalog = () => {
         }
     };
 
-    const handleImageChange = (section, index, file) => {
-        const reader = new FileReader();
-        reader.onload = () => {
+    const handleImageChange = async (section, index, file) => {
+        if (!file) return;
+        try {
+            const url = await api.uploadImage(file);
             const newArr = [...settings[section]];
-            newArr[index] = {...newArr[index], img: reader.result};
+            newArr[index] = {...newArr[index], img: url};
             setSettings({...settings, [section]: newArr});
-        };
-        reader.readAsDataURL(file);
+        } catch (error) {
+            console.error('Upload error:', error);
+            alert('Gagal upload gambar. Pastikan bucket "content" tersedia di Supabase.');
+        }
     };
 
     return (

@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { api } from '../../lib/api';
 import { Briefcase, Image as ImageIcon, Plus } from 'lucide-react';
 import { CMSHeader, SectionHeader, Input, ImageField, Card } from './CMSComponents';
+import { useToast } from '../../components/ui/Toast';
 
 const CMSCatalog = () => {
+    const { showToast } = useToast();
     const [settings, setSettings] = useState(null);
     const [isSaving, setIsSaving] = useState(false);
-    const [message, setMessage] = useState('');
 
     useEffect(() => {
         api.getSettings().then(setSettings);
@@ -16,11 +17,9 @@ const CMSCatalog = () => {
         setIsSaving(true);
         try {
             await api.updateSettings(settings);
-            setMessage('Berhasil disimpan!');
-            setTimeout(() => setMessage(''), 3000);
+            showToast('Semua perubahan berhasil disimpan!');
         } catch (error) { 
-            console.error(error);
-            setMessage('Gagal simpan'); 
+            showToast('Gagal menyimpan perubahan', 'error');
         }
         setIsSaving(false);
     };
@@ -29,11 +28,13 @@ const CMSCatalog = () => {
 
     const addItem = (section, template) => {
         setSettings({...settings, [section]: [...settings[section], template]});
+        showToast('Item baru ditambahkan');
     };
 
     const removeItem = (section, index) => {
         if (window.confirm('Hapus item ini?')) {
             setSettings({...settings, [section]: settings[section].filter((_, i) => i !== index)});
+            showToast('Item berhasil dihapus');
         }
     };
 

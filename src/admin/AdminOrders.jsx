@@ -4,8 +4,10 @@ import { api, supabase } from '../lib/api';
 import RoomPreview2D from '../components/RoomPreview2D';
 import { MATERIAL_COLORS, WALL_POS } from '../lib/constants';
 import { CMSHeader } from './cms/CMSComponents';
+import { useToast } from '../components/ui/Toast';
 
 export default function AdminOrders() {
+    const { showToast } = useToast();
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
     const [selectedOrder, setSelectedOrder] = useState(null);
@@ -14,7 +16,7 @@ export default function AdminOrders() {
 
     const copyToClipboard = (text, label) => {
         navigator.clipboard.writeText(text);
-        alert(`${label} berhasil disalin ke clipboard!`);
+        showToast(`${label} berhasil disalin!`);
     };
 
     const handleSendEmail = (order) => {
@@ -74,15 +76,12 @@ Apakah Kakak ada waktu luang untuk kami jadwalkan *Survey Lokasi* dalam waktu de
         };
     }, []);
 
-    const handleStatusChange = async (id, status) => {
+    const handleStatusChange = async (orderId, newStatus) => {
         try {
-            await api.updateOrderStatus(id, status);
-            fetchOrders(false);
+            await api.updateOrderStatus(orderId, newStatus);
+            setOrders(orders.map(o => o.id === orderId ? { ...o, status: newStatus } : o));
             
             // If selecting from modal, update local state
-            if (selectedOrder && selectedOrder.id === id) {
-                setSelectedOrder(prev => ({ ...prev, status }));
-            }
             
             return true;
         } catch (err) {

@@ -224,6 +224,15 @@ body {
 .reveal-delay-400 { transition-delay: 400ms; }
 .reveal-delay-500 { transition-delay: 500ms; }
 /* -- PRINT STYLES -- */
+@keyframes toast-in {
+    from { transform: translateX(100%) scale(0.9); opacity: 0; }
+    to { transform: translateX(0) scale(1); opacity: 1; }
+}
+
+.animate-toast-in {
+    animation: toast-in 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
 @media print {
   /* Hide non-document elements */
   aside, nav, .no-print, button, .tabs-nav, header, footer {

@@ -15,6 +15,7 @@ import CMSTemplates from './admin/cms/CMSTemplates';
 import CMSCatalog from './admin/cms/CMSCatalog';
 import CMSCommunity from './admin/cms/CMSCommunity';
 import CMSBlog from './admin/cms/CMSBlog';
+import { ToastProvider } from './components/ui/Toast';
 
 import ErrorBoundary from './components/ErrorBoundary';
 
@@ -23,35 +24,37 @@ import NotFound from './pages/NotFound';
 function App() {
   return (
     <ErrorBoundary>
-      <Router>
-        <Routes>
-          {/* Landing Page Publik */}
-          <Route path="/" element={<Home />} />
+      <ToastProvider>
+        <Router>
+          <Routes>
+            {/* Landing Page Publik */}
+            <Route path="/" element={<Home />} />
 
-          {/* Configurator App */}
-          <Route path="/configurator" element={<ConfiguratorLayout />} />
+            {/* Configurator App */}
+            <Route path="/configurator" element={<ConfiguratorLayout />} />
 
-          {/* admin Dashboard */}
-          <Route path="/admin" element={<AdminLayout />}>
-            <Route index element={<AdminDashboard />} />
-            <Route path="orders" element={<AdminOrders />} />
-            <Route path="products" element={<AdminProducts />} />
-            <Route path="settings" element={<AdminSettings />}>
-              <Route index element={<CMSHome />} />
-              <Route path="identity" element={<CMSIdentity />} />
-              <Route path="layout" element={<CMSHeaderFooter />} />
-              <Route path="contact" element={<CMSContact />} />
-              <Route path="templates" element={<CMSTemplates />} />
-              <Route path="catalog" element={<CMSCatalog />} />
-              <Route path="community" element={<CMSCommunity />} />
-              <Route path="blog" element={<CMSBlog />} />
+            {/* admin Dashboard */}
+            <Route path="/admin" element={<AdminLayout />}>
+              <Route index element={<AdminDashboard />} />
+              <Route path="orders" element={<AdminOrders />} />
+              <Route path="products" element={<AdminProducts />} />
+              <Route path="settings" element={<AdminSettings />}>
+                <Route index element={<CMSHome />} />
+                <Route path="identity" element={<CMSIdentity />} />
+                <Route path="layout" element={<CMSHeaderFooter />} />
+                <Route path="contact" element={<CMSContact />} />
+                <Route path="templates" element={<CMSTemplates />} />
+                <Route path="catalog" element={<CMSCatalog />} />
+                <Route path="community" element={<CMSCommunity />} />
+                <Route path="blog" element={<CMSBlog />} />
+              </Route>
             </Route>
-          </Route>
 
-          {/* 404 Page */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </Router>
+            {/* 404 Page */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Router>
+      </ToastProvider>
     </ErrorBoundary>
   );
 }

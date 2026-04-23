@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, MoveRight, ChevronDown } from 'lucide-react';
+import { ArrowRight, MoveRight, ChevronDown, Layers, Wrench } from 'lucide-react';
 
 export default function Hero({ cmsData }) {
     if (!cmsData) return null;

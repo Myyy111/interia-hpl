@@ -87,6 +87,9 @@ const AdminLayout = () => {
                                 <NavLink to="/admin/settings/community" className={({ isActive }) => `block px-4 py-2 rounded-lg text-xs font-medium transition-colors ${isActive ? 'text-teal-400 bg-teal-500/5' : 'text-slate-500 hover:text-slate-300'}`}>
                                     Tim & Testimoni
                                 </NavLink>
+                                <NavLink to="/admin/settings/blog" className={({ isActive }) => `block px-4 py-2 rounded-lg text-xs font-medium transition-colors ${isActive ? 'text-teal-400 bg-teal-500/5' : 'text-slate-500 hover:text-slate-300'}`}>
+                                    Manajemen Blog
+                                </NavLink>
                             </div>
                         )}
                     </div>

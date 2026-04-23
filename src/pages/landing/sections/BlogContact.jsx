@@ -1,29 +1,37 @@
-import React from 'react';
-import { Mail, Phone, MapPin, ArrowRight } from 'lucide-react';
+import React, { useState } from 'react';
+import { Mail, Phone, MapPin, ArrowRight, X, Clock, Calendar } from 'lucide-react';
 
 export function Blog({ cmsData, contactData }) {
+    const [selectedArticle, setSelectedArticle] = useState(null);
+
     const defaultArticles = [
         {
             title: '5 Tips Memilih Material HPL untuk Dapur Minimalis',
             date: '12 Feb 2026',
             img: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?q=80&w=600&auto=format&fit=crop',
-            desc: 'Pelajari karakter masing-masing pelapis kayu agar awet puluhan tahun...',
+            desc: 'Pelajari karakter masing-masing pelapis kayu agar awet puluhan tahun. Material HPL (High Pressure Laminate) adalah pilihan populer untuk finishing interior karena daya tahannya yang luar biasa terhadap panas dan goresan.',
+            content: 'Material HPL (High Pressure Laminate) telah menjadi standar emas dalam dunia desain interior modern, khususnya untuk area dapur. Kelebihannya terletak pada durabilitas tinggi, kemudahan perawatan, dan variasi motif yang sangat luas, mulai dari tekstur kayu alami hingga beton industrial.\n\nDalam artikel ini, kami merangkum 5 poin utama yang harus Anda perhatikan:\n1. Periksa ketebalan lapisan (grade).\n2. Pilih tekstur yang tidak mudah meninggalkan sidik jari (anti-fingerprint).\n3. Pastikan proses edging rapi dan menggunakan lem tahan panas.\n4. Sesuaikan motif dengan pencahayaan ruangan.\n5. Pilih merk yang memiliki reputasi garansi yang baik.'
         },
         {
             title: 'Warna Interior Paling Dicari Tahun Ini',
             date: '08 Feb 2026',
             img: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?q=80&w=600&auto=format&fit=crop',
-            desc: 'Dari Sage Green hingga warna-warna earth tone yang menenangkan...',
+            desc: 'Dari Sage Green hingga warna-warna earth tone yang menenangkan. Tren warna tahun ini bergeser ke arah alam dan ketenangan.',
+            content: 'Tahun 2026 membawa kita kembali ke akar alamiah. Warna-warna seperti Sage Green, Terracotta, dan Warm Sand mendominasi permintaan klien kami di Afandi Interior. Warna-warna ini tidak hanya menciptakan suasana yang menenangkan, tetapi juga sangat fleksibel untuk dipadukan dengan berbagai jenis furnitur kayu.\n\nKenapa warna earth tone begitu populer?\n- Memberikan kesan ruangan yang lebih luas dan cerah.\n- Meningkatkan mood dan produktivitas (psikologi warna).\n- Lebih awet secara estetika (timeless) dibandingkan warna neon yang cepat membosankan.'
         },
         {
             title: 'Perbedaan Multiplek vs Blockboard Jati',
             date: '24 Jan 2026',
             img: 'https://images.unsplash.com/photo-1540518614846-7eded433c457?q=80&w=600&auto=format&fit=crop',
-            desc: 'Sebelum membuat lemari custom, kenali jenis kayu inti terbaik untuk budget Anda.',
+            desc: 'Sebelum membuat lemari custom, kenali jenis kayu inti terbaik untuk budget Anda. Memahami struktur dasar furnitur Anda.',
+            content: 'Banyak konsumen yang masih bingung membedakan antara Multiplek (Plywood) dan Blockboard. Meskipun keduanya tampak sama setelah dilapisi HPL, kekuatannya berbeda.\n\nMultiplek dibuat dari lapisan tipis kayu yang ditumpuk silang, memberikan kekuatan struktural yang sangat stabil. Sementara Blockboard menggunakan potongan kayu persegi panjang (block) yang disusun sejajar. Untuk lemari yang menampung beban berat, kami selalu menyarankan penggunaan Multiplek grade A demi daya tahan jangka panjang.'
         },
     ];
 
-    const articles = (cmsData || []).length > 0 ? cmsData : defaultArticles;
+    const articles = (cmsData || []).length > 0 ? cmsData.map((a, i) => ({
+        ...a,
+        content: a.content || (defaultArticles[i] ? defaultArticles[i].content : 'Artikel detail sedang dalam proses penulisan. Silakan hubungi tim kami untuk informasi lebih lanjut mengenai topik ini.')
+    })) : defaultArticles;
 
     return (
         <section className="py-24 bg-white relative">
@@ -52,17 +60,15 @@ export function Blog({ cmsData, contactData }) {
                                 <img src={a.img} alt={a.title} className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" />
                             </div>
                             <div className="p-6">
-                                <h3 className="font-bold text-xl text-slate-900 mb-3 group-hover:text-teal-600 transition-colors uppercase tracking-tight leading-tight">{a.title}</h3>
-                                <p className="text-slate-500 text-sm leading-relaxed mb-6 font-light">{a.desc}</p>
-                                <a 
-                                    href={`https://wa.me/${contactData?.phone?.replace(/[^0-9]/g, '') || ''}?text=Halo Afandi Interior, saya ingin membaca lebih lanjut tentang artikel: ${a.title}`}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="text-sm font-bold text-teal-600 uppercase tracking-[0.2em] cursor-pointer inline-flex items-center gap-2 group-hover:gap-3 transition-all"
+                                <h3 className="font-bold text-xl text-slate-900 mb-3 group-hover:text-teal-600 transition-colors uppercase tracking-tight leading-tight line-clamp-2">{a.title}</h3>
+                                <p className="text-slate-500 text-sm leading-relaxed mb-6 font-light line-clamp-3">{a.desc}</p>
+                                <button 
+                                    onClick={() => setSelectedArticle(a)}
+                                    className="text-sm font-bold text-teal-600 uppercase tracking-[0.2em] cursor-pointer inline-flex items-center gap-2 group-hover:gap-3 transition-all border-none bg-transparent"
                                 >
                                     Baca Selengkapnya
                                     <ArrowRight size={16} />
-                                </a>
+                                </button>
                             </div>
                         </article>
                     ))}
@@ -75,6 +81,72 @@ export function Blog({ cmsData, contactData }) {
                     ))}
                 </div>
             </div>
+
+            {/* Blog Detail Modal */}
+            {selectedArticle && (
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8 animate-fade-in">
+                    <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-sm" onClick={() => setSelectedArticle(null)}></div>
+                    <div className="bg-white w-full max-w-4xl rounded-3xl overflow-hidden shadow-2xl relative z-10 flex flex-col max-h-[95vh]">
+                        <button 
+                            onClick={() => setSelectedArticle(null)}
+                            className="absolute top-6 right-6 w-10 h-10 bg-slate-100 hover:bg-slate-200 rounded-full flex items-center justify-center text-slate-900 transition-all z-20"
+                        >
+                            <X size={24} />
+                        </button>
+                        
+                        <div className="overflow-y-auto">
+                            <div className="h-64 md:h-[400px] overflow-hidden">
+                                <img src={selectedArticle.img} alt={selectedArticle.title} className="w-full h-full object-cover" />
+                            </div>
+                            
+                            <div className="p-8 md:p-12">
+                                <div className="flex flex-wrap items-center gap-6 text-sm text-slate-500 mb-6 font-medium">
+                                    <div className="flex items-center gap-2 bg-slate-50 px-3 py-1 rounded-full">
+                                        <Calendar size={14} className="text-teal-500" />
+                                        {selectedArticle.date}
+                                    </div>
+                                    <div className="flex items-center gap-2 bg-slate-50 px-3 py-1 rounded-full">
+                                        <Clock size={14} className="text-teal-500" />
+                                        5 Menit Baca
+                                    </div>
+                                    <div className="flex items-center gap-2 bg-slate-50 px-3 py-1 rounded-full">
+                                        <Mail size={14} className="text-teal-500" />
+                                        Edukasi Material
+                                    </div>
+                                </div>
+                                
+                                <h3 className="text-3xl md:text-5xl font-black text-slate-900 mb-8 leading-tight">{selectedArticle.title}</h3>
+                                
+                                <div className="prose prose-slate max-w-none">
+                                    {selectedArticle.content.split('\n').map((paragraph, idx) => (
+                                        <p key={idx} className="text-slate-600 text-lg leading-relaxed mb-6 whitespace-pre-wrap">
+                                            {paragraph}
+                                        </p>
+                                    ))}
+                                </div>
+
+                                <div className="mt-12 pt-12 border-t border-slate-100 flex flex-col md:flex-row justify-between items-center gap-8">
+                                    <div className="flex items-center gap-4">
+                                        <img src="/brand/logo-icon-dark.png" alt="Afandi Logo" className="w-12 h-12" />
+                                        <div>
+                                            <p className="font-bold text-slate-900">Afandi Interior Editorial</p>
+                                            <p className="text-sm text-slate-500">Spesialis Desain & Produksi Furnitur</p>
+                                        </div>
+                                    </div>
+                                    <a 
+                                        href={`https://wa.me/${contactData?.phone?.replace(/[^0-9]/g, '') || ''}?text=Halo Afandi Interior, saya baru saja membaca artikel: ${selectedArticle.title}. Saya ingin konsultasi lebih lanjut.`}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="px-8 py-4 bg-teal-500 hover:bg-teal-600 text-slate-900 rounded-2xl font-bold transition-all shadow-lg shadow-teal-500/20"
+                                    >
+                                        Konsultasi via WhatsApp
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </section>
     );
 }

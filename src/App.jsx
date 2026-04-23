@@ -10,6 +10,7 @@ import AdminSettings from './admin/AdminSettings';
 import CMSGeneral from './admin/cms/CMSGeneral';
 import CMSCatalog from './admin/cms/CMSCatalog';
 import CMSCommunity from './admin/cms/CMSCommunity';
+import CMSBlog from './admin/cms/CMSBlog';
 
 import ErrorBoundary from './components/ErrorBoundary';
 
@@ -35,6 +36,7 @@ function App() {
               <Route index element={<CMSGeneral />} />
               <Route path="catalog" element={<CMSCatalog />} />
               <Route path="community" element={<CMSCommunity />} />
+              <Route path="blog" element={<CMSBlog />} />
             </Route>
           </Route>
 

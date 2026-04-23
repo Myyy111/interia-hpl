@@ -130,7 +130,6 @@ const AdminLayout = () => {
                                 <span className="font-['Cinzel'] text-[9px] font-black tracking-[0.3em] text-slate-500 uppercase leading-none">
                                     {settings?.site?.name?.split(' ').slice(1).join(' ') || 'INTERIOR'}
                                 </span>
-                                <span className="text-[8px] font-bold text-slate-300 uppercase tracking-[0.4em] mt-2 border-t border-slate-100 pt-1">CMS Admin</span>
                             </div>
                         </div>
                     </div>

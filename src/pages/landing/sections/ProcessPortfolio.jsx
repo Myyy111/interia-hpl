@@ -134,8 +134,8 @@ export function Portfolio({ cmsData }) {
                                 </div>
                             </div>
 
-                            {/* Hover Overlay Icon (Hidden on Mobile, shown on hover/desktop) */}
-                            <div className="absolute top-6 right-6 z-20 w-10 h-10 rounded-full glass hidden md:flex items-center justify-center text-slate-900 opacity-0 group-hover:opacity-100 transition-all duration-500 transform scale-50 group-hover:scale-100">
+                            {/* Hover/Mobile Overlay Icon */}
+                            <div className="absolute top-6 right-6 z-20 w-10 h-10 rounded-full glass flex items-center justify-center text-slate-900 opacity-100 md:opacity-0 group-hover:opacity-100 transition-all duration-500 transform scale-100 md:scale-50 md:group-hover:scale-100 shadow-lg">
                                 <Maximize2 size={20} />
                             </div>
                         </div>

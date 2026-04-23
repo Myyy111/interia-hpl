@@ -175,7 +175,7 @@ export default function AdminOrders() {
                                 </div>
                                 <div>
                                     <div className="flex items-center gap-3 mb-1">
-                                        <h3 className="text-xl font-black text-slate-900 tracking-tight">Pesanan #{selectedOrder.id?.split('-')[0]}</h3>
+                                        <h3 className="text-xl font-black text-slate-900 tracking-tight">Pesanan #{String(selectedOrder.id || '').split('-')[0]}</h3>
                                         <span className={`px-2 py-0.5 rounded-md text-[9px] font-black uppercase tracking-widest border ${getStatusStyle(selectedOrder.status)}`}>
                                             {selectedOrder.status}
                                         </span>
@@ -315,7 +315,7 @@ export default function AdminOrders() {
                         <div className="p-8 border-t border-slate-50 bg-slate-50/50 flex justify-end gap-4 sticky bottom-0 z-20">
                             {selectedOrder.customer?.phone && (
                                 <a 
-                                    href={`https://wa.me/${selectedOrder.customer.phone?.replace(/[^0-9]/g, '')}`} 
+                                    href={`https://wa.me/${String(selectedOrder.customer.phone || '').replace(/[^0-9]/g, '')}`} 
                                     target="_blank" 
                                     rel="noopener noreferrer"
                                     className="px-8 py-4 bg-[#25D366] hover:bg-[#1da851] text-white font-black rounded-2xl transition-all flex items-center gap-3 shadow-xl shadow-emerald-200 active:scale-95 text-xs uppercase tracking-widest"

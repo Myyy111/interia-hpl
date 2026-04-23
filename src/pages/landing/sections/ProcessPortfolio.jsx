@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MousePointerClick, CalendarCheck, Wrench, PartyPopper, X, Maximize2 } from 'lucide-react';
+import { MousePointerClick, CalendarCheck, Wrench, PartyPopper, X, Maximize2, Instagram, ArrowRight } from 'lucide-react';
 
 export function HowItWorks({ cmsData }) {
     const defaultSteps = [
@@ -89,7 +89,7 @@ export function Portfolio({ cmsData }) {
     return (
         <section id="portfolio" className="py-24 bg-[#fdfaf6]">
             <div className="max-w-7xl mx-auto px-6 lg:px-8">
-                <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6 reveal">
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-8 reveal">
                     <div className="space-y-4">
                         <div className="text-sm font-bold text-teal-600 uppercase tracking-[0.3em]">Signature Collection</div>
                         <h2 className="text-5xl font-black text-slate-900">Mahakarya Kami</h2>
@@ -99,12 +99,10 @@ export function Portfolio({ cmsData }) {
                         href="https://instagram.com/afandi_interior" 
                         target="_blank" 
                         rel="noopener noreferrer"
-                        className="group flex items-center gap-3 px-8 py-4 bg-slate-900 text-white rounded-2xl font-bold transition-all hover:bg-teal-600 shadow-xl shadow-slate-900/10 active:scale-95"
+                        className="group flex items-center justify-center gap-3 px-8 py-4 bg-white border-2 border-slate-900 text-slate-900 rounded-full font-black transition-all hover:bg-slate-900 hover:text-white active:scale-95 text-xs uppercase tracking-widest shadow-xl shadow-slate-200 w-full md:w-auto"
                     >
-                        Eksplorasi di Instagram
-                        <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center group-hover:rotate-45 transition-transform">
-                            <Maximize2 size={16} />
-                        </div>
+                        <span>Eksplorasi di Instagram</span>
+                        <Instagram size={18} className="group-hover:scale-110 transition-transform" />
                     </a>
                 </div>
 

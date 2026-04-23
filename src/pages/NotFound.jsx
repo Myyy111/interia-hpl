@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Home, ArrowLeft, Compass } from 'lucide-react';
+import { Home, ArrowLeft } from 'lucide-react';
 
 export default function NotFound() {
     return (
@@ -10,10 +10,10 @@ export default function NotFound() {
             <div className="absolute bottom-[-10%] left-[-5%] w-80 h-80 bg-amber-500/5 rounded-full blur-3xl" />
             
             <div className="max-w-xl w-full text-center relative z-10">
-                {/* 404 Visual — icon now sits above the numbers, not overlapping */}
+                {/* 404 Visual — logo floats above the numbers */}
                 <div className="flex flex-col items-center mb-8">
-                    <div className="w-24 h-24 bg-white rounded-3xl shadow-xl flex items-center justify-center text-teal-600 animate-float mb-4">
-                        <Compass size={48} strokeWidth={1.5} />
+                    <div className="w-24 h-24 bg-white rounded-3xl shadow-xl flex items-center justify-center animate-float mb-4 overflow-hidden p-2">
+                        <img src="/brand/logo-icon.jpg" alt="Afandi Interior" className="w-full h-full object-contain" />
                     </div>
                     <h1 className="text-[150px] font-black text-slate-200 leading-none select-none">404</h1>
                 </div>

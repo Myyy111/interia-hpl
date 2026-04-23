@@ -1,5 +1,5 @@
-import React from 'react';
-import { MousePointerClick, CalendarCheck, Wrench, PartyPopper } from 'lucide-react';
+import React, { useState } from 'react';
+import { MousePointerClick, CalendarCheck, Wrench, PartyPopper, X, Maximize2 } from 'lucide-react';
 
 export function HowItWorks({ cmsData }) {
     const defaultSteps = [

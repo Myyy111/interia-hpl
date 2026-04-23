@@ -2,7 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { MapPin, Phone, Mail, Instagram, Facebook, Twitter } from 'lucide-react';
 
-export default function Footer({ contactData }) {
+export default function Footer({ cmsData }) {
+    const contactData = cmsData?.contact;
+    const footerSettings = cmsData?.cmsData || cmsData?.footer; // Handle both direct pass and nested
+    const settings = cmsData; // Easier access
     const phone = contactData?.phone || '+62 812-3456-7890';
     const email = contactData?.email || 'hello@afandi-interior.com';
     return (
@@ -12,14 +15,24 @@ export default function Footer({ contactData }) {
                 {/* Brand */}
                 <div className="space-y-6">
                     <Link to="/" className="flex items-center gap-4 group inline-flex mb-4">
-                        <img src="/brand/logo-icon-light.png" alt="Afandi Interior Icon" className="w-20 h-20 object-contain drop-shadow-md" />
+                        <div className="w-20 h-20 flex items-center justify-center overflow-hidden">
+                            {settings?.site?.logo ? (
+                                <img src={settings.site.logo} alt="Logo" className="w-full h-full object-contain drop-shadow-md" />
+                            ) : (
+                                <img src="/brand/logo-icon-light.png" alt="Logo Default" className="w-full h-full object-contain drop-shadow-md" />
+                            )}
+                        </div>
                         <div className="flex flex-col items-start ml-0 mt-1">
-                            <span className="font-['Playfair_Display'] text-[32px] font-bold leading-[0.85] text-white">Afandi</span>
-                            <span className="font-['Cinzel'] text-[11px] mt-2 tracking-[0.34em] font-bold pl-0.5 text-slate-400">INTERIOR</span>
+                            <span className="font-['Playfair_Display'] text-[32px] font-bold leading-[0.85] text-white uppercase">
+                                {settings?.site?.name?.split(' ')[0] || 'Afandi'}
+                            </span>
+                            <span className="font-['Cinzel'] text-[11px] mt-2 tracking-[0.34em] font-bold pl-0.5 text-slate-400 uppercase">
+                                {settings?.site?.name?.split(' ').slice(1).join(' ') || 'INTERIOR'}
+                            </span>
                         </div>
                     </Link>
                     <p className="text-sm leading-relaxed text-slate-400">
-                        Afandi Interior: Spesialis desain dan produksi interior premium. Kami memadukan estetika mewah dengan teknologi configurator untuk mewujudkan ruang impian Anda secara nyata dan presisi.
+                        {settings?.footer?.description || 'Afandi Interior: Spesialis desain dan produksi interior premium. Kami memadukan estetika mewah dengan teknologi configurator untuk mewujudkan ruang impian Anda secara nyata dan presisi.'}
                     </p>
                     <div className="flex gap-4">
                         <a href="#" className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-indigo-600 hover:text-white transition-all shadow-md">
@@ -68,7 +81,7 @@ export default function Footer({ contactData }) {
                     <ul className="space-y-4">
                         <li className="flex gap-3 text-sm items-start">
                             <MapPin size={18} className="text-indigo-400 shrink-0 mt-0.5" />
-                            <span className="leading-relaxed">Jl. Teknologi Interior No. 88, Workshop Area Selatan, Jakarta</span>
+                            <span className="leading-relaxed">{settings?.footer?.address || 'Jl. Teknologi Interior No. 88, Workshop Area Selatan, Jakarta'}</span>
                         </li>
                         <li className="flex gap-3 text-sm items-center">
                             <Phone size={18} className="text-indigo-400 shrink-0" />
@@ -85,7 +98,7 @@ export default function Footer({ contactData }) {
 
             <div className="max-w-7xl mx-auto px-6 lg:px-8 border-t border-slate-800 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
                 <p className="text-xs text-slate-500">
-                    &copy; {new Date().getFullYear()} Afandi Interior. All rights reserved.
+                    &copy; {new Date().getFullYear()} {settings?.footer?.copyright || settings?.site?.name || 'Afandi Interior'}. All rights reserved.
                 </p>
                 <div className="flex gap-6 text-xs text-slate-500">
                     <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>

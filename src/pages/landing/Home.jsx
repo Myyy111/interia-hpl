@@ -26,7 +26,7 @@ export default function Home() {
 
     return (
         <div className="min-h-screen font-sans bg-slate-50 text-slate-800 selection:bg-indigo-500/30">
-            <Navbar contactData={settings.contact} />
+            <Navbar cmsData={settings} />
 
             <main>
                 <Hero cmsData={settings.hero} />
@@ -43,7 +43,7 @@ export default function Home() {
                 <Contact cmsData={settings.contact} />
             </main>
 
-            <Footer contactData={settings.contact} />
+            <Footer cmsData={settings} />
         </div>
     );
 }

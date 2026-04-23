@@ -23,6 +23,7 @@ const AdminLayout = () => {
     const [isLoading] = useState(false);
     const [showSettingsDropdown, setShowSettingsDropdown] = useState(true); // Default open for easier navigation
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [settings, setSettings] = useState(null);
     const [pendingCount, setPendingCount] = useState(0);
     const navigate = useNavigate();
 
@@ -47,6 +48,7 @@ const AdminLayout = () => {
     useEffect(() => {
         if (!isAuthenticated) return;
         
+        api.getSettings().then(setSettings);
         fetchPendingCount();
 
         const channel = supabase
@@ -114,10 +116,19 @@ const AdminLayout = () => {
                     {/* Brand */}
                     <div className="h-20 flex items-center px-8 border-b border-slate-50">
                         <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 bg-slate-900 rounded-lg flex items-center justify-center">
-                                <Settings className="text-white" size={18} />
+                            <div className="w-8 h-8 rounded-lg flex items-center justify-center overflow-hidden">
+                                {settings?.site?.adminLogo ? (
+                                    <img src={settings.site.adminLogo} alt="Logo" className="w-full h-full object-contain" />
+                                ) : (
+                                    <div className="w-full h-full bg-slate-900 flex items-center justify-center">
+                                        <Settings className="text-white" size={18} />
+                                    </div>
+                                )}
                             </div>
-                            <span className="text-lg font-black tracking-tight text-slate-900">AFANDI<span className="text-slate-400 font-light ml-1 text-base uppercase tracking-widest">CMS</span></span>
+                            <span className="text-lg font-black tracking-tight text-slate-900 uppercase">
+                                {settings?.site?.name?.split(' ')[0] || 'AFANDI'}
+                                <span className="text-slate-400 font-light ml-1 text-base uppercase tracking-widest">CMS</span>
+                            </span>
                         </div>
                     </div>
 
@@ -173,6 +184,10 @@ const AdminLayout = () => {
                                     <NavLink to="/admin/settings/identity" className={subNavItemClass}>
                                         <div className="w-1 h-1 rounded-full bg-slate-300 group-[.active]:bg-slate-900 group-hover:bg-slate-900 transition-colors"></div>
                                         <span>Identitas & SEO</span>
+                                    </NavLink>
+                                    <NavLink to="/admin/settings/layout" className={subNavItemClass}>
+                                        <div className="w-1 h-1 rounded-full bg-slate-300 group-[.active]:bg-slate-900 group-hover:bg-slate-900 transition-colors"></div>
+                                        <span>Header & Footer</span>
                                     </NavLink>
                                     <NavLink to="/admin/settings/catalog" className={subNavItemClass}>
                                         <div className="w-1 h-1 rounded-full bg-slate-300 group-[.active]:bg-slate-900 group-hover:bg-slate-900 transition-colors"></div>

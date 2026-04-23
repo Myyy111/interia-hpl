@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { api } from '../../lib/api';
-import { Globe, Search } from 'lucide-react';
-import { CMSHeader, SectionHeader, Input, Textarea } from './CMSComponents';
+import { Globe, Search, Image as ImageIcon } from 'lucide-react';
+import { CMSHeader, SectionHeader, Input, Textarea, ImageField } from './CMSComponents';
 
 const CMSIdentity = () => {
     const [settings, setSettings] = useState(null);
@@ -38,6 +38,42 @@ const CMSIdentity = () => {
             />
             
             <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm space-y-10">
+                <section>
+                    <SectionHeader icon={<ImageIcon className="text-rose-500" />} title="Logo Website" />
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                        <ImageField 
+                            label="Logo Website Utama" 
+                            img={settings.site?.logo} 
+                            onUpload={async (e) => {
+                                const file = e.target.files[0];
+                                if (!file) return;
+                                try {
+                                    const url = await api.uploadImage(file);
+                                    setSettings({...settings, site: {...settings.site, logo: url}});
+                                } catch (error) {
+                                    console.error('Upload error:', error);
+                                    alert('Gagal upload logo.');
+                                }
+                            }} 
+                        />
+                        <ImageField 
+                            label="Logo Admin Dashboard" 
+                            img={settings.site?.adminLogo} 
+                            onUpload={async (e) => {
+                                const file = e.target.files[0];
+                                if (!file) return;
+                                try {
+                                    const url = await api.uploadImage(file);
+                                    setSettings({...settings, site: {...settings.site, adminLogo: url}});
+                                } catch (error) {
+                                    console.error('Upload error:', error);
+                                    alert('Gagal upload logo.');
+                                }
+                            }} 
+                        />
+                    </div>
+                </section>
+
                 <section>
                     <SectionHeader icon={<Globe className="text-blue-500" />} title="Identitas Situs" />
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

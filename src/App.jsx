@@ -9,6 +9,7 @@ import AdminProducts from './admin/AdminProducts';
 import AdminSettings from './admin/AdminSettings';
 import CMSHome from './admin/cms/CMSHome';
 import CMSIdentity from './admin/cms/CMSIdentity';
+import CMSHeaderFooter from './admin/cms/CMSHeaderFooter';
 import CMSContact from './admin/cms/CMSContact';
 import CMSTemplates from './admin/cms/CMSTemplates';
 import CMSCatalog from './admin/cms/CMSCatalog';
@@ -38,6 +39,7 @@ function App() {
             <Route path="settings" element={<AdminSettings />}>
               <Route index element={<CMSHome />} />
               <Route path="identity" element={<CMSIdentity />} />
+              <Route path="layout" element={<CMSHeaderFooter />} />
               <Route path="contact" element={<CMSContact />} />
               <Route path="templates" element={<CMSTemplates />} />
               <Route path="catalog" element={<CMSCatalog />} />

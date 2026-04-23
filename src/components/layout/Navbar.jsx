@@ -2,7 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ArrowRight } from 'lucide-react';
 
-export default function Navbar({ contactData }) {
+export default function Navbar({ cmsData }) {
+    const contactData = cmsData?.contact;
+    const headerSettings = cmsData?.header;
+    const siteSettings = cmsData?.site;
     const [isScrolled, setIsScrolled] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const location = useLocation();
@@ -46,11 +49,21 @@ export default function Navbar({ contactData }) {
 
                 {/* Logo */}
                 <Link to="/" className="flex items-center gap-3 group" onClick={() => setMobileMenuOpen(false)}>
-                    <img src={isHeaderSolid ? "/brand/logo-icon-dark.png" : "/brand/logo-icon-light.png"} alt="Afandi Interior Logo" className="w-[72px] h-[72px] object-contain drop-shadow-md transition-all duration-300" />
+                    <div className="w-[72px] h-[72px] flex items-center justify-center overflow-hidden">
+                        {siteSettings?.logo ? (
+                            <img src={siteSettings.logo} alt="Logo" className="w-full h-full object-contain drop-shadow-md" />
+                        ) : (
+                            <img src={isHeaderSolid ? "/brand/logo-icon-dark.png" : "/brand/logo-icon-light.png"} alt="Logo Default" className="w-full h-full object-contain drop-shadow-md" />
+                        )}
+                    </div>
                     <div className="flex flex-col items-start ml-0 mt-1">
-                        <span className={`font-['Playfair_Display'] text-[28px] font-bold leading-[0.85] transition-colors duration-300 ${isHeaderSolid ? 'text-[#b08d57]' : 'text-white'}`}>Afandi</span>
+                        <span className={`font-['Playfair_Display'] text-[28px] font-bold leading-[0.85] transition-colors duration-300 ${isHeaderSolid ? 'text-[#b08d57]' : 'text-white'}`}>
+                            {siteSettings?.name?.split(' ')[0] || 'Afandi'}
+                        </span>
                         <div className="flex items-center gap-1.5 mt-2">
-                             <span className={`font-['Cinzel'] text-[10px] tracking-[0.34em] font-bold pl-0.5 transition-colors duration-300 ${isHeaderSolid ? 'text-[#4a423e]' : 'text-slate-300'}`}>INTERIOR</span>
+                             <span className={`font-['Cinzel'] text-[10px] tracking-[0.34em] font-bold pl-0.5 transition-colors duration-300 uppercase ${isHeaderSolid ? 'text-[#4a423e]' : 'text-slate-300'}`}>
+                                {siteSettings?.name?.split(' ').slice(1).join(' ') || 'INTERIOR'}
+                             </span>
                         </div>
                     </div>
                 </Link>
@@ -73,7 +86,7 @@ export default function Navbar({ contactData }) {
                 {/* Desktop CTA */}
                 <div className="hidden md:flex items-center">
                     <Link
-                        to="/configurator"
+                        to={headerSettings?.buttonLink || "/configurator"}
                         className={`
                             flex items-center gap-2 px-6 py-2.5 rounded-full font-bold text-sm transition-all shadow-lg 
                             active:scale-95 active:shadow-inner
@@ -83,7 +96,7 @@ export default function Navbar({ contactData }) {
                             }
                         `}
                     >
-                        Mulai Desain <ArrowRight size={16} />
+                        {headerSettings?.buttonLabel || 'Mulai Desain'} <ArrowRight size={16} />
                     </Link>
                 </div>
 

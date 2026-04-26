@@ -50,7 +50,7 @@ const CMSCommunity = () => {
                 desc="Kelola anggota tim dan ulasan dari klien kami." 
                 onSave={handleSave} 
                 isSaving={isSaving} 
-                message={message} 
+                 
             />
             
             <div className="space-y-12">

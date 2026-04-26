@@ -33,7 +33,7 @@ const CMSHome = () => {
                 desc="Kelola konten Hero Section dan Tentang Kami." 
                 onSave={handleSave} 
                 isSaving={isSaving} 
-                message={message} 
+                 
             />
             
             <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm space-y-10">

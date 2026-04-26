@@ -16,7 +16,7 @@ export function About({ cmsData }) {
                     <h2 className="text-4xl md:text-6xl font-extrabold text-slate-900 leading-[1.1] tracking-tight">
                         Afandi Interior: <br /> 
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-teal-400">Seni Desain</span> & <br className="hidden md:block"/>
-                        <span className="text-slate-800 italic font-['Playfair_Display']">Keahlian Presisi</span>
+                        <span className="text-slate-800 italic font-playfair">Keahlian Presisi</span>
                     </h2>
                     <p className="text-lg text-slate-500 leading-relaxed font-normal max-w-xl">
                         {cmsData.description}
@@ -118,7 +118,7 @@ export function Services({ cmsData }) {
                     </div>
                     <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 leading-tight tracking-tight">
                         Spesialisasi Kami dalam <br/>
-                        <span className="italic font-['Playfair_Display'] text-teal-600 font-normal">Membangun Kenyamanan</span>
+                        <span className="italic font-playfair text-teal-600 font-normal">Membangun Kenyamanan</span>
                     </h2>
                 </div>
 

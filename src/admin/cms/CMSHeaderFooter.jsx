@@ -33,7 +33,7 @@ const CMSHeaderFooter = () => {
                 desc="Kelola tampilan navigasi atas dan informasi bagian bawah website." 
                 onSave={handleSave} 
                 isSaving={isSaving} 
-                message={message} 
+                 
             />
             
             <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm space-y-10">

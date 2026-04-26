@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useToast } from '../../components/ui/Toast';
 import { api } from '../../lib/api';
 import { Globe, Search, Image as ImageIcon } from 'lucide-react';
 import { CMSHeader, SectionHeader, Input, Textarea, ImageField } from './CMSComponents';
@@ -32,7 +33,7 @@ const CMSIdentity = () => {
                 desc="Kelola nama situs, tagline, dan optimasi mesin pencari." 
                 onSave={handleSave} 
                 isSaving={isSaving} 
-                message={message} 
+                 
             />
             
             <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm space-y-10">

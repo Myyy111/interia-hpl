@@ -281,8 +281,8 @@ export default function ConfiguratorLayout() {
                     <div className="flex items-center gap-2.5 shrink-0">
                         <img src="/brand/logo-icon-dark.png" alt="Icon" className="w-[48px] h-[48px] object-contain drop-shadow-sm" />
                         <div className="hidden sm:flex flex-col items-start ml-0 mt-1">
-                            <span className="font-['Playfair_Display'] text-[22px] font-bold leading-[0.85] text-[#b08d57]">Afandi</span>
-                            <span className="font-['Cinzel'] text-[8.5px] mt-1.5 tracking-[0.34em] font-bold pl-0.5 text-[#4a423e]">INTERIOR</span>
+                            <span className="font-playfair text-[22px] font-bold leading-[0.85] text-[#b08d57] uppercase">Afandi</span>
+                            <span className="font-cinzel text-[8.5px] mt-1.5 tracking-[0.34em] font-bold pl-0.5 text-[#4a423e]">INTERIOR</span>
                         </div>
                     </div>
 

@@ -70,7 +70,7 @@ const CMSBlog = () => {
                 desc="Tulis inspirasi, tips, dan edukasi untuk klien Anda." 
                 onSave={handleSave} 
                 isSaving={isSaving} 
-                message={message} 
+                 
             />
             
             <div className="space-y-8">

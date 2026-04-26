@@ -33,13 +33,17 @@ const AdminLayout = () => {
 
     const fetchPendingCount = async () => {
         try {
-            const { count, error } = await supabase
+            const { data, error } = await supabase
                 .from('orders')
-                .select('*', { count: 'exact', head: true })
-                .neq('status', 'Selesai')
-                .neq('status', 'Draft');
+                .select('data');
             
-            if (!error) setPendingCount(count || 0);
+            if (!error && data) {
+                const count = data.filter(item => {
+                    const status = item.data?.status?.toUpperCase() || 'PENDING';
+                    return status !== 'SELESAI' && status !== 'DRAFT';
+                }).length;
+                setPendingCount(count);
+            }
         } catch (err) {
             console.error('Error fetching count:', err);
         }
@@ -124,11 +128,11 @@ const AdminLayout = () => {
                                 )}
                             </div>
                             <div className="flex flex-col items-start mt-1">
-                                <span className="font-['Playfair_Display'] text-[28px] font-bold leading-[0.85] text-[#b08d57]">
+                                <span className="font-playfair text-[28px] font-bold leading-[0.85] text-[#b08d57] uppercase">
                                     {settings?.site?.name?.split(' ')[0] || 'Afandi'}
                                 </span>
                                 <div className="flex items-center gap-1.5 mt-2">
-                                    <span className="font-['Cinzel'] text-[10px] tracking-[0.34em] font-bold pl-0.5 text-[#4a423e] uppercase">
+                                    <span className="font-cinzel text-[10px] tracking-[0.34em] font-bold pl-0.5 text-[#4a423e] uppercase">
                                         {settings?.site?.name?.split(' ').slice(1).join(' ') || 'INTERIOR'}
                                     </span>
                                 </div>

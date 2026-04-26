@@ -23,10 +23,10 @@ export default function Footer({ cmsData }) {
                             )}
                         </div>
                         <div className="flex flex-col items-start ml-0 mt-1">
-                            <span className="font-['Playfair_Display'] text-[32px] font-bold leading-[0.85] text-white uppercase">
+                            <span className="font-playfair text-[32px] font-bold leading-[0.85] text-white uppercase">
                                 {settings?.site?.name?.split(' ')[0] || 'Afandi'}
                             </span>
-                            <span className="font-['Cinzel'] text-[11px] mt-2 tracking-[0.34em] font-bold pl-0.5 text-slate-400 uppercase">
+                            <span className="font-cinzel text-[11px] mt-2 tracking-[0.34em] font-bold pl-0.5 text-slate-400 uppercase">
                                 {settings?.site?.name?.split(' ').slice(1).join(' ') || 'INTERIOR'}
                             </span>
                         </div>

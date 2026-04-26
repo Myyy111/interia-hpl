@@ -64,7 +64,7 @@ const CMSCatalog = () => {
                 desc="Kelola katalog produk utama dan galeri hasil kerja." 
                 onSave={handleSave} 
                 isSaving={isSaving} 
-                message={message} 
+                 
             />
             
             <div className="space-y-12">

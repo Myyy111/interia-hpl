@@ -57,11 +57,11 @@ export default function Navbar({ cmsData }) {
                         )}
                     </div>
                     <div className="flex flex-col items-start ml-0 mt-1">
-                        <span className={`font-['Playfair_Display'] text-[28px] font-bold leading-[0.85] transition-colors duration-300 ${isHeaderSolid ? 'text-[#b08d57]' : 'text-white'}`}>
+                        <span className={`font-playfair text-[28px] font-bold leading-[0.85] transition-colors duration-300 uppercase ${isHeaderSolid ? 'text-[#b08d57]' : 'text-white'}`}>
                             {siteSettings?.name?.split(' ')[0] || 'Afandi'}
                         </span>
                         <div className="flex items-center gap-1.5 mt-2">
-                             <span className={`font-['Cinzel'] text-[10px] tracking-[0.34em] font-bold pl-0.5 transition-colors duration-300 uppercase ${isHeaderSolid ? 'text-[#4a423e]' : 'text-slate-300'}`}>
+                             <span className={`font-cinzel text-[10px] tracking-[0.34em] font-bold pl-0.5 transition-colors duration-300 uppercase ${isHeaderSolid ? 'text-[#4a423e]' : 'text-slate-300'}`}>
                                 {siteSettings?.name?.split(' ').slice(1).join(' ') || 'INTERIOR'}
                              </span>
                         </div>
